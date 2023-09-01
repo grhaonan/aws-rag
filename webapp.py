@@ -32,7 +32,7 @@ EMBEDDINGS_MODEL_LIST: List[str] = ["gpt-j-6b"]
 
 # API endpoint
 # TODO: Set this as environment variable when deploying in streamlit cloud
-api: str = "test"
+api: str = "https://19jf4e6vuj.execute-api.ap-southeast-2.amazonaws.com/uat"
 api_rag_ep: str = f"{api}/api/v1/llm/rag"
 api_text2text_ep: str = f"{api}/api/v1/llm/text2text"
 print(f"api_rag_ep={api_rag_ep}\napi_text2text_ep={api_text2text_ep}")

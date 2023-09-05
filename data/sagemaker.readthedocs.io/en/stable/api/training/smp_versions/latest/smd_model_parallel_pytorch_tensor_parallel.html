@@ -1,0 +1,2136 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>PyTorch API for Tensor Parallelism &mdash; sagemaker 2.182.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pagination.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/search_accessories.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/language_data.js"></script>
+        <script src="https://a0.awsstatic.com/s_code/js/3.0/awshome_s_code.js"></script>
+        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+        <script src="../../../../_static/js/datatable.js"></script>
+        <script async="async" src="../../../../../../_/static/javascript/readthedocs-doc-embed.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="TensorFlow API" href="smd_model_parallel_tensorflow.html" />
+    <link rel="prev" title="PyTorch API" href="smd_model_parallel_pytorch.html" /> 
+
+<!-- RTD Extra Head -->
+
+<link rel="stylesheet" href="../../../../../../_/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": true, "api_host": "https://readthedocs.org", "builder": "sphinx", "canonical_url": null, "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": null, "language": "en", "page": "api/training/smp_versions/latest/smd_model_parallel_pytorch_tensor_parallel", "programming_language": "py", "project": "sagemaker", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "stable"}</script>
+
+<!--
+Using this variable directly instead of using `JSON.parse` is deprecated.
+The READTHEDOCS_DATA global variable will be removed in the future.
+-->
+<script type="text/javascript">
+READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerHTML);
+</script>
+
+<script type="text/javascript" src="../../../../../../_/static/javascript/readthedocs-analytics.js" async="async"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> sagemaker
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                stable
+              </div>
+            
+          
+
+          <div role="search">
+    <form id ="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+        <input type="text" name="q" placeholder="ex. train object detection model, pd.concat" title="Type search term here" />
+        <br />
+        <br />
+        <div style="text-align: left;">
+            <div style="font-size: 0.85rem;">Filters: </div>
+            <div style="display: inline-block;"><label style="color: white;" for="filterExample"><input type="checkbox" id="filterExample" name="filterExample">Example</label></div>
+            <div style="display: inline-block;"><label style="color: white;" for="filterAWSDevGuide"><input type="checkbox" id="filterAWSDevGuide" name="filterAWSDevGuide">Dev Guide</label></div>
+            <div style="display: inline-block;"><label style="color: white;" for="filterSDKGuide"><input type="checkbox" id="filterSDKGuide" name="filterSDKGuide">SDK Guide</label></div>
+        </div>
+        
+    </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Using the SageMaker Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../v2.html">Use Version 2.x of the SageMaker Python SDK</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">APIs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../prep_data/feature_store.html">Feature Store APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html">Training APIs</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../distributed.html">Distributed Training APIs</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../distributed.html#the-sagemaker-distributed-data-parallel-library">The SageMaker Distributed Data Parallel Library</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../distributed.html#the-sagemaker-distributed-model-parallel-library">The SageMaker Distributed Model Parallel Library</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../smd_model_parallel.html">The SageMaker Distributed Model Parallel Library Overview</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../latest.html">Use the Library’s API to Adapt Training Scripts</a><ul class="current">
+<li class="toctree-l5 current"><a class="reference internal" href="../latest.html#version-1-11-0-1-13-0-1-14-0-1-15-0-latest">Version 1.11.0, 1.13.0, 1.14.0, 1.15.0 (Latest)</a><ul class="current">
+<li class="toctree-l6"><a class="reference internal" href="smd_model_parallel_common_api.html">Common API</a></li>
+<li class="toctree-l6"><a class="reference internal" href="smd_model_parallel_pytorch.html">PyTorch API</a></li>
+<li class="toctree-l6 current"><a class="current reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#">PyTorch API for Tensor Parallelism</a></li>
+<li class="toctree-l6"><a class="reference internal" href="smd_model_parallel_tensorflow.html">TensorFlow API</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../latest.html#documentation-archive">Documentation Archive</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../smd_model_parallel_general.html">Run a Distributed Training Job Using the SageMaker Python SDK</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../smd_model_parallel_release_notes/smd_model_parallel_change_log.html">Release Notes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../inference/index.html">Inference APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../governance/index.html">Governance APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../utility/index.html">Utility APIs</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../frameworks/index.html">Frameworks</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../algorithms/index.html">Built-in Algorithms</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../workflows/index.html">Workflows</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../experiments/index.html">Amazon SageMaker Experiments</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../amazon_sagemaker_debugger.html">Amazon SageMaker Debugger</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../amazon_sagemaker_featurestore.html">Amazon SageMaker Feature Store</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../amazon_sagemaker_model_monitoring.html">Amazon SageMaker Model Monitor</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../amazon_sagemaker_processing.html">Amazon SageMaker Processing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../amazon_sagemaker_model_building_pipeline.html">Amazon SageMaker Model Building Pipeline</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">sagemaker</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">APIs</a> &raquo;</li>
+        
+          <li><a href="../../distributed.html">Distributed Training APIs</a> &raquo;</li>
+        
+          <li><a href="../latest.html">Use the Library’s API to Adapt Training Scripts</a> &raquo;</li>
+        
+      <li>PyTorch API for Tensor Parallelism</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/aws/sagemaker-python-sdk/blob/f2ae8ff8b6ed82eb89110887eb5e74c953e6372a/doc/api/training/smp_versions/latest/smd_model_parallel_pytorch_tensor_parallel.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="pytorch-api-for-tensor-parallelism">
+<span id="smdmp-pytorch-tensor-parallel"></span><h1>PyTorch API for Tensor Parallelism<a class="headerlink" href="smd_model_parallel_pytorch_tensor_parallel.html#pytorch-api-for-tensor-parallelism" title="Permalink to this headline">¶</a></h1>
+<p>SageMaker distributed tensor parallelism works by replacing specific submodules
+in the model with their distributed implementations. The distributed modules
+have their parameters and optimizer states partitioned across tensor-parallel
+ranks. This is to compute the same output as it would have been computed by
+the original modules. Since tensor parallelism occurs across data-parallel
+ranks, a rank might collect slices of the activations corresponding to the
+data shards on other devices that are part of the same tensor parallelism group.</p>
+<p>You can enable or disable tensor parallelism for specific parts of the model.
+Within the enabled parts, the replacements with distributed modules will take
+place on a best-effort basis for those module supported for tensor parallelism.
+Alternatively, you can directly import and use the library’s distributed
+modules in the model definition.</p>
+<p>Some of the supported modules (such as <code class="docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.Transformer</span></code>) are high-level
+blocks that contain many operations. Because custom implementations
+(as opposed to the built-in PyTorch modules) are typically used for these
+high-level blocks, the library offers an API that you can use to register
+specific distributed versions with such custom modules (provided that they
+are functionally equivalent). This allows the library to automatically replace
+the occurrences of such PyTorch modules with their distributed counterparts
+provided by the library.
+For more information, see the following topics.</p>
+<div class="contents local topic" id="topics">
+<p class="topic-title first">Topics</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#registering-tensor-parallelism-distributed-modules" id="id2">Registering Tensor Parallelism Distributed Modules</a></p></li>
+<li><p><a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#supported-modules-for-tensor-parallelism" id="id3">Supported Modules for Tensor Parallelism</a></p>
+<ul>
+<li><p><a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#tensor-parallelism-module-apis" id="id4">Tensor Parallelism Module APIs</a></p></li>
+<li><p><a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#enabling-tensor-parallelism" id="id5">Enabling Tensor Parallelism</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#activation-checkpointing-apis" id="id6">Activation Checkpointing APIs</a></p></li>
+<li><p><a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#appendix-reference-implementations-for-modules" id="id7">Appendix: Reference Implementations for Modules</a></p>
+<ul>
+<li><p><a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed-modelparallel-torch-nn-distributedtransformer" id="id8"><code class="docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.DistributedTransformer</span></code></a></p></li>
+<li><p><a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed-modelparallel-torch-nn-distributedtransformerlayer" id="id9"><code class="docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.DistributedTransformerLayer</span></code></a></p></li>
+<li><p><a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed-modelparallel-torch-nn-distributedattentionlayer" id="id10"><code class="docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.DistributedAttentionLayer</span></code></a></p></li>
+<li><p><a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed-modelparallel-torch-nn-distributedtransformeroutputlayer" id="id11"><code class="docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.DistributedTransformerOutputLayer</span></code></a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="registering-tensor-parallelism-distributed-modules">
+<span id="registering-tp-modules"></span><h2><a class="toc-backref" href="smd_model_parallel_pytorch_tensor_parallel.html#id2">Registering Tensor Parallelism Distributed Modules</a><a class="headerlink" href="smd_model_parallel_pytorch_tensor_parallel.html#registering-tensor-parallelism-distributed-modules" title="Permalink to this headline">¶</a></h2>
+<p>Although PyTorch natively provides some of the commonly used (and
+tensor-parallelizable) building blocks such as Transformer, users often
+use custom implementations for such higher-level modules. To distribute
+such modules with tensor parallelism, you need to register the
+distributed modules to the custom module implementation in your class,
+so that the library knows how to distribute the custom module. When you
+register the distributed modules, make sure the custom module that you
+use is functionally equivalent to the distributed module. You can verify
+this by taking a look at the equivalent reference implementations in the
+<a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#smdmp-tp-appendix"><span class="std std-ref">Appendix: Reference Implementations for Modules</span></a>.
+These implementations are functionally equivalent to their distributed
+versions in <code class="docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn</span></code> module.</p>
+<dl class="py class">
+<dt id="smdistributed.modelparallel.torch.tp_register">
+<em class="property">class </em><code class="sig-prename descclassname">smdistributed.modelparallel.torch.</code><code class="sig-name descname">tp_register</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dist_module</span></em>, <em class="sig-param"><span class="n">init_hook</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">forward_hook</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">return_hook</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.tp_register" title="Permalink to this definition">¶</a></dt>
+<dd><ul>
+<li><p>A decorator class that registers the <code class="docutils literal notranslate"><span class="pre">dist_module</span></code> class with
+the module class that it is attached to. The hooks can be used to
+adapt to different interfaces used with <code class="docutils literal notranslate"><span class="pre">__init__</span></code> and
+<code class="docutils literal notranslate"><span class="pre">forward</span></code> methods.</p></li>
+<li><p><strong>Arguments:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dist_module</span></code>: A subclass of <code class="docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.DistributedModule</span></code>
+that implements the distributed version of the module class the
+decorator is attached to. Any distributed module class defined
+in <code class="docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn</span></code> module can be used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">init_hook</span></code>: A callable that translates the arguments of the
+original module <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method to an <code class="docutils literal notranslate"><span class="pre">(args,</span> <span class="pre">kwargs)</span></code>
+tuple compatible with the arguments of the corresponding
+distributed module <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method. Must return a tuple,
+whose first element is an iterable representing the positional
+arguments, and second element is a <code class="docutils literal notranslate"><span class="pre">dict</span></code> representing the
+keyword arguments. The input signature of the <code class="docutils literal notranslate"><span class="pre">init_hook</span></code>
+must <strong>exactly</strong> match the signature of the original
+<code class="docutils literal notranslate"><span class="pre">__init__</span></code> method (including argument order and default
+values), except it must exclude <code class="docutils literal notranslate"><span class="pre">self</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">forward_hook</span></code>: A callable that translates the arguments of
+the original module <code class="docutils literal notranslate"><span class="pre">forward</span></code> method to an <code class="docutils literal notranslate"><span class="pre">(args,</span> <span class="pre">kwargs)</span></code>
+tuple compatible with the arguments of the corresponding
+distributed module <code class="docutils literal notranslate"><span class="pre">forward</span></code> method. Must return a tuple,
+whose first element is an iterable representing the positional
+arguments, and second element is a <code class="docutils literal notranslate"><span class="pre">dict</span></code> representing the
+keyword arguments. The input signature of the <code class="docutils literal notranslate"><span class="pre">init_hook</span></code>
+must <strong>exactly</strong> match the signature of the original
+<code class="docutils literal notranslate"><span class="pre">forward</span></code> method (including argument order and default
+values), except it must exclude <code class="docutils literal notranslate"><span class="pre">self</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">return_hook</span></code>: A callable that translates the object returned
+from the distributed module to the return object expected of
+the original module.</p></li>
+</ul>
+</li>
+<li><p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">smdistributed.modelparallel.torch</span> <span class="k">as</span> <span class="nn">smp</span>
+
+<span class="n">init_hook</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">config</span><span class="p">:</span> <span class="p">((),</span> <span class="n">config</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+
+<span class="c1"># register smp.nn.DistributedTransformer</span>
+<span class="c1"># as the distributed version of MyTransformer</span>
+<span class="nd">@smp</span><span class="o">.</span><span class="n">tp_register</span><span class="p">(</span><span class="n">smp</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">DistributedTransformer</span><span class="p">,</span> <span class="n">init_hook</span><span class="o">=</span><span class="n">init_hook</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">MyTransformer</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="o">...</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_states</span><span class="p">,</span> <span class="n">attention_mask</span><span class="p">):</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt id="smdistributed.modelparallel.torch.tp_register_with_module">
+<code class="sig-prename descclassname">smdistributed.modelparallel.torch.</code><code class="sig-name descname">tp_register_with_module</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">module_cls</span></em>, <em class="sig-param"><span class="n">dist_module</span></em>, <em class="sig-param"><span class="n">init_hook</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">forward_hook</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">return_hook</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.tp_register_with_module" title="Permalink to this definition">¶</a></dt>
+<dd><ul>
+<li><p>When you do not have direct access to model definition code, you
+can use this API to similarly register a distributed module with
+an existing module class.</p></li>
+<li><p><strong>Arguments:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">module_cls</span></code>: The existing module class that will be
+distributed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dist_module</span></code>: A subclass of <code class="docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.DistributedModule</span></code>
+that implements the distributed version of the module class the
+decorator is attached to. Any distributed module class defined
+in <code class="docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn</span></code> module can be used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">init_hook</span></code>: A callable that translates the arguments of the
+original module <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method to an <code class="docutils literal notranslate"><span class="pre">(args,</span> <span class="pre">kwargs)</span></code>
+tuple compatible with the arguments of the corresponding
+distributed module <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method. Must return a tuple,
+whose first element is an iterable representing the positional
+arguments, and second element is a <code class="docutils literal notranslate"><span class="pre">dict</span></code> representing the
+keyword arguments. The input signature of the <code class="docutils literal notranslate"><span class="pre">init_hook</span></code>
+must <strong>exactly</strong> match the signature of the original
+<code class="docutils literal notranslate"><span class="pre">__init__</span></code> method (including argument order and default
+values), except it must exclude <code class="docutils literal notranslate"><span class="pre">self</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">forward_hook</span></code>: A callable that translates the arguments of
+the original module <code class="docutils literal notranslate"><span class="pre">forward</span></code> method to an <code class="docutils literal notranslate"><span class="pre">(args,</span> <span class="pre">kwargs)</span></code>
+tuple compatible with the arguments of the corresponding
+distributed module <code class="docutils literal notranslate"><span class="pre">forward</span></code> method. Must return a tuple,
+whose first element is an iterable representing the positional
+arguments, and second element is a <code class="docutils literal notranslate"><span class="pre">dict</span></code> representing the
+keyword arguments. The input signature of the <code class="docutils literal notranslate"><span class="pre">init_hook</span></code>
+must <strong>exactly</strong> match the signature of the original
+<code class="docutils literal notranslate"><span class="pre">forward</span></code> method (including argument order and default
+values), except it must exclude <code class="docutils literal notranslate"><span class="pre">self</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">return_hook</span></code>: A callable that translates the object returned
+from the distributed module to the return object expected of
+the original module.</p></li>
+</ul>
+</li>
+<li><p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">smdistributed.modelparallel.torch</span> <span class="k">as</span> <span class="nn">smp</span>
+
+<span class="kn">from</span> <span class="nn">somelibrary</span> <span class="kn">import</span> <span class="n">MyTransformer</span>
+
+<span class="n">init_hook</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">config</span><span class="p">:</span> <span class="p">((),</span> <span class="n">config</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+
+<span class="c1"># register smp.nn.DistributedTransformer as the distributed version of MyTransformer</span>
+<span class="n">smp</span><span class="o">.</span><span class="n">tp_register_with_module</span><span class="p">(</span><span class="n">MyTransformer</span><span class="p">,</span>
+                            <span class="n">smp</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">DistributedTransformer</span><span class="p">,</span>
+                            <span class="n">init_hook</span><span class="o">=</span><span class="n">init_hook</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="supported-modules-for-tensor-parallelism">
+<span id="smdmp-supported-modules-for-tp"></span><h2><a class="toc-backref" href="smd_model_parallel_pytorch_tensor_parallel.html#id3">Supported Modules for Tensor Parallelism</a><a class="headerlink" href="smd_model_parallel_pytorch_tensor_parallel.html#supported-modules-for-tensor-parallelism" title="Permalink to this headline">¶</a></h2>
+<p>The following modules are supported for tensor parallelism.</p>
+<div class="contents local topic" id="id1">
+<p class="topic-title first">Topics</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#tensor-parallelism-module-apis" id="id12">Tensor Parallelism Module APIs</a></p></li>
+<li><p><a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#enabling-tensor-parallelism" id="id13">Enabling Tensor Parallelism</a></p></li>
+</ul>
+</div>
+<div class="section" id="tensor-parallelism-module-apis">
+<span id="tp-module-api"></span><h3><a class="toc-backref" href="smd_model_parallel_pytorch_tensor_parallel.html#id12">Tensor Parallelism Module APIs</a><a class="headerlink" href="smd_model_parallel_pytorch_tensor_parallel.html#tensor-parallelism-module-apis" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.nn.DistributedLinear" title="smdistributed.modelparallel.torch.nn.DistributedLinear"><code class="xref py py-class docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.DistributedLinear</span></code></a> (implements <code class="docutils literal notranslate"><span class="pre">nn.Linear</span></code>)</p></li>
+<li><p><a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.nn.DistributedTransformerLMHead" title="smdistributed.modelparallel.torch.nn.DistributedTransformerLMHead"><code class="xref py py-class docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.DistributedTransformerLMHead</span></code></a></p></li>
+<li><p><a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.nn.DistributedTransformer" title="smdistributed.modelparallel.torch.nn.DistributedTransformer"><code class="xref py py-class docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.DistributedTransformer</span></code></a></p></li>
+<li><p><a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.nn.DistributedTransformerLayer" title="smdistributed.modelparallel.torch.nn.DistributedTransformerLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.DistributedTransformerLayer</span></code></a></p></li>
+<li><p><a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.nn.DistributedAttentionLayer" title="smdistributed.modelparallel.torch.nn.DistributedAttentionLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.DistributedAttentionLayer</span></code></a></p></li>
+<li><p><a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.nn.DistributedTransformerOutputLayer" title="smdistributed.modelparallel.torch.nn.DistributedTransformerOutputLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.DistributedTransformerOutputLayer</span></code></a></p></li>
+<li><p><a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.nn.DistributedEmbedding" title="smdistributed.modelparallel.torch.nn.DistributedEmbedding"><code class="xref py py-class docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.DistributedEmbedding</span></code></a></p></li>
+</ul>
+<dl class="py class">
+<dt id="smdistributed.modelparallel.torch.nn.DistributedLinear">
+<em class="property">class </em><code class="sig-prename descclassname">smdistributed.modelparallel.torch.nn.</code><code class="sig-name descname">DistributedLinear</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">in_features</span></em>, <em class="sig-param"><span class="n">out_features</span></em><span class="sig-paren">)</span><a class="headerlink" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.nn.DistributedLinear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tensor-parallel implementation of the <code class="docutils literal notranslate"><span class="pre">nn.Linear</span></code> class.
+Functionally equivalent to an <code class="docutils literal notranslate"><span class="pre">nn.Linear</span></code> module with the same
+<code class="docutils literal notranslate"><span class="pre">in_features</span></code> and <code class="docutils literal notranslate"><span class="pre">out_features</span></code>. In other words,
+<code class="docutils literal notranslate"><span class="pre">in_features</span></code> and <code class="docutils literal notranslate"><span class="pre">out_features</span></code> are the number of <em>global</em>
+channels across tensor-parallel ranks.</p>
+<p>For more information about what’s the reference implementation of this module,
+see <a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#smdmp-tp-appendix"><span class="std std-ref">Appendix: Reference Implementations for Modules</span></a>.</p>
+<ul class="simple">
+<li><p><strong>Arguments:</strong></p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">in_features</span></code>: The total number of input channels for the
+linear layer across all tensor-parallel ranks.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">out_features</span></code>: The total number of output channels for the
+linear layer across all tensor-parallel ranks.</p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py class">
+<dt id="smdistributed.modelparallel.torch.nn.DistributedTransformerLMHead">
+<em class="property">class </em><code class="sig-prename descclassname">smdistributed.modelparallel.torch.nn.</code><code class="sig-name descname">DistributedTransformerLMHead</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">num_layers</span><span class="o">=</span><span class="default_value">12</span></em>, <em class="sig-param"><span class="n">num_attention_heads</span><span class="o">=</span><span class="default_value">32</span></em>, <em class="sig-param"><span class="n">attention_head_size</span><span class="o">=</span><span class="default_value">32</span></em>, <em class="sig-param"><span class="n">hidden_size</span><span class="o">=</span><span class="default_value">1024</span></em>, <em class="sig-param"><span class="n">intermediate_size</span><span class="o">=</span><span class="default_value">4096</span></em>, <em class="sig-param"><span class="n">vocab_size</span><span class="o">=</span><span class="default_value">30522</span></em>, <em class="sig-param"><span class="n">num_positions</span><span class="o">=</span><span class="default_value">1024</span></em>, <em class="sig-param"><span class="n">attention_dropout_prob</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">hidden_dropout_prob</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">activation</span><span class="o">=</span><span class="default_value">'gelu'</span></em>, <em class="sig-param"><span class="n">layernorm_epsilon</span><span class="o">=</span><span class="default_value">1e-05</span></em>, <em class="sig-param"><span class="n">num_token_types</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">causal_mask_size</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">add_cross_attention</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">add_lm_head</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">initializer_range</span><span class="o">=</span><span class="default_value">0.02</span></em>, <em class="sig-param"><span class="n">use_normal_initialization</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">pre_layernorm</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">post_layernorm</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.nn.DistributedTransformerLMHead" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs a distributed transformer model, including embeddings
+and a single LM head. A word embedding of size
+<code class="docutils literal notranslate"><span class="pre">(vocab_size,</span> <span class="pre">hidden_size)</span></code> is created, as well as a positional
+embedding of size <code class="docutils literal notranslate"><span class="pre">(num_positions,</span> <span class="pre">hidden_size)</span></code>, and the
+embeddings are added together. If <code class="docutils literal notranslate"><span class="pre">num_token_types</span></code> is larger
+than 0, a separate embedding of size
+<code class="docutils literal notranslate"><span class="pre">(num_token_types,</span> <span class="pre">hidden_size)</span></code> is created, and further added
+on top.</p>
+<ul class="simple">
+<li><p>The embeddings are fed through a <code class="docutils literal notranslate"><span class="pre">DistributedTransformer</span></code>, and
+if <code class="docutils literal notranslate"><span class="pre">add_lm_head</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>, the output passes through a single
+LM head, which is a linear module without bias whose weight is
+tied to the word embeddings.</p></li>
+<li><p>See <a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.nn.DistributedTransformerLayer" title="smdistributed.modelparallel.torch.nn.DistributedTransformerLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.DistributedTransformerLayer</span></code></a> for descriptions of the rest
+of the arguments.</p></li>
+<li><p><strong>Methods:</strong></p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">forward(self,</span> <span class="pre">inputs)</span></code></p>
+<ul>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">add_cross_attention</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">inputs</span></code> must be a
+tuple
+<code class="docutils literal notranslate"><span class="pre">(input_ids,</span> <span class="pre">attention_mask,</span> <span class="pre">token_type_ids,</span> <span class="pre">position_ids,</span> <span class="pre">cross_states,</span> <span class="pre">cross_states,</span> <span class="pre">cross_mask,</span> <span class="pre">labels)</span></code>.</p></li>
+<li><p>Otherwise, <code class="docutils literal notranslate"><span class="pre">inputs</span></code> must be a tuple
+<code class="docutils literal notranslate"><span class="pre">(input_ids,</span> <span class="pre">attention_mask,</span> <span class="pre">token_type_ids,</span> <span class="pre">position_ids,</span> <span class="pre">labels)</span></code>.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">token_type_ids</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, token type embedding will
+not be used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">input_ids</span></code> is assumed to be of shape <code class="docutils literal notranslate"><span class="pre">[N,</span> <span class="pre">S]</span></code>, where
+<code class="docutils literal notranslate"><span class="pre">N</span></code> is the batch size and <code class="docutils literal notranslate"><span class="pre">S</span></code> is sequence length.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">attention_mask</span></code> is assumed to be a 0-1 tensor of shape
+<code class="docutils literal notranslate"><span class="pre">[N,</span> <span class="pre">S]</span></code>, where 1 represents a masked position.</p></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py class">
+<dt id="smdistributed.modelparallel.torch.nn.DistributedTransformer">
+<em class="property">class </em><code class="sig-prename descclassname">smdistributed.modelparallel.torch.nn.</code><code class="sig-name descname">DistributedTransformer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">num_layers</span><span class="o">=</span><span class="default_value">12</span></em>, <em class="sig-param"><span class="n">num_attention_heads</span><span class="o">=</span><span class="default_value">32</span></em>, <em class="sig-param"><span class="n">attention_head_size</span><span class="o">=</span><span class="default_value">32</span></em>, <em class="sig-param"><span class="n">hidden_size</span><span class="o">=</span><span class="default_value">1024</span></em>, <em class="sig-param"><span class="n">intermediate_size</span><span class="o">=</span><span class="default_value">4096</span></em>, <em class="sig-param"><span class="n">attention_dropout_prob</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">hidden_dropout_prob</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">activation</span><span class="o">=</span><span class="default_value">'gelu'</span></em>, <em class="sig-param"><span class="n">layernorm_epsilon</span><span class="o">=</span><span class="default_value">1e-05</span></em>, <em class="sig-param"><span class="n">initializer_range</span><span class="o">=</span><span class="default_value">0.02</span></em>, <em class="sig-param"><span class="n">use_normal_initialization</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">causal_mask_size</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">add_cross_attention</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">pre_layernorm</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">post_layernorm</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.nn.DistributedTransformer" title="Permalink to this definition">¶</a></dt>
+<dd><p>A sequence of <a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.nn.DistributedTransformerLayer" title="smdistributed.modelparallel.torch.nn.DistributedTransformerLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.DistributedTransformerLayer</span></code></a>s, whose
+number is given by <code class="docutils literal notranslate"><span class="pre">num_layers</span></code> argument. For the other
+arguments and methods, refer to
+<a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.nn.DistributedTransformerLayer" title="smdistributed.modelparallel.torch.nn.DistributedTransformerLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.DistributedTransformerLayer</span></code></a>.</p>
+<p>If both <code class="docutils literal notranslate"><span class="pre">pre_layernorm</span></code> and <code class="docutils literal notranslate"><span class="pre">post_layernorm</span></code> are <code class="docutils literal notranslate"><span class="pre">True</span></code>,
+layer normalization is applied to both the input and the output of
+the <code class="docutils literal notranslate"><span class="pre">DistributedTransformer</span></code>, in addition to the intermediate
+attention and transformer-output layers.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="smdistributed.modelparallel.torch.nn.DistributedTransformerLayer">
+<em class="property">class </em><code class="sig-prename descclassname">smdistributed.modelparallel.torch.nn.</code><code class="sig-name descname">DistributedTransformerLayer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">num_attention_heads</span><span class="o">=</span><span class="default_value">32</span></em>, <em class="sig-param"><span class="n">attention_head_size</span><span class="o">=</span><span class="default_value">32</span></em>, <em class="sig-param"><span class="n">hidden_size</span><span class="o">=</span><span class="default_value">1024</span></em>, <em class="sig-param"><span class="n">intermediate_size</span><span class="o">=</span><span class="default_value">4096</span></em>, <em class="sig-param"><span class="n">attention_dropout_prob</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">hidden_dropout_prob</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">activation</span><span class="o">=</span><span class="default_value">'gelu'</span></em>, <em class="sig-param"><span class="n">layernorm_epsilon</span><span class="o">=</span><span class="default_value">1e-05</span></em>, <em class="sig-param"><span class="n">initializer_range</span><span class="o">=</span><span class="default_value">0.02</span></em>, <em class="sig-param"><span class="n">use_normal_initialization</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">causal_mask_size</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">add_cross_attention</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">pre_layernorm</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">post_layernorm</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.nn.DistributedTransformerLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tensor-parallel implementation of a single transformer layer.
+Number of attention heads, hidden size, and intermediate size
+refer to the global quantities across all tensor-parallel ranks.</p>
+<p>For more information about what’s the reference implementation of this module,
+see <a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#smdmp-tp-appendix"><span class="std std-ref">Appendix: Reference Implementations for Modules</span></a>.</p>
+<ul class="simple">
+<li><p><strong>Arguments:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_attention_heads</span></code>: The total number of attention heads
+across tensor-parallel ranks</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">attention_head_size</span></code>: The number of channels of a single
+attention head.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hidden_size</span></code>: The hidden dimension of the transformer. The
+input tensor <code class="docutils literal notranslate"><span class="pre">hidden_states</span></code> is assumed to have its last
+dimension size equal to <code class="docutils literal notranslate"><span class="pre">hidden_size</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">intermediate_size</span></code>: The number of output channels in the
+first linear transformation of the transformer output layer.
+<code class="docutils literal notranslate"><span class="pre">DistributedTransformerOutputLayer</span></code> first maps
+<code class="docutils literal notranslate"><span class="pre">hidden_size</span></code> dimensions of its input tensor into
+<code class="docutils literal notranslate"><span class="pre">intermediate_size</span></code> dimensions, and then maps it back into
+<code class="docutils literal notranslate"><span class="pre">hidden_size</span></code> dimensions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">attention_dropout_prob</span></code>: The dropout probability applied to
+the attention probabilities.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hidden_dropout_prob</span></code>: The dropout probability used in
+dropout layers other than the one applied to the attention
+probabilities.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">activation</span></code>: Choice of activation function to use at the
+output layer. Must be <code class="docutils literal notranslate"><span class="pre">&quot;gelu&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;relu&quot;</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">layernorm_epsilon</span></code>: The epsilon added to the denominator of
+layer normalization for numerical stability.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initializer_range</span></code>: If <code class="docutils literal notranslate"><span class="pre">use_normal_initialization</span></code> is
+<code class="docutils literal notranslate"><span class="pre">True</span></code>, the standard deviation of the normal random variable
+to initialize the weights with.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">use_normal_initialization</span></code>: If <code class="docutils literal notranslate"><span class="pre">True</span></code>, the weights are
+initialized with normal distribution with standard deviation
+given by <code class="docutils literal notranslate"><span class="pre">initializer_range</span></code>. Otherwise, default PyTorch
+initialization is used.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">causal_mask_size</span></code>: If <code class="docutils literal notranslate"><span class="pre">None</span></code>, no causal mask is used on
+attentions. Otherwise, should be set to maximum sequence length
+to apply a causal mask to the attention scores. This is used,
+for instance, in GPT-2.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">add_cross_attention</span></code>: If <code class="docutils literal notranslate"><span class="pre">True</span></code>, a cross-attention layer
+will be added after the self-attention block. The
+cross-attention layer computes the attention keys and values
+based on the <code class="docutils literal notranslate"><span class="pre">cross_states</span></code> input (instead of
+<code class="docutils literal notranslate"><span class="pre">hidden_states</span></code> input, as in self-attention. This is used in
+the decoder block of encoder-decoder architectures. For
+encoder-only architectures that only use self-attention, this
+should be kept <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pre_layernorm</span></code>: If <code class="docutils literal notranslate"><span class="pre">True</span></code>, inserts layer normalization at
+the input. At least one of <code class="docutils literal notranslate"><span class="pre">pre_layernorm</span></code> and
+<code class="docutils literal notranslate"><span class="pre">post_layernorm</span></code> must be <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">post_layernorm</span></code>: If <code class="docutils literal notranslate"><span class="pre">True</span></code>, inserts layer normalization at
+the output. At least one of <code class="docutils literal notranslate"><span class="pre">pre_layernorm</span></code> and
+<code class="docutils literal notranslate"><span class="pre">post_layernorm</span></code> must be <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">use_alibi</span></code> (bool, default False): Activates Attention with
+Linear Biases (ALiBi) for attention computation.
+ALiBi facilitates efficient extrapolation on input sequences
+and thus improves training efficiency.
+The library enables ALiBi by using the <a class="reference external" href="https://github.com/HazyResearch/flash-attention">Triton
+flash attention kernel</a>.
+Refer to <a class="reference external" href="https://arxiv.org/abs/2108.12409">https://arxiv.org/abs/2108.12409</a> for more
+details on the technique.
+(Available from
+the SageMaker model parallelism library v1.15.0.)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">alibi_bias_max</span></code> (int, default 8): Defines the ALiBi base
+value for mask generation. (Available from
+the SageMaker model parallelism library v1.15.0.)</p></li>
+</ul>
+</li>
+<li><p><strong>Methods:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">forward(self,</span> <span class="pre">inputs)</span></code>: Forward pass for the transformer
+layer.</p>
+<ul>
+<li><p><strong>Arguments:</strong></p>
+<ul>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">add_cross_attention=False</span></code>, <code class="docutils literal notranslate"><span class="pre">inputs</span></code> must be a
+tuple <code class="docutils literal notranslate"><span class="pre">(hidden_states,</span> <span class="pre">attention_mask)</span></code>, where
+<code class="docutils literal notranslate"><span class="pre">hidden_states</span></code> is assumed to be a tensor of dimensions
+<code class="docutils literal notranslate"><span class="pre">[N,</span> <span class="pre">S,</span> <span class="pre">H]</span></code>, where <code class="docutils literal notranslate"><span class="pre">N</span></code> is batch size, <code class="docutils literal notranslate"><span class="pre">S</span></code> is
+sequence length, and <code class="docutils literal notranslate"><span class="pre">H</span></code> is <code class="docutils literal notranslate"><span class="pre">hidden_size</span></code>.
+<code class="docutils literal notranslate"><span class="pre">attention_mask</span></code> is assumed to be a tensor of
+dimensions <code class="docutils literal notranslate"><span class="pre">[N,</span> <span class="pre">1,</span> <span class="pre">1,</span> <span class="pre">S]</span></code>, where <code class="docutils literal notranslate"><span class="pre">N</span></code> is the batch
+size, and <code class="docutils literal notranslate"><span class="pre">S</span></code> is the sequence length.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">add_cross_attention=True</span></code>, <code class="docutils literal notranslate"><span class="pre">inputs</span></code> must be a
+tuple
+<code class="docutils literal notranslate"><span class="pre">(hidden_states,</span> <span class="pre">cross_states,</span> <span class="pre">attention_mask,</span> <span class="pre">cross_mask)</span></code>,
+where <code class="docutils literal notranslate"><span class="pre">hidden_states</span></code> is assumed to be a tensor of
+dimensions <code class="docutils literal notranslate"><span class="pre">[N,</span> <span class="pre">S_1,</span> <span class="pre">H]</span></code>, where <code class="docutils literal notranslate"><span class="pre">N</span></code> is batch size,
+<code class="docutils literal notranslate"><span class="pre">S_1</span></code> is sequence length, and <code class="docutils literal notranslate"><span class="pre">H</span></code> is <code class="docutils literal notranslate"><span class="pre">hidden_size</span></code>.
+<code class="docutils literal notranslate"><span class="pre">cross_states</span></code> is assumed to be a tensor of size
+<code class="docutils literal notranslate"><span class="pre">[N,</span> <span class="pre">S_2,</span> <span class="pre">H]</span></code>, similarly interpreted.
+<code class="docutils literal notranslate"><span class="pre">attention_mask</span></code> is assumed to be a tensor of
+dimensions <code class="docutils literal notranslate"><span class="pre">[N,</span> <span class="pre">1,</span> <span class="pre">1,</span> <span class="pre">S_1]</span></code>, where <code class="docutils literal notranslate"><span class="pre">N</span></code> is the batch
+size, and <code class="docutils literal notranslate"><span class="pre">S_1</span></code> is the sequence length, and
+<code class="docutils literal notranslate"><span class="pre">cross_mask</span></code> is assumed to be a tensor of size
+<code class="docutils literal notranslate"><span class="pre">[N,</span> <span class="pre">1,</span> <span class="pre">1,</span> <span class="pre">S_2]</span></code>. Keys and values for the attention
+heads in the cross-attention layer (but not the
+self-attention layer) are computed using
+<code class="docutils literal notranslate"><span class="pre">cross_states</span></code>, and <code class="docutils literal notranslate"><span class="pre">cross_mask</span></code> is applied as the
+attention mask in the cross-attention layer (but not the
+self-attention layer).</p></li>
+</ul>
+</li>
+<li><p><strong>Returns:</strong></p>
+<ul>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">add_cross_attention=False</span></code>, a tuple
+<code class="docutils literal notranslate"><span class="pre">(hidden_states,</span> <span class="pre">attention_mask)</span></code>, where
+<code class="docutils literal notranslate"><span class="pre">hidden_states</span></code> is the output of the transformer, and
+<code class="docutils literal notranslate"><span class="pre">attention_mask</span></code> is the same the <code class="docutils literal notranslate"><span class="pre">attention_mask</span></code>
+argument.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">add_cross_attention=True</span></code>, a tuple
+<code class="docutils literal notranslate"><span class="pre">(hidden_states,</span> <span class="pre">cross_states,</span> <span class="pre">attention_mask,</span> <span class="pre">cross_mask)</span></code>,
+where <code class="docutils literal notranslate"><span class="pre">hidden_states</span></code> is the output of the transformer,
+and the next three tensors are the same as the input
+arguments.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="py class">
+<dt id="smdistributed.modelparallel.torch.nn.DistributedAttentionLayer">
+<em class="property">class </em><code class="sig-prename descclassname">smdistributed.modelparallel.torch.nn.</code><code class="sig-name descname">DistributedAttentionLayer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">num_attention_heads</span><span class="o">=</span><span class="default_value">32</span></em>, <em class="sig-param"><span class="n">attention_head_size</span><span class="o">=</span><span class="default_value">32</span></em>, <em class="sig-param"><span class="n">hidden_size</span><span class="o">=</span><span class="default_value">1024</span></em>, <em class="sig-param"><span class="n">attention_dropout_prob</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">hidden_dropout_prob</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">layernorm_epsilon</span><span class="o">=</span><span class="default_value">1e-05</span></em>, <em class="sig-param"><span class="n">initializer_range</span><span class="o">=</span><span class="default_value">0.02</span></em>, <em class="sig-param"><span class="n">use_normal_initialization</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">cross_attention</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">causal_mask_size</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">pre_layernorm</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">post_layernorm</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.nn.DistributedAttentionLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>A distributed implementation for the attention block. Includes the
+computation of the self- or cross-attention (context layer),
+followed by a linear mapping and dropout, which is optionally
+followed by the residual-connection and layer normalization.</p>
+<p>For more information about what’s the reference implementation of this module,
+see <a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#smdmp-tp-appendix"><span class="std std-ref">Appendix: Reference Implementations for Modules</span></a>.</p>
+<ul class="simple">
+<li><p><strong>Arguments:</strong></p>
+<ul>
+<li><p>See <a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.nn.DistributedTransformerLayer" title="smdistributed.modelparallel.torch.nn.DistributedTransformerLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.DistributedTransformerLayer</span></code></a> for descriptions of the
+arguments.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cross_attention</span></code>: If <code class="docutils literal notranslate"><span class="pre">True</span></code>, it computes the attentions
+with respect to the <code class="docutils literal notranslate"><span class="pre">cross_states</span></code> tensor of the <code class="docutils literal notranslate"><span class="pre">forward</span></code>
+method input tuple. (Default: <code class="docutils literal notranslate"><span class="pre">False</span></code>)</p></li>
+</ul>
+</li>
+<li><p><strong>Methods:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">forward(self,</span> <span class="pre">inputs)</span></code>: Forward pass for the attention
+layer.</p>
+<ul>
+<li><p><strong>Arguments:</strong></p>
+<ul>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">cross_attention=False</span></code>, <code class="docutils literal notranslate"><span class="pre">inputs</span></code> must be a tuple
+<code class="docutils literal notranslate"><span class="pre">(hidden_states,</span> <span class="pre">attention_mask)</span></code>, where
+<code class="docutils literal notranslate"><span class="pre">hidden_states</span></code> is assumed to be a tensor of dimensions
+<code class="docutils literal notranslate"><span class="pre">[N,</span> <span class="pre">S,</span> <span class="pre">H]</span></code>, where <code class="docutils literal notranslate"><span class="pre">N</span></code> is batch size, <code class="docutils literal notranslate"><span class="pre">S</span></code> is
+sequence length, and <code class="docutils literal notranslate"><span class="pre">H</span></code> is <code class="docutils literal notranslate"><span class="pre">hidden_size</span></code>.
+<code class="docutils literal notranslate"><span class="pre">attention_mask</span></code> is assumed to be a tensor of
+dimensions <code class="docutils literal notranslate"><span class="pre">[N,</span> <span class="pre">1,</span> <span class="pre">1,</span> <span class="pre">S]</span></code>, where <code class="docutils literal notranslate"><span class="pre">N</span></code> is the
+batch size, and <code class="docutils literal notranslate"><span class="pre">S</span></code> is the sequence length.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">cross_attention=True</span></code>, <code class="docutils literal notranslate"><span class="pre">inputs</span></code> must be a tuple
+<code class="docutils literal notranslate"><span class="pre">(hidden_states,</span> <span class="pre">cross_states,</span> <span class="pre">attention_mask)</span></code>, where
+<code class="docutils literal notranslate"><span class="pre">hidden_states</span></code> is assumed to be a tensor of dimensions
+<code class="docutils literal notranslate"><span class="pre">[N,</span> <span class="pre">S_1,</span> <span class="pre">H]</span></code>, where <code class="docutils literal notranslate"><span class="pre">N</span></code> is batch size, <code class="docutils literal notranslate"><span class="pre">S_1</span></code> is
+sequence length, and <code class="docutils literal notranslate"><span class="pre">H</span></code> is <code class="docutils literal notranslate"><span class="pre">hidden_size</span></code>.
+<code class="docutils literal notranslate"><span class="pre">cross_states</span></code> is assumed to be a tensor of size
+<code class="docutils literal notranslate"><span class="pre">[N,</span> <span class="pre">S_2,</span> <span class="pre">H]</span></code>, similarly interpreted.
+<code class="docutils literal notranslate"><span class="pre">attention_mask</span></code> is assumed to be a tensor of
+dimensions <code class="docutils literal notranslate"><span class="pre">[N,</span> <span class="pre">1,</span> <span class="pre">1,</span> <span class="pre">S_2]</span></code>, where <code class="docutils literal notranslate"><span class="pre">N</span></code> is the batch
+size, and <code class="docutils literal notranslate"><span class="pre">S_2</span></code> is the sequence length. Keys and values
+for the attention heads are computed using
+<code class="docutils literal notranslate"><span class="pre">cross_states</span></code>.</p></li>
+</ul>
+</li>
+<li><p><strong>Returns:</strong></p>
+<ul>
+<li><p>A single tensor that is the output of the attention
+layer.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="py class">
+<dt id="smdistributed.modelparallel.torch.nn.DistributedTransformerOutputLayer">
+<em class="property">class </em><code class="sig-prename descclassname">smdistributed.modelparallel.torch.nn.</code><code class="sig-name descname">DistributedTransformerOutputLayer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hidden_size</span><span class="o">=</span><span class="default_value">1024</span></em>, <em class="sig-param"><span class="n">intermediate_size</span><span class="o">=</span><span class="default_value">4096</span></em>, <em class="sig-param"><span class="n">hidden_dropout_prob</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">activation</span><span class="o">=</span><span class="default_value">'gelu'</span></em>, <em class="sig-param"><span class="n">layernorm_epsilon</span><span class="o">=</span><span class="default_value">1e-05</span></em>, <em class="sig-param"><span class="n">initializer_range</span><span class="o">=</span><span class="default_value">0.02</span></em>, <em class="sig-param"><span class="n">use_normal_initialization</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">pre_layernorm</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">post_layernorm</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">fp32_residual_addition</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.nn.DistributedTransformerOutputLayer" title="Permalink to this definition">¶</a></dt>
+<dd><ul>
+<li><p>Distributed implementation of a single transformer output layer. A
+single <a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.nn.DistributedTransformerLayer" title="smdistributed.modelparallel.torch.nn.DistributedTransformerLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.DistributedTransformerLayer</span></code></a> with
+<code class="docutils literal notranslate"><span class="pre">add_cross_attention=False</span></code> consists of a single
+<code class="docutils literal notranslate"><span class="pre">DistributedAttentionLayer</span></code> immediately followed by a single
+<code class="docutils literal notranslate"><span class="pre">DistributedTransformerOutputLayer</span></code>. The latter linearly maps
+the last channel of the input tensor from <code class="docutils literal notranslate"><span class="pre">hidden_size</span></code> to
+<code class="docutils literal notranslate"><span class="pre">intermediate_size</span></code>, and then maps it back to <code class="docutils literal notranslate"><span class="pre">hidden_size</span></code>.</p>
+<p>For more information about what’s the reference implementation of this module,
+see <a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#smdmp-tp-appendix"><span class="std std-ref">Appendix: Reference Implementations for Modules</span></a>.</p>
+</li>
+<li><p><strong>Arguments:</strong></p>
+<ul class="simple">
+<li><p>See <a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.nn.DistributedTransformerLayer" title="smdistributed.modelparallel.torch.nn.DistributedTransformerLayer"><code class="xref py py-class docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.DistributedTransformerLayer</span></code></a> for descriptions of the
+arguments.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fp32_residual_addition</span></code>: Set to <code class="docutils literal notranslate"><span class="pre">True</span></code> if you want to avoid overflow
+(NaN loss values) for large models with more than 100 billion parameters
+when using FP16. (Default: False)</p></li>
+</ul>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="py class">
+<dt id="smdistributed.modelparallel.torch.nn.DistributedEmbedding">
+<em class="property">class </em><code class="sig-prename descclassname">smdistributed.modelparallel.torch.nn.</code><code class="sig-name descname">DistributedEmbedding</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">num_embeddings</span></em>, <em class="sig-param"><span class="n">embedding_dim</span></em>, <em class="sig-param"><span class="n">padding_idx</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">max_norm</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">norm_type</span><span class="o">=</span><span class="default_value">2.0</span></em>, <em class="sig-param"><span class="n">scale_grad_by_freq</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">sparse</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">_weight</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">initializer_range</span><span class="o">=</span><span class="default_value">0.02</span></em>, <em class="sig-param"><span class="n">_skip_allgather</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">_skip_scatter_and_merge</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.nn.DistributedEmbedding" title="Permalink to this definition">¶</a></dt>
+<dd><ul class="simple">
+<li><p>Distributed implementation of a single Embedding Layer. Currently
+only supports splitting across the embedding_dim.</p></li>
+<li><p><strong>Arguments:</strong></p>
+<ul>
+<li><p>See <a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.nn.DistributedEmbedding" title="smdistributed.modelparallel.torch.nn.DistributedEmbedding"><code class="xref py py-class docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.DistributedEmbedding</span></code></a> for descriptions of the
+arguments.</p></li>
+</ul>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="enabling-tensor-parallelism">
+<span id="enabling-tp"></span><h3><a class="toc-backref" href="smd_model_parallel_pytorch_tensor_parallel.html#id13">Enabling Tensor Parallelism</a><a class="headerlink" href="smd_model_parallel_pytorch_tensor_parallel.html#enabling-tensor-parallelism" title="Permalink to this headline">¶</a></h3>
+<p>There are two ways tensor parallelism can be enabled.</p>
+<p>First, you can use
+the distributed module implementations in <code class="docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn</span></code> module directly in
+your model definition. See <a class="reference internal" href="smd_model_parallel_pytorch_tensor_parallel.html#smdmp-supported-modules-for-tp"><span class="std std-ref">Supported Modules for Tensor Parallelism</span></a>
+for a complete list of built-in distributed modules. Here is an example
+of how this can be done:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">smdistributed.modelparallel.torch</span> <span class="k">as</span> <span class="nn">smp</span>
+
+<span class="k">class</span> <span class="nc">TransformerModel</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span>
+
+        <span class="c1"># directly instantiate smp.nn.DistributedTransformer and use it</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">smp</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">DistributedTransformer</span><span class="p">(</span><span class="n">num_layers</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pooler</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_states</span><span class="p">):</span>
+        <span class="n">emb_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedding</span><span class="p">(</span><span class="n">hidden_states</span><span class="p">)</span>
+        <span class="n">enc_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="p">(</span><span class="n">emb_out</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pooler</span><span class="p">(</span><span class="n">enc_out</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Second, you can enable tensor parallelism for specific modules or blocks
+of code, which will automatically enable tensor parallelism for the
+supported modules within that scope. To do this, you can use the
+following API:</p>
+<dl class="py function">
+<dt id="smdistributed.modelparallel.torch.tensor_parallelism">
+<code class="sig-prename descclassname">&#64;</code><code class="sig-prename descclassname">smdistributed.modelparallel.torch.</code><code class="sig-name descname">tensor_parallelism</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">enabled</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.tensor_parallelism" title="Permalink to this definition">¶</a></dt>
+<dd><ul>
+<li><p>A context manager that enables or disables tensor parallelism for
+any supported module that is created inside. If there are nested
+contexts, the innermost overrides the rest. If there are
+multiple supported modules created within the context, where one
+is the submodule of the other, only the outermost module will be
+distributed. If a supported module shares weights with another
+(supported or unsupported) module, or if its hyperparameters do
+not support distribution (e.g., not divisible by the tensor
+parallelism degree), tensor parallelism will <strong>not</strong> be enabled
+for this module even if this API is used.</p>
+<p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">smdistributed.modelparallel.torch</span> <span class="k">as</span> <span class="nn">smp</span>
+
+<span class="k">with</span> <span class="n">smp</span><span class="o">.</span><span class="n">tensor_parallelism</span><span class="p">():</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">m0</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>                   <span class="c1"># will be distributed</span>
+    <span class="k">with</span> <span class="n">smp</span><span class="o">.</span><span class="n">tensor_parallelism</span><span class="p">(</span><span class="n">enabled</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">m1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>               <span class="c1"># will not be distributed</span>
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kwargs</span></code> - Keyword arguments that can be used to modify the configurations of
+the distributed modules created inside the context.
+If a keyword argument provided through it matches any <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method arguments
+of a <code class="docutils literal notranslate"><span class="pre">DistributedModule</span></code> that substitutes a module created inside
+the <code class="docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.tensor_parallelism</span></code> context, this keyword will override
+the value defined in the <code class="docutils literal notranslate"><span class="pre">init_hook</span></code>.</p>
+<ul class="simple">
+<li><p>(<em>For v1.7.0 and later</em>) Through the following additional keyword arguments,
+the library supports <a class="reference external" href="https://github.com/NVIDIA/Megatron-LM/tree/main/megatron/fused_kernels">NVIDIA Megatron’s fused kernels</a></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">fused_softmax</span></code> (bool) - Fusion of attention masking and softmax.
+By default, it is set to <code class="docutils literal notranslate"><span class="pre">True</span></code>. You can deactivate it by setting
+<code class="docutils literal notranslate"><span class="pre">fused_softmax=False</span></code> in the <code class="docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.tensor_parallelism</span></code> context manager.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fused_bias_gelu</span></code> (bool) - Fusion of bias addition and Gelu activation.
+By default, it is set to <code class="docutils literal notranslate"><span class="pre">False</span></code>. You can activate it by setting
+<code class="docutils literal notranslate"><span class="pre">fused_bias_gelu=True</span></code> in the <code class="docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.tensor_parallelism</span></code> context manager.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt id="smdistributed.modelparallel.torch.set_tensor_parallelism">
+<code class="sig-prename descclassname">smdistributed.modelparallel.torch.</code><code class="sig-name descname">set_tensor_parallelism</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">module</span></em>, <em class="sig-param"><span class="n">enabled</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.set_tensor_parallelism" title="Permalink to this definition">¶</a></dt>
+<dd><ul>
+<li><p>Enables or disables tensor parallelism for the supported
+submodules of <code class="docutils literal notranslate"><span class="pre">module</span></code>. If enabling, the outermost supported
+modules will be distributed. If disabling, tensor parallelism will
+be disabled for the entire module subtree of <code class="docutils literal notranslate"><span class="pre">module</span></code>. Unlike
+the context manager, this API can be used after the model creation
+(but before wrapping with <a class="reference internal" href="smd_model_parallel_pytorch.html#smdistributed.modelparallel.torch.DistributedModel" title="smdistributed.modelparallel.torch.DistributedModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.DistributedModel</span></code></a>), so direct
+access to model definition code is not required. If a supported
+module shares weights with another (supported or unsupported)
+module, or if its hyperparameters do not support distribution
+(e.g., not divisible by the tensor parallelism degree), tensor
+parallelism will <strong>not</strong> be enabled for this module.</p></li>
+<li><p>Keyword arguments <code class="docutils literal notranslate"><span class="pre">kwargs</span></code> can be used to modify the
+configurations of the distributed modules created inside the
+context. If a keyword argument provided here matches any
+<code class="docutils literal notranslate"><span class="pre">__init__</span></code> method arguments of a <a class="reference internal" href="smd_model_parallel_pytorch.html#smdistributed.modelparallel.torch.DistributedModel" title="smdistributed.modelparallel.torch.DistributedModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.DistributedModel</span></code></a> that
+substitutes a module created inside the <code class="docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.tensor_parallelism</span></code>
+context, this keyword will override the value defined in the
+<code class="docutils literal notranslate"><span class="pre">init_hook</span></code>.</p></li>
+<li><p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">smdistributed.modelparallel.torch</span> <span class="k">as</span> <span class="nn">smp</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">MyModel</span><span class="p">()</span>
+<span class="n">smp</span><span class="o">.</span><span class="n">set_tensor_parallelism</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">encoder</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">smp</span><span class="o">.</span><span class="n">set_tensor_parallelism</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">encoder</span><span class="o">.</span><span class="n">embedding</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># outermost supported submodules in model.encoder will be distributed, except for</span>
+<span class="c1"># model.encoder.embedding</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">smp</span><span class="o">.</span><span class="n">DistributedModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">smp</span><span class="o">.</span><span class="n">DistributedOptimizer</span><span class="p">(</span><span class="n">optimizer</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="activation-checkpointing-apis">
+<span id="activation-checkpointing-api"></span><h2><a class="toc-backref" href="smd_model_parallel_pytorch_tensor_parallel.html#id6">Activation Checkpointing APIs</a><a class="headerlink" href="smd_model_parallel_pytorch_tensor_parallel.html#activation-checkpointing-apis" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">smdistributed.modelparallel</span></code> provides three APIs to enable
+activation checkpointing: one for checkpointing modules,
+one for checkpointing sequential modules, and
+one for checkpointing pretrained models.</p>
+<p>For a conceptual guide and examples, see
+<a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-parallel-extended-features-pytorch-activation-checkpointing.html">Activation Checkpointing</a>
+in the <em>SageMaker’s Distributed Model Parallel developer guide</em>.</p>
+<dl class="py class">
+<dt id="smdistributed.modelparallel.torch.patches.checkpoint.checkpoint">
+<em class="property">class </em><code class="sig-prename descclassname">smdistributed.modelparallel.torch.patches.checkpoint.</code><code class="sig-name descname">checkpoint</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">module</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="n">preserve_rng_state</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.patches.checkpoint.checkpoint" title="Permalink to this definition">¶</a></dt>
+<dd><ul class="simple">
+<li><p>Checkpoints the module passed. Throws error if, during manual
+partitioning, all children of module are not on same rank as the
+module itself, i.e. the module tree is split across multiple
+partitions. During auto-partitioning, if the module is split
+across multiple partitions, then this call is ignored(with a
+warning). Note that this call applies to the module instance only,
+not to the module class.</p></li>
+<li><p><strong>Arguments:</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">module</span> <span class="pre">(Instance</span> <span class="pre">of</span> <span class="pre">nn.Module)</span></code>: The module to be
+checkpointed. Note that unlike native checkpointing in
+PyTorch’s, activation checkpointing in
+<code class="docutils literal notranslate"><span class="pre">smdistributed.modelparallel</span></code> is at the granularity of a
+module. A generic function cannot be passed here.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">args</span></code>: Tuple containing inputs to the module.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">preserve_rng_state</span> <span class="pre">(bool,</span> <span class="pre">default=True)</span></code>: Omit stashing and
+restoring the RNG state during each checkpoint.</p></li>
+</ul>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="py class">
+<dt id="smdistributed.modelparallel.torch.patches.checkpoint.checkpoint_sequential">
+<em class="property">class </em><code class="sig-prename descclassname">smdistributed.modelparallel.torch.patches.checkpoint.</code><code class="sig-name descname">checkpoint_sequential</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sequential_module</span></em>, <em class="sig-param"><span class="n">input</span></em>, <em class="sig-param"><span class="n">strategy</span><span class="o">=</span><span class="default_value">'each'</span></em>, <em class="sig-param"><span class="n">preserve_rng_state</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">pack_args_as_tuple</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.patches.checkpoint.checkpoint_sequential" title="Permalink to this definition">¶</a></dt>
+<dd><ul class="simple">
+<li><p>Checkpoints the modules inside
+<a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Sequential.html">nn.Sequential</a>.
+This can be used even if different layers that are part of the
+sequential container lie on different partitions. Each layer part
+of the sequential module that is checkpointed must lie completely
+within one partition. If this is not the case during manual
+partitioning, then an error will be thrown. If this is not the
+case during auto partitioning, a warning will be raised and this
+module will be run without checkpointing.</p></li>
+<li><p><strong>Arguments</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">sequential_module</span> <span class="pre">(nn.Sequential)</span></code>: the sequential module to
+be checkpointed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">input</span> <span class="pre">(torch.Tensor</span> <span class="pre">or</span> <span class="pre">a</span> <span class="pre">tuple</span> <span class="pre">of</span> <span class="pre">torch.Tensors)</span></code>: input to
+the module, which can be a tensor or a tuple of tensors. If a
+tuple is passed, then pack_args_as_tuple should be set to True.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">strategy</span> <span class="pre">(string,</span> <span class="pre">default=“each”)</span></code> : Strategy determines how
+many layers part of the sequential module need to be grouped
+together for one checkpointing call. This determines how much
+memory can be reduced. It can take the following values</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">each</span></code> : The default is to checkpoint each module inside
+the sequential separately.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">contiguous</span></code>: Groups consecutive layers on the same
+partition together. For example, if a sequential consists of
+[a, b, c, d] where a,b are on pp_rank0 and c,d are on
+pp_rank 1, then this strategy would checkpoint a,b together
+and then c,d together. This means effectively, inputs of a,
+outputs of b, inputs of c, and outputs of d are in memory;
+the reamining activations are recomputed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">group_2,</span> <span class="pre">group_3,</span> <span class="pre">group_4,</span> <span class="pre">etc:</span></code> More generally,
+<code class="docutils literal notranslate"><span class="pre">group_x</span></code> where x is an integer. This strategy provides
+more flexibility in how many layers to group together.
+<code class="docutils literal notranslate"><span class="pre">group_x</span></code> groups x layers together on a best effort basis.
+It can group x layers together if there are x layers
+consecutively on the same partition. For example:
+[a,b,c,d,e] where a,b are on pp_rank0 and c,d,e are on
+pp_rank 1. If the strategy is <code class="docutils literal notranslate"><span class="pre">group_3,</span></code> then a,b are
+checkpointed together on pp_rank0 and c,d,e are checkpointed
+together on pp_rank1.</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">preserve_rng_state</span> <span class="pre">(bool,</span> <span class="pre">default=True)</span></code>: Set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+to omit stashing and restoring the RNG state during each
+checkpoint.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pack_args_as_tuple</span> <span class="pre">(bool,</span> <span class="pre">default=False)</span></code>: To ensure that
+backward works correctly, the autograd function has to unpack
+any tuples received. If the checkpointed layer takes a tuple as
+input, then this needs to be set to True.</p></li>
+</ul>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="py class">
+<dt id="smdistributed.modelparallel.torch.set_activation_checkpointing">
+<em class="property">class </em><code class="sig-prename descclassname">smdistributed.modelparallel.torch.</code><code class="sig-name descname">set_activation_checkpointing</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">module</span></em>, <em class="sig-param"><span class="n">preserve_rng_state</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">pack_args_as_tuple</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">strategy</span><span class="o">=</span><span class="default_value">'each'</span></em><span class="sig-paren">)</span><a class="headerlink" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.set_activation_checkpointing" title="Permalink to this definition">¶</a></dt>
+<dd><ul class="simple">
+<li><p>This API is recommended when importing pretrained models from
+libraries, such as PyTorch and Hugging Face Transformers. This is
+particularly useful when you don’t have access to the model
+definition code and not be able to replace a module call with
+checkpoint.</p></li>
+<li><p><strong>Arguments</strong>:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">module</span> <span class="pre">(Instance</span> <span class="pre">of</span> <span class="pre">nn.Module</span> <span class="pre">or</span> <span class="pre">nn.Sequential)</span></code>: The module
+to checkpoint.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">preserve_rng_state</span> <span class="pre">(bool,</span> <span class="pre">default=True)</span></code>: Set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+to omit stashing and restoring the RNG state during each
+checkpoint.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pack_args_as_tuple</span> <span class="pre">(bool,</span> <span class="pre">default=False)</span></code>: <em>Can only be
+passed when module is a sequential module.</em> To ensure that
+backward works correctly, the autograd function has to unpack
+any tuples received. If the layer checkpointed takes a tuple as
+input, then this needs to be set to True.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">strategy:</span> <span class="pre">(string,</span> <span class="pre">default=“each”)</span></code>: <em>Can only be passed
+when module is a sequential module.</em> Strategy determines how
+many layers part of the sequential module need to be grouped
+together for one checkpointing call.</p></li>
+<li><p>This determines how much memory can be reduced. It can take the
+following values</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">each</span></code> : The default is to checkpoint each module inside
+the sequential separately.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">contiguous</span></code>: Groups consecutive layers on the same
+partition together. For example if a sequential consists of
+<code class="docutils literal notranslate"><span class="pre">[a,</span> <span class="pre">b,</span> <span class="pre">c,</span> <span class="pre">d]</span></code> where <code class="docutils literal notranslate"><span class="pre">a,</span> <span class="pre">b</span></code> are on <code class="docutils literal notranslate"><span class="pre">pp_rank0</span></code> and <code class="docutils literal notranslate"><span class="pre">c,</span> <span class="pre">d</span></code> are on
+<code class="docutils literal notranslate"><span class="pre">pp_rank</span> <span class="pre">1</span></code>, then this strategy would checkpoint a,b together
+and then <code class="docutils literal notranslate"><span class="pre">c,</span> <span class="pre">d</span></code> together. This means effectively, the inputs of
+<code class="docutils literal notranslate"><span class="pre">a</span></code>, outputs of <code class="docutils literal notranslate"><span class="pre">b</span></code>, inputs of <code class="docutils literal notranslate"><span class="pre">c</span></code>, and outputs of <code class="docutils literal notranslate"><span class="pre">d</span></code> are in
+memory, and the rest of the activations are recomputed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">group_2,</span> <span class="pre">group_3,</span> <span class="pre">group_4,</span> <span class="pre">etc:</span></code> More generally,
+<code class="docutils literal notranslate"><span class="pre">group_x</span></code> where x is an integer. This strategy provides
+more flexibility in how many layers to group together.
+<code class="docutils literal notranslate"><span class="pre">group_x</span></code> groups x number of layers together on a best
+effort basis if there are x layers consecutively in the same
+partition. <strong>Example</strong>: Assume a module with layers <code class="docutils literal notranslate"><span class="pre">[a,</span> <span class="pre">b,</span>
+<span class="pre">c,</span> <span class="pre">d,</span> <span class="pre">e]</span></code>. The layers a and b are on pp_rank0, and <code class="docutils literal notranslate"><span class="pre">c</span></code>, <code class="docutils literal notranslate"><span class="pre">d</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">e</span></code> are on <code class="docutils literal notranslate"><span class="pre">pp_rank</span> <span class="pre">1</span></code>. If the strategy is <code class="docutils literal notranslate"><span class="pre">group_3,</span></code> then <code class="docutils literal notranslate"><span class="pre">a</span></code>,
+<code class="docutils literal notranslate"><span class="pre">b</span></code> are checkpointed together on <code class="docutils literal notranslate"><span class="pre">pp_rank0</span></code>, and <code class="docutils literal notranslate"><span class="pre">c</span></code>, <code class="docutils literal notranslate"><span class="pre">d</span></code>, <code class="docutils literal notranslate"><span class="pre">e</span></code> are
+checkpointed together on <code class="docutils literal notranslate"><span class="pre">pp_rank1</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="appendix-reference-implementations-for-modules">
+<span id="smdmp-tp-appendix"></span><h2><a class="toc-backref" href="smd_model_parallel_pytorch_tensor_parallel.html#id7">Appendix: Reference Implementations for Modules</a><a class="headerlink" href="smd_model_parallel_pytorch_tensor_parallel.html#appendix-reference-implementations-for-modules" title="Permalink to this headline">¶</a></h2>
+<p>The following are reference implementations for transformer-related
+modules. Note that this is not the actual <code class="docutils literal notranslate"><span class="pre">smdistributed</span></code> source code,
+but the distributed implementations provided in the library are the
+distributed versions of these reference implementations, and can be used
+to determine whether the distributed modules perform the same operations
+as the custom modules in your script.</p>
+<p>To keep the implementations simple, we only assume keyword arguments,
+and assume the existence of a method <code class="docutils literal notranslate"><span class="pre">parse_args(kwargs)</span></code>, which
+parses the arguments to <code class="docutils literal notranslate"><span class="pre">__init__</span></code> methods and sets the relevant
+attributes of the module, such as <code class="docutils literal notranslate"><span class="pre">hidden_size</span></code> and
+<code class="docutils literal notranslate"><span class="pre">num_attention_heads</span></code>.</p>
+<div class="section" id="smdistributed-modelparallel-torch-nn-distributedtransformer">
+<h3><a class="toc-backref" href="smd_model_parallel_pytorch_tensor_parallel.html#id8"><code class="docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.DistributedTransformer</span></code></a><a class="headerlink" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed-modelparallel-torch-nn-distributedtransformer" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Transformer</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Transformer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">layers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_layers</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TransformerLayer</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">seq_layers</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">seq_layers</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="smdistributed-modelparallel-torch-nn-distributedtransformerlayer">
+<h3><a class="toc-backref" href="smd_model_parallel_pytorch_tensor_parallel.html#id9"><code class="docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.DistributedTransformerLayer</span></code></a><a class="headerlink" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed-modelparallel-torch-nn-distributedtransformerlayer" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TransformerLayer</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TransformerLayer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">attention</span> <span class="o">=</span> <span class="n">AttentionLayer</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">TransformerOutputLayer</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_cross_attention</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cross_attention</span> <span class="o">=</span> <span class="n">AttentionLayer</span><span class="p">(</span><span class="n">cross_attention</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_cross_attention</span><span class="p">:</span>
+            <span class="n">hidden_states</span><span class="p">,</span> <span class="n">cross_states</span><span class="p">,</span> <span class="n">attention_mask</span><span class="p">,</span> <span class="n">cross_mask</span> <span class="o">=</span> <span class="n">inp</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">hidden_states</span><span class="p">,</span> <span class="n">attention_mask</span> <span class="o">=</span> <span class="n">inp</span>
+
+        <span class="n">attention_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attention</span><span class="p">((</span><span class="n">hidden_states</span><span class="p">,</span> <span class="n">attention_mask</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_cross_attention</span><span class="p">:</span>
+            <span class="n">attention_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cross_attention</span><span class="p">((</span><span class="n">attention_output</span><span class="p">,</span>
+                                                     <span class="n">cross_states</span><span class="p">,</span>
+                                                     <span class="n">cross_mask</span><span class="p">))</span>
+
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">attention_output</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_cross_attention</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">output</span><span class="p">,</span> <span class="n">cross_states</span><span class="p">,</span> <span class="n">attention_mask</span><span class="p">,</span> <span class="n">cross_mask</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">output</span><span class="p">,</span> <span class="n">attention_mask</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="smdistributed-modelparallel-torch-nn-distributedattentionlayer">
+<h3><a class="toc-backref" href="smd_model_parallel_pytorch_tensor_parallel.html#id10"><code class="docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.DistributedAttentionLayer</span></code></a><a class="headerlink" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed-modelparallel-torch-nn-distributedattentionlayer" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">AttentionLayer</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AttentionLayer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attention_head_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_attention_heads</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dropout1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">attention_dropout_prob</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dropout2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_dropout_prob</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_layernorm</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pre_layernorm</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span>
+                                    <span class="n">eps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">layernorm_epsilon</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_layernorm</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layernorm</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span>
+                                    <span class="n">eps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">layernorm_epsilon</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">transpose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tensor</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="n">tensor</span><span class="o">.</span><span class="n">size</span><span class="p">()[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span>
+                        <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_attention_heads</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">attention_head_size</span><span class="p">)</span>
+        <span class="n">tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">key</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">tensor</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">tensor</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cross_attention</span><span class="p">:</span>
+            <span class="n">hidden_states</span><span class="p">,</span> <span class="n">cross_states</span><span class="p">,</span> <span class="n">attention_mask</span> <span class="o">=</span> <span class="n">inp</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">hidden_states</span><span class="p">,</span> <span class="n">attention_mask</span> <span class="o">=</span> <span class="n">inp</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_layernorm</span><span class="p">:</span>
+            <span class="n">norm_states</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_layernorm</span><span class="p">(</span><span class="n">hidden_states</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">norm_states</span> <span class="o">=</span> <span class="n">hidden_states</span>
+
+        <span class="n">query_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">norm_states</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cross_attention</span><span class="p">:</span>
+            <span class="n">key_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">(</span><span class="n">cross_states</span><span class="p">)</span>
+            <span class="n">value_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">cross_states</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">key_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">key</span><span class="p">(</span><span class="n">norm_states</span><span class="p">)</span>
+            <span class="n">value_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">norm_states</span><span class="p">)</span>
+
+        <span class="n">query_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">query_layer</span><span class="p">)</span>
+        <span class="n">key_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">key_layer</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">value_layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">value_layer</span><span class="p">)</span>
+
+        <span class="n">attention_scores</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">query_layer</span><span class="p">,</span> <span class="n">key_layer</span><span class="p">)</span>
+        <span class="n">attention_scores</span> <span class="o">=</span> <span class="n">attention_scores</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">attention_head_size</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">cross_attention</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">causal_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">attention_scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_causal_mask</span><span class="p">(</span><span class="n">attention_scores</span><span class="p">)</span>
+
+        <span class="n">attention_scores</span> <span class="o">=</span> <span class="n">attention_scores</span> <span class="o">+</span> <span class="n">attention_mask</span>
+
+        <span class="n">attention_probs</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">attention_scores</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">attention_probs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout1</span><span class="p">(</span><span class="n">attention_probs</span><span class="p">)</span>
+
+        <span class="n">context_layer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">attention_probs</span><span class="p">,</span> <span class="n">value_layer</span><span class="p">)</span>
+        <span class="n">context_layer</span> <span class="o">=</span> <span class="n">context_layer</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">new_context_layer_shape</span> <span class="o">=</span> <span class="n">context_layer</span><span class="o">.</span><span class="n">size</span><span class="p">()[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> \
+                                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_attention_size</span><span class="p">,)</span>
+        <span class="n">context_layer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">context_layer</span><span class="p">,</span> <span class="n">new_context_layer_shape</span><span class="p">)</span>
+
+        <span class="n">self_attention</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense</span><span class="p">(</span><span class="n">context_layer</span><span class="p">)</span>
+        <span class="n">self_attention</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout2</span><span class="p">(</span><span class="n">self_attention</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_layernorm</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">layernorm</span><span class="p">(</span><span class="n">self_attention</span> <span class="o">+</span> <span class="n">hidden_states</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">self_attention</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="smdistributed-modelparallel-torch-nn-distributedtransformeroutputlayer">
+<h3><a class="toc-backref" href="smd_model_parallel_pytorch_tensor_parallel.html#id11"><code class="docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.DistributedTransformerOutputLayer</span></code></a><a class="headerlink" href="smd_model_parallel_pytorch_tensor_parallel.html#smdistributed-modelparallel-torch-nn-distributedtransformeroutputlayer" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TransformerOutputLayer</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TransformerOutputLayer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">intermediate_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dense2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intermediate_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">attention_dropout_prob</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_layernorm</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pre_layernorm</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span>
+                                    <span class="n">eps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">layernorm_epsilon</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_layernorm</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">layernorm</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">,</span>
+                                    <span class="n">eps</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">layernorm_epsilon</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_layernorm</span><span class="p">:</span>
+            <span class="n">norm_inp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pre_layernorm</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">norm_inp</span> <span class="o">=</span> <span class="n">inp</span>
+
+        <span class="n">dense1_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense1</span><span class="p">(</span><span class="n">norm_inp</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation</span> <span class="o">==</span> <span class="s2">&quot;gelu&quot;</span><span class="p">:</span>
+            <span class="n">act_output</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">gelu</span><span class="p">(</span><span class="n">dense1_output</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">act_output</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">dense1_output</span><span class="p">)</span>
+
+        <span class="n">dense2_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dense2</span><span class="p">(</span><span class="n">act_output</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout</span><span class="p">(</span><span class="n">dense2_output</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_layernorm</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">layernorm</span><span class="p">(</span><span class="n">inp</span> <span class="o">+</span> <span class="n">output</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">output</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="smd_model_parallel_tensorflow.html" class="btn btn-neutral float-right" title="TensorFlow API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="smd_model_parallel_pytorch.html" class="btn btn-neutral float-left" title="PyTorch API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2023, Amazon
+      <span class="commit">
+        
+        Revision <code>f2ae8ff8</code>.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: stable
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="../../../../index.html">stable</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.182.0/">v2.182.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.181.0/">v2.181.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.180.0/">v2.180.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.179.0/">v2.179.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.178.0/">v2.178.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.177.1/">v2.177.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.177.0/">v2.177.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.176.0/">v2.176.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.175.0/">v2.175.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.174.0/">v2.174.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.173.0/">v2.173.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.172.0/">v2.172.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.171.0/">v2.171.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.170.0/">v2.170.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.169.0/">v2.169.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.168.0/">v2.168.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.167.0/">v2.167.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.166.0/">v2.166.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.165.0/">v2.165.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.164.0/">v2.164.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.163.0/">v2.163.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.162.0/">v2.162.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.161.0/">v2.161.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.160.0/">v2.160.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.159.0/">v2.159.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.158.0/">v2.158.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.157.0/">v2.157.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.156.0/">v2.156.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.155.0/">v2.155.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.154.0/">v2.154.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.153.0/">v2.153.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.152.0/">v2.152.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.151.0/">v2.151.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.150.0/">v2.150.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.149.0/">v2.149.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.148.0/">v2.148.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.147.0/">v2.147.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.146.1/">v2.146.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.146.0/">v2.146.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.145.0/">v2.145.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.144.0/">v2.144.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.143.0/">v2.143.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.142.0/">v2.142.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.141.0/">v2.141.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.140.1/">v2.140.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.140.0/">v2.140.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.139.0/">v2.139.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.138.0/">v2.138.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.137.0/">v2.137.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.136.0/">v2.136.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.135.1.post0/">v2.135.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.135.1/">v2.135.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.135.0/">v2.135.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.134.1/">v2.134.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.134.0/">v2.134.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.133.0/">v2.133.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.132.0/">v2.132.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.131.1/">v2.131.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.131.0/">v2.131.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.130.0/">v2.130.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.129.0/">v2.129.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.128.0/">v2.128.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.127.0/">v2.127.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.126.0/">v2.126.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.125.0/">v2.125.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.124.0/">v2.124.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.123.0/">v2.123.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.122.0/">v2.122.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.121.2/">v2.121.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.121.1/">v2.121.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.121.0/">v2.121.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.120.0/">v2.120.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.119.0/">v2.119.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.118.0/">v2.118.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.117.0/">v2.117.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.116.0/">v2.116.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.115.0/">v2.115.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.114.0/">v2.114.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.113.0/">v2.113.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.112.2/">v2.112.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.112.1/">v2.112.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.112.0/">v2.112.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.111.0/">v2.111.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.110.0/">v2.110.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.109.0/">v2.109.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.108.0/">v2.108.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.107.0/">v2.107.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.106.0/">v2.106.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.105.0/">v2.105.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.104.0/">v2.104.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.103.0/">v2.103.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.102.0/">v2.102.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.101.1/">v2.101.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.101.0/">v2.101.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.100.0/">v2.100.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.99.0/">v2.99.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.98.0/">v2.98.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.97.0/">v2.97.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.96.0/">v2.96.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.95.0/">v2.95.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.94.0/">v2.94.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.93.1/">v2.93.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.93.0/">v2.93.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.92.2/">v2.92.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.92.1/">v2.92.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.92.0/">v2.92.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.91.1/">v2.91.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.91.0/">v2.91.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.90.0/">v2.90.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.89.0/">v2.89.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.3/">v2.88.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.2/">v2.88.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.1/">v2.88.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.0/">v2.88.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.87.0/">v2.87.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.86.2/">v2.86.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.86.1/">v2.86.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.86.0/">v2.86.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.85.0/">v2.85.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.84.0/">v2.84.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.83.0/">v2.83.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.82.2/">v2.82.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.82.1/">v2.82.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.82.0/">v2.82.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.81.1/">v2.81.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.81.0/">v2.81.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.80.0/">v2.80.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.79.0/">v2.79.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.78.0/">v2.78.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.77.1/">v2.77.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.77.0/">v2.77.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.76.0/">v2.76.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.75.1/">v2.75.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.75.0/">v2.75.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.74.0/">v2.74.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.73.0/">v2.73.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.3/">v2.72.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.2/">v2.72.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.1/">v2.72.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.0/">v2.72.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.71.0/">v2.71.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.70.0/">v2.70.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.69.0/">v2.69.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.68.0/">v2.68.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.67.0/">v2.67.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.2.post0/">v2.66.2.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.2/">v2.66.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.1/">v2.66.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.0/">v2.66.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.65.0/">v2.65.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.64.0/">v2.64.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.63.2/">v2.63.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.63.1/">v2.63.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.63.0/">v2.63.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.62.0/">v2.62.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.61.0/">v2.61.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.60.0/">v2.60.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.8/">v2.59.8</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.7/">v2.59.7</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.6/">v2.59.6</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.5/">v2.59.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.4/">v2.59.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.3.post0/">v2.59.3.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.3/">v2.59.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.2/">v2.59.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.1.post0/">v2.59.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.1/">v2.59.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.0/">v2.59.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.58.0/">v2.58.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.57.0/">v2.57.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.56.0/">v2.56.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.55.0/">v2.55.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.54.0/">v2.54.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.53.0/">v2.53.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.2.post0/">v2.52.2.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.2/">v2.52.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.1/">v2.52.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.0/">v2.52.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.51.0/">v2.51.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.50.1/">v2.50.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.50.0/">v2.50.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.49.2/">v2.49.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.49.1/">v2.49.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.49.0/">v2.49.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.48.2/">v2.48.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.48.1/">v2.48.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.48.0/">v2.48.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.2.post0/">v2.47.2.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.2/">v2.47.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.1/">v2.47.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.0/">v2.47.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.46.1/">v2.46.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.46.0/">v2.46.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.45.0/">v2.45.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.44.0/">v2.44.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.43.0/">v2.43.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.42.1/">v2.42.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.42.0/">v2.42.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.41.0/">v2.41.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.40.0/">v2.40.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.39.1/">v2.39.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.39.0.post0/">v2.39.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.39.0/">v2.39.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.38.0/">v2.38.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.37.0/">v2.37.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.36.0/">v2.36.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.35.0/">v2.35.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.34.0/">v2.34.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.33.0/">v2.33.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.32.1/">v2.32.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.32.0/">v2.32.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.31.1/">v2.31.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.31.0/">v2.31.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.30.0/">v2.30.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.29.2/">v2.29.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.29.1/">v2.29.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.29.0/">v2.29.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.28.0/">v2.28.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.27.1/">v2.27.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.27.0/">v2.27.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.26.0/">v2.26.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.25.2/">v2.25.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.25.1/">v2.25.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.25.0/">v2.25.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.5/">v2.24.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.4/">v2.24.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.3/">v2.24.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.2/">v2.24.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.1/">v2.24.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.0/">v2.24.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.6/">v2.23.6</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.5/">v2.23.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.4.post0/">v2.23.4.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.4/">v2.23.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.3/">v2.23.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.2/">v2.23.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.1/">v2.23.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.0/">v2.23.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.22.0/">v2.22.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.21.0/">v2.21.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.20.0/">v2.20.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.19.0/">v2.19.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.18.0/">v2.18.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.17.0/">v2.17.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.4/">v2.16.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.3.post0/">v2.16.3.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.3/">v2.16.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.2/">v2.16.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.1/">v2.16.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.0.post0/">v2.16.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.0/">v2.16.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.4/">v2.15.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.3/">v2.15.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.2/">v2.15.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.1/">v2.15.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.0/">v2.15.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.14.0/">v2.14.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.13.0/">v2.13.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.12.0/">v2.12.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.11.0/">v2.11.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.10.0/">v2.10.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.9.2/">v2.9.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.9.1/">v2.9.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.9.0/">v2.9.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.8.0/">v2.8.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.7.0/">v2.7.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.6.0/">v2.6.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.5/">v2.5.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.4/">v2.5.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.3/">v2.5.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.2/">v2.5.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.1/">v2.5.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.0/">v2.5.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.4.2/">v2.4.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.4.1/">v2.4.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.4.0/">v2.4.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.3.0/">v2.3.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.2.0/">v2.2.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.1.0/">v2.1.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.1/">v2.0.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.0/">v2.0.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.0.rc1/">v2.0.0.rc1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.0.rc0/">v2.0.0.rc0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.72.1/">v1.72.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.72.0/">v1.72.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.71.1/">v1.71.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.71.0/">v1.71.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.70.2/">v1.70.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.70.1/">v1.70.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.70.0/">v1.70.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.69.0/">v1.69.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.68.0/">v1.68.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.67.1.post0/">v1.67.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.67.1/">v1.67.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.67.0/">v1.67.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.66.0/">v1.66.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.1.post1/">v1.65.1.post1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.1.post0/">v1.65.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.1/">v1.65.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.0/">v1.65.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.64.1/">v1.64.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.64.0/">v1.64.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.63.0/">v1.63.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.62.0/">v1.62.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.61.0/">v1.61.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.60.2/">v1.60.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.59.0/">v1.59.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.58.4/">v1.58.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.58.1/">v1.58.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.58.0/">v1.58.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.57.0/">v1.57.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.3/">v1.56.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.2/">v1.56.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.1.post1/">v1.56.1.post1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.1.post0/">v1.56.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.1/">v1.56.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.0/">v1.56.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.4/">v1.55.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.3/">v1.55.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.2/">v1.55.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.1/">v1.55.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.0.post0/">v1.55.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.0/">v1.55.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.54.0/">v1.54.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.53.0/">v1.53.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.52.1/">v1.52.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.52.0.post0/">v1.52.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.52.0/">v1.52.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.4/">v1.51.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.3/">v1.51.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.1/">v1.51.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.0/">v1.51.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.18.post0/">v1.50.18.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.18/">v1.50.18</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.17.post0/">v1.50.17.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.17/">v1.50.17</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.16/">v1.50.16</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.15/">v1.50.15</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.14.post0/">v1.50.14.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.14/">v1.50.14</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.13/">v1.50.13</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.12/">v1.50.12</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.11/">v1.50.11</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.10.post0/">v1.50.10.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.10/">v1.50.10</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.9.post0/">v1.50.9.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.9/">v1.50.9</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.8/">v1.50.8</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.7/">v1.50.7</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.6.post0/">v1.50.6.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.6/">v1.50.6</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.5/">v1.50.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.4/">v1.50.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.3/">v1.50.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.2/">v1.50.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.1/">v1.50.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.0/">v1.50.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.49.0/">v1.49.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.48.1/">v1.48.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.48.0/">v1.48.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.47.1/">v1.47.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.45.0/">v1.45.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.44.4/">v1.44.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.44.3/">v1.44.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.4.post1/">v1.43.4.post1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.4.post0/">v1.43.4.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.4/">v1.43.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.3/">v1.43.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.2/">v1.43.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.1/">v1.43.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.0/">v1.43.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.42.0/">v1.42.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.41.0/">v1.41.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.40.0/">v1.40.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.39.0/">v1.39.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.38.0/">v1.38.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.37.0/">v1.37.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.36.0/">v1.36.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.35.0/">v1.35.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.34.0/">v1.34.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.33.0/">v1.33.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.32.0/">v1.32.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.31.0/">v1.31.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.30.0/">v1.30.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.29.0/">v1.29.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.28.0/">v1.28.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.27.0/">v1.27.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.26.0/">v1.26.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.25.0/">v1.25.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.24.0/">v1.24.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.23.0/">v1.23.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.22.0/">v1.22.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.21.0/">v1.21.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.20.0/">v1.20.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.19.0/">v1.19.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.18.0/">v1.18.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.17.0/">v1.17.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.15.0/">v1.15.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.14.0/">v1.14.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.13.0/">v1.13.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.12.0/">v1.12.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.11.0/">v1.11.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.10.0/">v1.10.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.9.0/">v1.9.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.8.0/">v1.8.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.7.0/">v1.7.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.6.0/">v1.6.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.5.0/">v1.5.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.4.0/">v1.4.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.3.0/">v1.3.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.2.0/">v1.2.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.1.0/">v1.1.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.0.0/">v1.0.0</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+      </dl>
+      <dl>
+        
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="https://readthedocs.org/projects/sagemaker/?fromdocs=sagemaker">Project Home</a>
+          </dd>
+          <dd>
+            <a href="https://readthedocs.org/builds/sagemaker/?fromdocs=sagemaker">Builds</a>
+          </dd>
+      </dl>
+    </div>
+  </div>
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+   
+
+</body>
+</html>

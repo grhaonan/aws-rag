@@ -12,5 +12,4 @@ app.include_router(router, prefix="/api/v1")
 async def root():
     return {"message": "API for questions answering system"}
 
-
 handler = Mangum(app=app)

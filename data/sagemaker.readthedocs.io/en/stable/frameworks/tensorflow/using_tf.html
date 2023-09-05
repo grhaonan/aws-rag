@@ -1,0 +1,2117 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Use TensorFlow with the SageMaker Python SDK &mdash; sagemaker 2.182.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pagination.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/search_accessories.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="https://a0.awsstatic.com/s_code/js/3.0/awshome_s_code.js"></script>
+        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+        <script src="../../_static/js/datatable.js"></script>
+        <script async="async" src="../../../../_/static/javascript/readthedocs-doc-embed.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Deploying to TensorFlow Serving Endpoints" href="deploying_tensorflow_serving.html" />
+    <link rel="prev" title="TensorFlow" href="index.html" /> 
+
+<!-- RTD Extra Head -->
+
+<link rel="stylesheet" href="../../../../_/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": true, "api_host": "https://readthedocs.org", "builder": "sphinx", "canonical_url": null, "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": null, "language": "en", "page": "frameworks/tensorflow/using_tf", "programming_language": "py", "project": "sagemaker", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "stable"}</script>
+
+<!--
+Using this variable directly instead of using `JSON.parse` is deprecated.
+The READTHEDOCS_DATA global variable will be removed in the future.
+-->
+<script type="text/javascript">
+READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerHTML);
+</script>
+
+<script type="text/javascript" src="../../../../_/static/javascript/readthedocs-analytics.js" async="async"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> sagemaker
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                stable
+              </div>
+            
+          
+
+          <div role="search">
+    <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+        <input type="text" name="q" placeholder="ex. train object detection model, pd.concat" title="Type search term here" />
+        <br />
+        <br />
+        <div style="text-align: left;">
+            <div style="font-size: 0.85rem;">Filters: </div>
+            <div style="display: inline-block;"><label style="color: white;" for="filterExample"><input type="checkbox" id="filterExample" name="filterExample">Example</label></div>
+            <div style="display: inline-block;"><label style="color: white;" for="filterAWSDevGuide"><input type="checkbox" id="filterAWSDevGuide" name="filterAWSDevGuide">Dev Guide</label></div>
+            <div style="display: inline-block;"><label style="color: white;" for="filterSDKGuide"><input type="checkbox" id="filterSDKGuide" name="filterSDKGuide">SDK Guide</label></div>
+        </div>
+        
+    </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Using the SageMaker Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../v2.html">Use Version 2.x of the SageMaker Python SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">APIs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Frameworks</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../mxnet/index.html">Apache MXNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chainer/index.html">Chainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../huggingface/index.html">Hugging Face</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/index.html">PyTorch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rl/index.html">Reinforcement Learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sklearn/index.html">Scikit-Learn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sparkml/index.html">SparkML Serving</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">TensorFlow</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="using_tf.html#">Use TensorFlow with the SageMaker Python SDK</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="using_tf.html#train-a-model-with-tensorflow">Train a Model with TensorFlow</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="using_tf.html#id1">Prepare a Training Script</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="using_tf.html#adapting-your-local-tensorflow-script">Adapting your local TensorFlow script</a></li>
+<li class="toctree-l6"><a class="reference internal" href="using_tf.html#use-third-party-libraries">Use third-party libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="using_tf.html#create-an-estimator">Create an Estimator</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="using_tf.html#specify-a-docker-image-using-an-estimator">Specify a Docker image using an Estimator</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="using_tf.html#call-the-fit-method">Call the fit Method</a></li>
+<li class="toctree-l5"><a class="reference internal" href="using_tf.html#distributed-training">Distributed Training</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="using_tf.html#training-with-parameter-servers">Training with parameter servers</a></li>
+<li class="toctree-l6"><a class="reference internal" href="using_tf.html#training-with-horovod">Training with Horovod</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="using_tf.html#training-with-pipe-mode-using-pipemodedataset">Training with Pipe Mode using PipeModeDataset</a></li>
+<li class="toctree-l5"><a class="reference internal" href="using_tf.html#training-with-mkl-dnn-disabled">Training with MKL-DNN disabled</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="using_tf.html#deploy-tensorflow-serving-models">Deploy TensorFlow Serving models</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="using_tf.html#deploy-to-a-sagemaker-endpoint">Deploy to a SageMaker Endpoint</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="using_tf.html#deploying-from-an-estimator">Deploying from an Estimator</a></li>
+<li class="toctree-l6"><a class="reference internal" href="using_tf.html#deploying-directly-from-model-artifacts">Deploying directly from model artifacts</a></li>
+<li class="toctree-l6"><a class="reference internal" href="using_tf.html#making-predictions-against-a-sagemaker-endpoint">Making predictions against a SageMaker Endpoint</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="using_tf.html#run-a-batch-transform-job">Run a Batch Transform Job</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="using_tf.html#create-a-transformer-object">Create a Transformer Object</a></li>
+<li class="toctree-l6"><a class="reference internal" href="using_tf.html#call-transform">Call transform</a></li>
+<li class="toctree-l6"><a class="reference internal" href="using_tf.html#batch-transform-supported-data-formats">Batch Transform Supported Data Formats</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="using_tf.html#tensorflow-serving-input-and-output">TensorFlow Serving Input and Output</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="using_tf.html#supported-formats">Supported Formats</a></li>
+<li class="toctree-l6"><a class="reference internal" href="using_tf.html#create-python-scripts-for-custom-input-and-output-formats">Create Python Scripts for Custom Input and Output Formats</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="using_tf.html#sagemaker-tensorflow-classes">SageMaker TensorFlow Classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="using_tf.html#sagemaker-tensorflow-docker-containers">SageMaker TensorFlow Docker containers</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="deploying_tensorflow_serving.html">Deploying to TensorFlow Serving Endpoints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="upgrade_from_legacy.html">Upgrade from Legacy TensorFlow Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../sagemaker.tensorflow.html">TensorFlow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../xgboost/index.html">XGBoost</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../djl/index.html">Deep Java Library (DJL)</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/index.html">Built-in Algorithms</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../workflows/index.html">Workflows</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../experiments/index.html">Amazon SageMaker Experiments</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../amazon_sagemaker_debugger.html">Amazon SageMaker Debugger</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../amazon_sagemaker_featurestore.html">Amazon SageMaker Feature Store</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../amazon_sagemaker_model_monitoring.html">Amazon SageMaker Model Monitor</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../amazon_sagemaker_processing.html">Amazon SageMaker Processing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../amazon_sagemaker_model_building_pipeline.html">Amazon SageMaker Model Building Pipeline</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">sagemaker</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Frameworks</a> &raquo;</li>
+        
+          <li><a href="index.html">TensorFlow</a> &raquo;</li>
+        
+      <li>Use TensorFlow with the SageMaker Python SDK</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/aws/sagemaker-python-sdk/blob/f2ae8ff8b6ed82eb89110887eb5e74c953e6372a/doc/frameworks/tensorflow/using_tf.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="use-tensorflow-with-the-sagemaker-python-sdk">
+<h1><a class="toc-backref" href="using_tf.html#id5">Use TensorFlow with the SageMaker Python SDK</a><a class="headerlink" href="using_tf.html#use-tensorflow-with-the-sagemaker-python-sdk" title="Permalink to this headline">¶</a></h1>
+<p>With the SageMaker Python SDK, you can train and host TensorFlow models on Amazon SageMaker.</p>
+<p>For information about supported versions of TensorFlow, see the <a class="reference external" href="https://aws.amazon.com/releasenotes/available-deep-learning-containers-images">AWS documentation</a>.
+We recommend that you use the latest supported version because that’s where we focus our development efforts.</p>
+<p>For general information about using the SageMaker Python SDK, see <a class="reference internal" href="../../overview.html#using-the-sagemaker-python-sdk"><span class="std std-ref">Using the SageMaker Python SDK</span></a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Support for TensorFlow versions 1.4-1.10 has been deprecated.
+For information on how to upgrade, see <a class="reference external" href="upgrade_from_legacy.html">Upgrade from Legacy TensorFlow Support</a>.</p>
+</div>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="using_tf.html#use-tensorflow-with-the-sagemaker-python-sdk" id="id5">Use TensorFlow with the SageMaker Python SDK</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_tf.html#train-a-model-with-tensorflow" id="id6">Train a Model with TensorFlow</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_tf.html#id1" id="id7">Prepare a Training Script</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_tf.html#adapting-your-local-tensorflow-script" id="id8">Adapting your local TensorFlow script</a></p></li>
+<li><p><a class="reference internal" href="using_tf.html#use-third-party-libraries" id="id9">Use third-party libraries</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="using_tf.html#create-an-estimator" id="id10">Create an Estimator</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_tf.html#specify-a-docker-image-using-an-estimator" id="id11">Specify a Docker image using an Estimator</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="using_tf.html#call-the-fit-method" id="id12">Call the fit Method</a></p></li>
+<li><p><a class="reference internal" href="using_tf.html#distributed-training" id="id13">Distributed Training</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_tf.html#training-with-parameter-servers" id="id14">Training with parameter servers</a></p></li>
+<li><p><a class="reference internal" href="using_tf.html#training-with-horovod" id="id15">Training with Horovod</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="using_tf.html#training-with-pipe-mode-using-pipemodedataset" id="id16">Training with Pipe Mode using PipeModeDataset</a></p></li>
+<li><p><a class="reference internal" href="using_tf.html#training-with-mkl-dnn-disabled" id="id17">Training with MKL-DNN disabled</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="using_tf.html#deploy-tensorflow-serving-models" id="id18">Deploy TensorFlow Serving models</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_tf.html#deploy-to-a-sagemaker-endpoint" id="id19">Deploy to a SageMaker Endpoint</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_tf.html#deploying-from-an-estimator" id="id20">Deploying from an Estimator</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_tf.html#what-happens-when-deploy-is-called" id="id21">What happens when deploy is called</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="using_tf.html#deploying-directly-from-model-artifacts" id="id22">Deploying directly from model artifacts</a></p></li>
+<li><p><a class="reference internal" href="using_tf.html#making-predictions-against-a-sagemaker-endpoint" id="id23">Making predictions against a SageMaker Endpoint</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="using_tf.html#run-a-batch-transform-job" id="id24">Run a Batch Transform Job</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_tf.html#create-a-transformer-object" id="id25">Create a Transformer Object</a></p></li>
+<li><p><a class="reference internal" href="using_tf.html#call-transform" id="id26">Call transform</a></p></li>
+<li><p><a class="reference internal" href="using_tf.html#batch-transform-supported-data-formats" id="id27">Batch Transform Supported Data Formats</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="using_tf.html#tensorflow-serving-input-and-output" id="id28">TensorFlow Serving Input and Output</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_tf.html#supported-formats" id="id29">Supported Formats</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_tf.html#simplified-json-input" id="id30">Simplified JSON Input</a></p></li>
+<li><p><a class="reference internal" href="using_tf.html#line-delimited-json" id="id31">Line-delimited JSON</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="using_tf.html#create-python-scripts-for-custom-input-and-output-formats" id="id32">Create Python Scripts for Custom Input and Output Formats</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_tf.html#how-to-implement-the-pre-and-or-post-processing-handler-s" id="id33">How to implement the pre- and/or post-processing handler(s)</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="using_tf.html#sagemaker-tensorflow-classes" id="id34">SageMaker TensorFlow Classes</a></p></li>
+<li><p><a class="reference internal" href="using_tf.html#sagemaker-tensorflow-docker-containers" id="id35">SageMaker TensorFlow Docker containers</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="train-a-model-with-tensorflow">
+<h2><a class="toc-backref" href="using_tf.html#id6">Train a Model with TensorFlow</a><a class="headerlink" href="using_tf.html#train-a-model-with-tensorflow" title="Permalink to this headline">¶</a></h2>
+<p>To train a TensorFlow model by using the SageMaker Python SDK:</p>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="using_tf.html#prepare-a-training-script">Prepare a training script</a></p></li>
+<li><p><a class="reference external" href="using_tf.html#create-an-estimator">Create a <code class="docutils literal notranslate"><span class="pre">sagemaker.tensorflow.TensorFlow</span> <span class="pre">estimator</span></code></a></p></li>
+<li><p><a class="reference external" href="using_tf.html#call-the-fit-method">Call the estimator’s <code class="docutils literal notranslate"><span class="pre">fit</span></code> method</a></p></li>
+</ol>
+<div class="section" id="id1">
+<h3><a class="toc-backref" href="using_tf.html#id7">Prepare a Training Script</a><a class="headerlink" href="using_tf.html#id1" title="Permalink to this headline">¶</a></h3>
+<p>The training script is very similar to a training script you might run outside of SageMaker, but you can access useful properties about the training environment through various environment variables, including the following:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">SM_MODEL_DIR</span></code>: A string that represents the local path where the training job writes the model artifacts to.
+After training, artifacts in this directory are uploaded to S3 for model hosting. This is different than the <code class="docutils literal notranslate"><span class="pre">model_dir</span></code>
+argument passed in your training script, which can be an S3 location. <code class="docutils literal notranslate"><span class="pre">SM_MODEL_DIR</span></code> is always set to <code class="docutils literal notranslate"><span class="pre">/opt/ml/model</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SM_NUM_GPUS</span></code>: An integer representing the number of GPUs available to the host.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SM_OUTPUT_DATA_DIR</span></code>: A string that represents the path to the directory to write output artifacts to.
+Output artifacts might include checkpoints, graphs, and other files to save, but do not include model artifacts.
+These artifacts are compressed and uploaded to S3 to an S3 bucket with the same prefix as the model artifacts.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SM_CHANNEL_XXXX</span></code>: A string that represents the path to the directory that contains the input data for the specified channel.
+For example, if you specify two input channels in the TensorFlow estimator’s <code class="docutils literal notranslate"><span class="pre">fit</span></code> call, named ‘train’ and ‘test’, the environment variables <code class="docutils literal notranslate"><span class="pre">SM_CHANNEL_TRAIN</span></code> and <code class="docutils literal notranslate"><span class="pre">SM_CHANNEL_TEST</span></code> are set.</p></li>
+</ul>
+<p>For the exhaustive list of available environment variables, see the <a class="reference external" href="https://github.com/aws/sagemaker-containers#list-of-provided-environment-variables-by-sagemaker-containers">SageMaker Containers documentation</a>.</p>
+<p>A typical training script loads data from the input channels, configures training with hyperparameters, trains a model, and saves a model to <code class="docutils literal notranslate"><span class="pre">SM_MODEL_DIR</span></code> so that it can be deployed for inference later.
+Hyperparameters are passed to your script as arguments and can be retrieved with an <code class="docutils literal notranslate"><span class="pre">argparse.ArgumentParser</span></code> instance.
+For example, a training script might start with the following:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span><span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+
+    <span class="c1"># hyperparameters sent by the client are passed as command-line arguments to the script.</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--epochs&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--batch_size&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--learning_rate&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+
+    <span class="c1"># input data and model directories</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--model_dir&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--train&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;SM_CHANNEL_TRAIN&#39;</span><span class="p">))</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--test&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;SM_CHANNEL_TEST&#39;</span><span class="p">))</span>
+
+    <span class="n">args</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()</span>
+
+    <span class="c1"># ... load from args.train and args.test, train a model, write model to args.model_dir.</span>
+</pre></div>
+</div>
+<p>Because the SageMaker imports your training script, putting your training launching code in a main guard (<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">__name__=='__main__':</span></code>)
+is good practice.</p>
+<p>Note that SageMaker doesn’t support argparse actions.
+For example, if you want to use a boolean hyperparameter, specify <code class="docutils literal notranslate"><span class="pre">type</span></code> as <code class="docutils literal notranslate"><span class="pre">bool</span></code> in your script and provide an explicit <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code> value for this hyperparameter when you create the TensorFlow estimator.</p>
+<p>For a complete example of a TensorFlow training script, see <a class="reference external" href="https://github.com/awslabs/amazon-sagemaker-examples/blob/master/sagemaker-python-sdk/tensorflow_script_mode_training_and_serving/mnist.py">mnist.py</a>.</p>
+<div class="section" id="adapting-your-local-tensorflow-script">
+<h4><a class="toc-backref" href="using_tf.html#id8">Adapting your local TensorFlow script</a><a class="headerlink" href="using_tf.html#adapting-your-local-tensorflow-script" title="Permalink to this headline">¶</a></h4>
+<p>If you have a TensorFlow training script that runs outside of SageMaker, do the following to adapt the script to run in SageMaker:</p>
+<p>1. Make sure your script can handle <code class="docutils literal notranslate"><span class="pre">--model_dir</span></code> as an additional command line argument. If you did not specify a
+location when you created the TensorFlow estimator, an S3 location under the default training job bucket is used.
+Distributed training with parameter servers requires you to use the <code class="docutils literal notranslate"><span class="pre">tf.estimator.train_and_evaluate</span></code> API and
+to provide an S3 location as the model directory during training. Here is an example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">estimator</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">Estimator</span><span class="p">(</span><span class="n">model_fn</span><span class="o">=</span><span class="n">my_model_fn</span><span class="p">,</span> <span class="n">model_dir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">model_dir</span><span class="p">)</span>
+<span class="o">...</span>
+<span class="n">train_spec</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">TrainSpec</span><span class="p">(</span><span class="n">train_input_fn</span><span class="p">,</span> <span class="n">max_steps</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">eval_spec</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">EvalSpec</span><span class="p">(</span><span class="n">eval_input_fn</span><span class="p">)</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">estimator</span><span class="o">.</span><span class="n">train_and_evaluate</span><span class="p">(</span><span class="n">mnist_classifier</span><span class="p">,</span> <span class="n">train_spec</span><span class="p">,</span> <span class="n">eval_spec</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Load input data from the input channels. The input channels are defined when <code class="docutils literal notranslate"><span class="pre">fit</span></code> is called. For example:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">({</span><span class="s1">&#39;train&#39;</span><span class="p">:</span><span class="s1">&#39;s3://my-bucket/my-training-data&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;eval&#39;</span><span class="p">:</span><span class="s1">&#39;s3://my-bucket/my-evaluation-data&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>In your training script the channels will be stored in environment variables <code class="docutils literal notranslate"><span class="pre">SM_CHANNEL_TRAIN</span></code> and
+<code class="docutils literal notranslate"><span class="pre">SM_CHANNEL_EVAL</span></code>. You can add them to your argument parsing logic like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--train&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;SM_CHANNEL_TRAIN&#39;</span><span class="p">))</span>
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--eval&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;SM_CHANNEL_EVAL&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Export your final model to path stored in environment variable <code class="docutils literal notranslate"><span class="pre">SM_MODEL_DIR</span></code> which should always be
+<code class="docutils literal notranslate"><span class="pre">/opt/ml/model</span></code>. At end of training SageMaker will upload the model file under <code class="docutils literal notranslate"><span class="pre">/opt/ml/model</span></code> to
+<code class="docutils literal notranslate"><span class="pre">output_path</span></code>.</p></li>
+</ol>
+</div>
+<div class="section" id="use-third-party-libraries">
+<h4><a class="toc-backref" href="using_tf.html#id9">Use third-party libraries</a><a class="headerlink" href="using_tf.html#use-third-party-libraries" title="Permalink to this headline">¶</a></h4>
+<p>If there are other packages you want to use with your script, you can use a <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> to install other dependencies at runtime.</p>
+<p>For training, support for installing packages using <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> varies by TensorFlow version as follows:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>For TensorFlow 1.15.2 with Python 3.7 or newer, and TensorFlow 2.2 or newer:</dt><dd><ul>
+<li><p>Include a <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file in the same directory as your training script.</p></li>
+<li><p>You must specify this directory using the <code class="docutils literal notranslate"><span class="pre">source_dir</span></code> argument when creating a TensorFlow estimator.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>For TensorFlow versions 1.11-1.15.2, 2.0-2.1 with Python 2.7 or 3.6:</dt><dd><ul>
+<li><p>Write a shell script for your entry point that first calls <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code>, then runs your training script.</p></li>
+<li><p>For an example of using shell scripts, see <a class="reference external" href="https://github.com/awslabs/amazon-sagemaker-examples/blob/master/sagemaker-python-sdk/tensorflow_script_mode_using_shell_commands/tensorflow_script_mode_using_shell_commands.ipynb">this example notebook</a>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>For legacy versions of TensorFlow:</dt><dd><ul>
+<li><p>See <a class="reference external" href="upgrade_from_legacy.html">Upgrade from Legacy TensorFlow Support</a>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>For serving, support for installing packages using <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> varies by TensorFlow version as follows:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>For TensorFlow 1.11 or newer:</dt><dd><ul>
+<li><p>Include a <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file in the <code class="docutils literal notranslate"><span class="pre">code</span></code> directory.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>For legacy versions of TensorFlow:</dt><dd><ul>
+<li><p>See <a class="reference external" href="upgrade_from_legacy.html">Upgrade from Legacy TensorFlow Support</a>.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p>A <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file is a text file that contains a list of items that are installed by using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code>.
+You can also specify the version of an item to install.
+For information about the format of a <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file, see <a class="reference external" href="https://pip.pypa.io/en/stable/user_guide/#requirements-files">Requirements Files</a> in the pip documentation.</p>
+</div>
+</div>
+<div class="section" id="create-an-estimator">
+<h3><a class="toc-backref" href="using_tf.html#id10">Create an Estimator</a><a class="headerlink" href="using_tf.html#create-an-estimator" title="Permalink to this headline">¶</a></h3>
+<p>After you create your training script, create an instance of the <code class="xref py py-class docutils literal notranslate"><span class="pre">sagemaker.tensorflow.TensorFlow</span></code> estimator.</p>
+<p>To use Python 3.7, please specify both of the args:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">py_version='py37'</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">framework_version='1.15.2'</span></code></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sagemaker.tensorflow</span> <span class="kn">import</span> <span class="n">TensorFlow</span>
+
+<span class="n">tf_estimator</span> <span class="o">=</span> <span class="n">TensorFlow</span><span class="p">(</span>
+    <span class="n">entry_point</span><span class="o">=</span><span class="s2">&quot;tf-train.py&quot;</span><span class="p">,</span>
+    <span class="n">role</span><span class="o">=</span><span class="s2">&quot;SageMakerRole&quot;</span><span class="p">,</span>
+    <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">instance_type</span><span class="o">=</span><span class="s2">&quot;ml.p2.xlarge&quot;</span><span class="p">,</span>
+    <span class="n">framework_version</span><span class="o">=</span><span class="s2">&quot;2.2&quot;</span><span class="p">,</span>
+    <span class="n">py_version</span><span class="o">=</span><span class="s2">&quot;py37&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">tf_estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="s2">&quot;s3://bucket/path/to/training/data&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Where the S3 url is a path to your training data within Amazon S3.
+The constructor keyword arguments define how SageMaker runs your training script.</p>
+<div class="section" id="specify-a-docker-image-using-an-estimator">
+<h4><a class="toc-backref" href="using_tf.html#id11">Specify a Docker image using an Estimator</a><a class="headerlink" href="using_tf.html#specify-a-docker-image-using-an-estimator" title="Permalink to this headline">¶</a></h4>
+<p>There are use cases, such as extending an existing pre-built Amazon SageMaker images, that require specifing a Docker image when creating an Estimator by directly specifying the ECR URI instead of the Python and framework version. For a full list of available container URIs, see <a class="reference external" href="https://github.com/aws/deep-learning-containers/blob/master/available_images.md">Available Deep Learning Containers Images</a> For more information on using Docker containers, see <a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/your-algorithms.html">Use Your Own Algorithms or Models with Amazon SageMaker</a>.</p>
+<p>When specifying the image, you must use the <code class="docutils literal notranslate"><span class="pre">image_name=''</span></code> arg to replace the following arg:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">py_version=''</span></code></p></li>
+</ul>
+<p>You should still specify the <code class="docutils literal notranslate"><span class="pre">framework_version=''</span></code> arg because the SageMaker Python SDK accomodates for differences in the images based on the version.</p>
+<p>The following example uses the <code class="docutils literal notranslate"><span class="pre">image_name=''</span></code> arg to specify the container image, Python version, and framework version.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tf_estimator</span> <span class="o">=</span> <span class="n">TensorFlow</span><span class="p">(</span><span class="n">entry_point</span><span class="o">=</span><span class="s1">&#39;tf-train.py&#39;</span><span class="p">,</span>
+                          <span class="n">role</span><span class="o">=</span><span class="s1">&#39;SageMakerRole&#39;</span><span class="p">,</span>
+                          <span class="n">train_instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                          <span class="n">train_instance_type</span><span class="o">=</span><span class="s1">&#39;ml.p2.xlarge&#39;</span><span class="p">,</span>
+                          <span class="n">image_name</span><span class="o">=</span><span class="s1">&#39;763104351884.dkr.ecr.&lt;region&gt;.amazonaws.com/&lt;framework&gt;-&lt;job type&gt;:&lt;framework version&gt;-&lt;cpu/gpu&gt;-&lt;python version&gt;-ubuntu18.04&#39;</span><span class="p">,</span>
+                          <span class="n">script_mode</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For more information about the sagemaker.tensorflow.TensorFlow estimator, see <a class="reference internal" href="using_tf.html#sagemaker-tensorflow-classes">SageMaker TensorFlow Classes</a>.</p>
+</div>
+</div>
+<div class="section" id="call-the-fit-method">
+<h3><a class="toc-backref" href="using_tf.html#id12">Call the fit Method</a><a class="headerlink" href="using_tf.html#call-the-fit-method" title="Permalink to this headline">¶</a></h3>
+<p>You start your training script by calling the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method on a <code class="docutils literal notranslate"><span class="pre">TensorFlow</span></code> estimator.</p>
+<p>Calling <code class="docutils literal notranslate"><span class="pre">fit</span></code> starts a SageMaker training job. The training job will execute the following.</p>
+<ul class="simple">
+<li><p>Starts <code class="docutils literal notranslate"><span class="pre">instance_count</span></code> EC2 instances of the type <code class="docutils literal notranslate"><span class="pre">instance_type</span></code>.</p></li>
+<li><p>On each instance, it will do the following steps:</p>
+<ul>
+<li><p>starts a Docker container optimized for TensorFlow.</p></li>
+<li><p>downloads the dataset.</p></li>
+<li><p>setup up training related environment varialbes</p></li>
+<li><p>setup up distributed training environment if configured to use parameter server</p></li>
+<li><p>starts asynchronous training</p></li>
+</ul>
+</li>
+</ul>
+<p>If the <code class="docutils literal notranslate"><span class="pre">wait=False</span></code> flag is passed to <code class="docutils literal notranslate"><span class="pre">fit</span></code>, then it returns immediately. The training job continues running
+asynchronously. Later, a TensorFlow estimator can be obtained by attaching to the existing training job.
+If the training job is not finished, it starts showing the standard output of training and wait until it completes.
+After attaching, the estimator can be deployed as usual.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tf_estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">your_input_data</span><span class="p">,</span> <span class="n">wait</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">training_job_name</span> <span class="o">=</span> <span class="n">tf_estimator</span><span class="o">.</span><span class="n">latest_training_job</span><span class="o">.</span><span class="n">name</span>
+
+<span class="c1"># after some time, or in a separate Python notebook, we can attach to it again.</span>
+
+<span class="n">tf_estimator</span> <span class="o">=</span> <span class="n">TensorFlow</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">training_job_name</span><span class="o">=</span><span class="n">training_job_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For more information about the options available for <code class="docutils literal notranslate"><span class="pre">fit</span></code>, see the <a class="reference external" href="../../estimators.html#sagemaker.estimator.EstimatorBase.fit">API documentation</a>.</p>
+</div>
+<div class="section" id="distributed-training">
+<h3><a class="toc-backref" href="using_tf.html#id13">Distributed Training</a><a class="headerlink" href="using_tf.html#distributed-training" title="Permalink to this headline">¶</a></h3>
+<p>To run your training job with multiple instances in a distributed fashion, set <code class="docutils literal notranslate"><span class="pre">instance_count</span></code>
+to a number larger than 1. We support two different types of distributed training, parameter server and Horovod.
+The <code class="docutils literal notranslate"><span class="pre">distribution</span></code> parameter is used to configure which distributed training strategy to use.</p>
+<div class="section" id="training-with-parameter-servers">
+<h4><a class="toc-backref" href="using_tf.html#id14">Training with parameter servers</a><a class="headerlink" href="using_tf.html#training-with-parameter-servers" title="Permalink to this headline">¶</a></h4>
+<p>If you specify parameter_server as the value of the distribution parameter, the container launches a parameter server
+thread on each instance in the training cluster, and then executes your training code. You can find more information on
+TensorFlow distributed training at <a class="reference external" href="https://www.tensorflow.org/deploy/distributed">TensorFlow docs</a>.
+To enable parameter server training:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sagemaker.tensorflow</span> <span class="kn">import</span> <span class="n">TensorFlow</span>
+
+<span class="n">tf_estimator</span> <span class="o">=</span> <span class="n">TensorFlow</span><span class="p">(</span>
+    <span class="n">entry_point</span><span class="o">=</span><span class="s2">&quot;tf-train.py&quot;</span><span class="p">,</span>
+    <span class="n">role</span><span class="o">=</span><span class="s2">&quot;SageMakerRole&quot;</span><span class="p">,</span>
+    <span class="n">instance_count</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">instance_type</span><span class="o">=</span><span class="s2">&quot;ml.p2.xlarge&quot;</span><span class="p">,</span>
+    <span class="n">framework_version</span><span class="o">=</span><span class="s2">&quot;2.2&quot;</span><span class="p">,</span>
+    <span class="n">py_version</span><span class="o">=</span><span class="s2">&quot;py37&quot;</span><span class="p">,</span>
+    <span class="n">distribution</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;parameter_server&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}},</span>
+<span class="p">)</span>
+<span class="n">tf_estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="s2">&quot;s3://bucket/path/to/training/data&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="training-with-horovod">
+<h4><a class="toc-backref" href="using_tf.html#id15">Training with Horovod</a><a class="headerlink" href="using_tf.html#training-with-horovod" title="Permalink to this headline">¶</a></h4>
+<p>Horovod is a distributed training framework based on MPI. Horovod is only available with TensorFlow version <code class="docutils literal notranslate"><span class="pre">1.12</span></code> or newer.
+You can find more details at <a class="reference external" href="https://github.com/uber/horovod">Horovod README</a>.</p>
+<p>The container sets up the MPI environment and executes the <code class="docutils literal notranslate"><span class="pre">mpirun</span></code> command, enabling you to run any Horovod
+training script.</p>
+<p>Training with <code class="docutils literal notranslate"><span class="pre">MPI</span></code> is configured by specifying following fields in <code class="docutils literal notranslate"><span class="pre">distribution</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">enabled</span> <span class="pre">(bool)</span></code>: If set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, the MPI setup is performed and <code class="docutils literal notranslate"><span class="pre">mpirun</span></code> command is executed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">processes_per_host</span> <span class="pre">(int)</span></code>: Number of processes MPI should launch on each host. Note, this should not be
+greater than the available slots on the selected instance type. This flag should be set for the multi-cpu/gpu
+training.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">custom_mpi_options</span> <span class="pre">(str)</span></code>:  Any <code class="docutils literal notranslate"><span class="pre">mpirun</span></code> flag(s) can be passed in this field that will be added to the <code class="docutils literal notranslate"><span class="pre">mpirun</span></code>
+command executed by SageMaker to launch distributed horovod training.</p></li>
+</ul>
+<p>In the below example we create an estimator to launch Horovod distributed training with 4 processes on one host:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sagemaker.tensorflow</span> <span class="kn">import</span> <span class="n">TensorFlow</span>
+
+<span class="n">tf_estimator</span> <span class="o">=</span> <span class="n">TensorFlow</span><span class="p">(</span>
+    <span class="n">entry_point</span><span class="o">=</span><span class="s2">&quot;tf-train.py&quot;</span><span class="p">,</span>
+    <span class="n">role</span><span class="o">=</span><span class="s2">&quot;SageMakerRole&quot;</span><span class="p">,</span>
+    <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">instance_type</span><span class="o">=</span><span class="s2">&quot;ml.p3.8xlarge&quot;</span><span class="p">,</span>
+    <span class="n">framework_version</span><span class="o">=</span><span class="s2">&quot;2.1.0&quot;</span><span class="p">,</span>
+    <span class="n">py_version</span><span class="o">=</span><span class="s2">&quot;py3&quot;</span><span class="p">,</span>
+    <span class="n">distribution</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;mpi&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;processes_per_host&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+            <span class="s2">&quot;custom_mpi_options&quot;</span><span class="p">:</span> <span class="s2">&quot;--NCCL_DEBUG INFO&quot;</span>
+        <span class="p">},</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+<span class="n">tf_estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="s2">&quot;s3://bucket/path/to/training/data&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="training-with-pipe-mode-using-pipemodedataset">
+<h3><a class="toc-backref" href="using_tf.html#id16">Training with Pipe Mode using PipeModeDataset</a><a class="headerlink" href="using_tf.html#training-with-pipe-mode-using-pipemodedataset" title="Permalink to this headline">¶</a></h3>
+<p>Amazon SageMaker allows users to create training jobs using Pipe input mode.
+With Pipe input mode, your dataset is streamed directly to your training instances instead of being downloaded first.
+This means that your training jobs start sooner, finish quicker, and need less disk space.</p>
+<p>SageMaker TensorFlow provides an implementation of <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> that makes it easy to take advantage of Pipe
+input mode in SageMaker. You can replace your <code class="docutils literal notranslate"><span class="pre">tf.data.Dataset</span></code> with a <code class="docutils literal notranslate"><span class="pre">sagemaker_tensorflow.PipeModeDataset</span></code> to
+read TFRecords as they are streamed to your training instances.</p>
+<p>In your <code class="docutils literal notranslate"><span class="pre">entry_point</span></code> script, you can use <code class="docutils literal notranslate"><span class="pre">PipeModeDataset</span></code> like a <code class="docutils literal notranslate"><span class="pre">Dataset</span></code>. In this example, we create a
+<code class="docutils literal notranslate"><span class="pre">PipeModeDataset</span></code> to read TFRecords from the ‘training’ channel:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sagemaker_tensorflow</span> <span class="kn">import</span> <span class="n">PipeModeDataset</span>
+
+<span class="n">features</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">FixedLenFeature</span><span class="p">([],</span> <span class="n">tf</span><span class="o">.</span><span class="n">string</span><span class="p">),</span>
+    <span class="s1">&#39;labels&#39;</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">FixedLenFeature</span><span class="p">([],</span> <span class="n">tf</span><span class="o">.</span><span class="n">int64</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="n">record</span><span class="p">):</span>
+    <span class="n">parsed</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">parse_single_example</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">features</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">({</span>
+        <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">decode_raw</span><span class="p">(</span><span class="n">parsed</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">],</span> <span class="n">tf</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="p">},</span> <span class="n">parsed</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">])</span>
+
+<span class="k">def</span> <span class="nf">train_input_fn</span><span class="p">(</span><span class="n">training_dir</span><span class="p">,</span> <span class="n">hyperparameters</span><span class="p">):</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">PipeModeDataset</span><span class="p">(</span><span class="n">channel</span><span class="o">=</span><span class="s1">&#39;training&#39;</span><span class="p">,</span> <span class="n">record_format</span><span class="o">=</span><span class="s1">&#39;TFRecord&#39;</span><span class="p">)</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">prefetch</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">parse</span><span class="p">,</span> <span class="n">num_parallel_calls</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ds</span>
+</pre></div>
+</div>
+<p>To run training job with Pipe input mode, pass in <code class="docutils literal notranslate"><span class="pre">input_mode='Pipe'</span></code> to your TensorFlow Estimator:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sagemaker.tensorflow</span> <span class="kn">import</span> <span class="n">TensorFlow</span>
+
+<span class="n">tf_estimator</span> <span class="o">=</span> <span class="n">TensorFlow</span><span class="p">(</span>
+    <span class="n">entry_point</span><span class="o">=</span><span class="s2">&quot;tf-train-with-pipemodedataset.py&quot;</span><span class="p">,</span>
+    <span class="n">role</span><span class="o">=</span><span class="s2">&quot;SageMakerRole&quot;</span><span class="p">,</span>
+    <span class="n">training_steps</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>
+    <span class="n">evaluation_steps</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">instance_type</span><span class="o">=</span><span class="s2">&quot;ml.p2.xlarge&quot;</span><span class="p">,</span>
+    <span class="n">framework_version</span><span class="o">=</span><span class="s2">&quot;1.10.0&quot;</span><span class="p">,</span>
+    <span class="n">py_version</span><span class="o">=</span><span class="s2">&quot;py3&quot;</span><span class="p">,</span>
+    <span class="n">input_mode</span><span class="o">=</span><span class="s2">&quot;Pipe&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">tf_estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="s2">&quot;s3://bucket/path/to/training/data&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If your TFRecords are compressed, you can train on Gzipped TF Records by passing in <code class="docutils literal notranslate"><span class="pre">compression='Gzip'</span></code> to the call to
+<code class="docutils literal notranslate"><span class="pre">fit()</span></code>, and SageMaker will automatically unzip the records as data is streamed to your training instances:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sagemaker.inputs</span> <span class="kn">import</span> <span class="n">TrainingInput</span>
+
+<span class="n">train_s3_input</span> <span class="o">=</span> <span class="n">TrainingInput</span><span class="p">(</span><span class="s1">&#39;s3://bucket/path/to/training/data&#39;</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="s1">&#39;Gzip&#39;</span><span class="p">)</span>
+<span class="n">tf_estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train_s3_input</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can learn more about <code class="docutils literal notranslate"><span class="pre">PipeModeDataset</span></code> in the sagemaker-tensorflow-extensions repository: <a class="reference external" href="https://github.com/aws/sagemaker-tensorflow-extensions">https://github.com/aws/sagemaker-tensorflow-extensions</a></p>
+</div>
+<div class="section" id="training-with-mkl-dnn-disabled">
+<h3><a class="toc-backref" href="using_tf.html#id17">Training with MKL-DNN disabled</a><a class="headerlink" href="using_tf.html#training-with-mkl-dnn-disabled" title="Permalink to this headline">¶</a></h3>
+<p>SageMaker TensorFlow CPU images use TensorFlow built with Intel® MKL-DNN optimization.</p>
+<p>In certain cases you might be able to get a better performance by disabling this optimization
+(for example when using small models).</p>
+<p>You can disable MKL-DNN optimization for TensorFlow <code class="docutils literal notranslate"><span class="pre">1.8.0</span></code> and above by setting two following environment variables:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;TF_DISABLE_MKL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;TF_DISABLE_POOL_ALLOCATOR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="deploy-tensorflow-serving-models">
+<h2><a class="toc-backref" href="using_tf.html#id18">Deploy TensorFlow Serving models</a><a class="headerlink" href="using_tf.html#deploy-tensorflow-serving-models" title="Permalink to this headline">¶</a></h2>
+<p>After a TensorFlow estimator has been fit, it saves a TensorFlow SavedModel in
+the S3 location defined by <code class="docutils literal notranslate"><span class="pre">output_path</span></code>. You can call <code class="docutils literal notranslate"><span class="pre">deploy</span></code> on a TensorFlow
+estimator to create a SageMaker Endpoint, or you can call <code class="docutils literal notranslate"><span class="pre">transformer</span></code> to create a <code class="docutils literal notranslate"><span class="pre">Transformer</span></code> that you can use to run a batch transform job.</p>
+<p>Your model will be deployed to a TensorFlow Serving-based server. The server provides a super-set of the
+<a class="reference external" href="https://www.tensorflow.org/serving/api_rest">TensorFlow Serving REST API</a>.</p>
+<div class="section" id="deploy-to-a-sagemaker-endpoint">
+<h3><a class="toc-backref" href="using_tf.html#id19">Deploy to a SageMaker Endpoint</a><a class="headerlink" href="using_tf.html#deploy-to-a-sagemaker-endpoint" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="deploying-from-an-estimator">
+<h4><a class="toc-backref" href="using_tf.html#id20">Deploying from an Estimator</a><a class="headerlink" href="using_tf.html#deploying-from-an-estimator" title="Permalink to this headline">¶</a></h4>
+<p>After a TensorFlow estimator has been fit, it saves a TensorFlow
+<a class="reference external" href="https://www.tensorflow.org/guide/saved_model">SavedModel</a> bundle in
+the S3 location defined by <code class="docutils literal notranslate"><span class="pre">output_path</span></code>. You can call <code class="docutils literal notranslate"><span class="pre">deploy</span></code> on a TensorFlow
+estimator object to create a SageMaker Endpoint:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sagemaker.tensorflow</span> <span class="kn">import</span> <span class="n">TensorFlow</span>
+
+<span class="n">estimator</span> <span class="o">=</span> <span class="n">TensorFlow</span><span class="p">(</span>
+    <span class="n">entry_point</span><span class="o">=</span><span class="s2">&quot;tf-train.py&quot;</span><span class="p">,</span>
+    <span class="o">...</span><span class="p">,</span>
+    <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">instance_type</span><span class="o">=</span><span class="s2">&quot;ml.c4.xlarge&quot;</span><span class="p">,</span>
+    <span class="n">framework_version</span><span class="o">=</span><span class="s2">&quot;2.2&quot;</span><span class="p">,</span>
+    <span class="n">py_version</span><span class="o">=</span><span class="s2">&quot;py37&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+
+<span class="n">predictor</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span><span class="n">initial_instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">instance_type</span><span class="o">=</span><span class="s2">&quot;ml.c5.xlarge&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The code block above deploys a SageMaker Endpoint with one instance of the type ‘ml.c5.xlarge’.</p>
+<div class="section" id="what-happens-when-deploy-is-called">
+<h5><a class="toc-backref" href="using_tf.html#id21">What happens when deploy is called</a><a class="headerlink" href="using_tf.html#what-happens-when-deploy-is-called" title="Permalink to this headline">¶</a></h5>
+<p>Calling <code class="docutils literal notranslate"><span class="pre">deploy</span></code> starts the process of creating a SageMaker Endpoint. This process includes the following steps.</p>
+<ul class="simple">
+<li><p>Starts <code class="docutils literal notranslate"><span class="pre">initial_instance_count</span></code> EC2 instances of the type <code class="docutils literal notranslate"><span class="pre">instance_type</span></code>.</p></li>
+<li><p>On each instance, it will do the following steps:</p>
+<ul>
+<li><p>start a Docker container optimized for TensorFlow Serving, see <a class="reference external" href="https://github.com/aws/sagemaker-tensorflow-serving-container">SageMaker TensorFlow Serving containers</a>.</p></li>
+<li><p>start a <cite>TensorFlow Serving</cite> process configured to run your model.</p></li>
+<li><p>start an HTTP server that provides access to TensorFlow Server through the SageMaker InvokeEndpoint API.</p></li>
+</ul>
+</li>
+</ul>
+<p>When the <code class="docutils literal notranslate"><span class="pre">deploy</span></code> call finishes, the created SageMaker Endpoint is ready for prediction requests. The
+<a class="reference internal" href="using_tf.html#making-predictions-against-a-sagemaker-endpoint">Making predictions against a SageMaker Endpoint</a> section will explain how to make prediction requests
+against the Endpoint.</p>
+</div>
+</div>
+<div class="section" id="deploying-directly-from-model-artifacts">
+<h4><a class="toc-backref" href="using_tf.html#id22">Deploying directly from model artifacts</a><a class="headerlink" href="using_tf.html#deploying-directly-from-model-artifacts" title="Permalink to this headline">¶</a></h4>
+<p>If you already have existing model artifacts in S3, you can skip training and deploy them directly to an endpoint:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sagemaker.tensorflow</span> <span class="kn">import</span> <span class="n">TensorFlowModel</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">TensorFlowModel</span><span class="p">(</span><span class="n">model_data</span><span class="o">=</span><span class="s1">&#39;s3://mybucket/model.tar.gz&#39;</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="s1">&#39;MySageMakerRole&#39;</span><span class="p">)</span>
+
+<span class="n">predictor</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span><span class="n">initial_instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">instance_type</span><span class="o">=</span><span class="s1">&#39;ml.c5.xlarge&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Python-based TensorFlow serving on SageMaker has support for <a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/ei.html">Elastic Inference</a>, which allows for inference acceleration to a hosted endpoint for a fraction of the cost of using a full GPU instance. In order to attach an Elastic Inference accelerator to your endpoint provide the accelerator type to accelerator_type to your deploy call.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sagemaker.tensorflow</span> <span class="kn">import</span> <span class="n">TensorFlowModel</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">TensorFlowModel</span><span class="p">(</span><span class="n">model_data</span><span class="o">=</span><span class="s1">&#39;s3://mybucket/model.tar.gz&#39;</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="s1">&#39;MySageMakerRole&#39;</span><span class="p">)</span>
+
+<span class="n">predictor</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span><span class="n">initial_instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">instance_type</span><span class="o">=</span><span class="s1">&#39;ml.c5.xlarge&#39;</span><span class="p">,</span> <span class="n">accelerator_type</span><span class="o">=</span><span class="s1">&#39;ml.eia1.medium&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="making-predictions-against-a-sagemaker-endpoint">
+<h4><a class="toc-backref" href="using_tf.html#id23">Making predictions against a SageMaker Endpoint</a><a class="headerlink" href="using_tf.html#making-predictions-against-a-sagemaker-endpoint" title="Permalink to this headline">¶</a></h4>
+<p>Once you have the <code class="docutils literal notranslate"><span class="pre">Predictor</span></code> instance returned by <code class="docutils literal notranslate"><span class="pre">model.deploy(...)</span></code> or <code class="docutils literal notranslate"><span class="pre">estimator.deploy(...)</span></code>, you
+can send prediction requests to your Endpoint.</p>
+<p>The following code shows how to make a prediction request:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">input</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">&#39;instances&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">predictor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The result object will contain a Python dict like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s1">&#39;predictions&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The formats of the input and the output data correspond directly to the request and response formats
+of the <code class="docutils literal notranslate"><span class="pre">Predict</span></code> method in the <a class="reference external" href="https://www.tensorflow.org/serving/api_rest">TensorFlow Serving REST API</a>.</p>
+<p>If your SavedModel includes the right <code class="docutils literal notranslate"><span class="pre">signature_def</span></code>, you can also make Classify or Regress requests:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># input matches the Classify and Regress API</span>
+<span class="nb">input</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">&#39;signature_name&#39;</span><span class="p">:</span> <span class="s1">&#39;tensorflow/serving/regress&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;examples&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">},</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">}]</span>
+<span class="p">}</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">predictor</span><span class="o">.</span><span class="n">regress</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>  <span class="c1"># or predictor.classify(...)</span>
+
+<span class="c1"># result contains:</span>
+<span class="p">{</span>
+  <span class="s1">&#39;results&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You can include multiple <code class="docutils literal notranslate"><span class="pre">instances</span></code> in your predict request (or multiple <code class="docutils literal notranslate"><span class="pre">examples</span></code> in
+classify/regress requests) to get multiple prediction results in one request to your Endpoint:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">input</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">&#39;instances&#39;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">]</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">predictor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+
+<span class="c1"># result contains:</span>
+<span class="p">{</span>
+  <span class="s1">&#39;predictions&#39;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">]</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If your application allows request grouping like this, it is <strong>much</strong> more efficient than making separate requests.</p>
+<p>See <a class="reference external" href="deploying_tensorflow_serving.html">Deploying to TensorFlow Serving Endpoints</a> to learn how to deploy your model and make inference requests.</p>
+</div>
+</div>
+<div class="section" id="run-a-batch-transform-job">
+<h3><a class="toc-backref" href="using_tf.html#id24">Run a Batch Transform Job</a><a class="headerlink" href="using_tf.html#run-a-batch-transform-job" title="Permalink to this headline">¶</a></h3>
+<p>Batch transform allows you to get inferences for an entire dataset that is stored in an S3 bucket.</p>
+<p>For general information about using batch transform with the SageMaker Python SDK, see <a class="reference internal" href="../../overview.html#sagemaker-batch-transform"><span class="std std-ref">SageMaker Batch Transform</span></a>.
+For information about SageMaker batch transform, see <cite>Get Inferences for an Entire Dataset with Batch Transform &lt;https://docs.aws.amazon.com/sagemaker/latest/dg/how-it-works-batch.html&gt;</cite> in the AWS documentation.</p>
+<p>To run a batch transform job, you first create a <code class="docutils literal notranslate"><span class="pre">Transformer</span></code> object, and then call that object’s <code class="docutils literal notranslate"><span class="pre">transform</span></code> method.</p>
+<div class="section" id="create-a-transformer-object">
+<h4><a class="toc-backref" href="using_tf.html#id25">Create a Transformer Object</a><a class="headerlink" href="using_tf.html#create-a-transformer-object" title="Permalink to this headline">¶</a></h4>
+<p>If you used an estimator to train your model, you can call the <code class="docutils literal notranslate"><span class="pre">transformer</span></code> method of the estimator to create a <code class="docutils literal notranslate"><span class="pre">Transformer</span></code> object.</p>
+<p>For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bucket</span> <span class="o">=</span> <span class="n">myBucket</span> <span class="c1"># The name of the S3 bucket where the results are stored</span>
+<span class="n">prefix</span> <span class="o">=</span> <span class="s1">&#39;batch-results&#39;</span> <span class="c1"># The folder in the S3 bucket where the results are stored</span>
+
+<span class="n">batch_output</span> <span class="o">=</span> <span class="s1">&#39;s3://</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">/results&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="n">prefix</span><span class="p">)</span> <span class="c1"># The location to store the results</span>
+
+<span class="n">tf_transformer</span> <span class="o">=</span> <span class="n">tf_estimator</span><span class="o">.</span><span class="n">transformer</span><span class="p">(</span><span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">instance_type</span><span class="o">=</span><span class="s1">&#39;ml.m4.xlarge&#39;</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="n">batch_output</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To use a model trained outside of SageMaker, you can package the model as a SageMaker model, and call the <code class="docutils literal notranslate"><span class="pre">transformer</span></code> method of the SageMaker model.</p>
+<p>For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bucket</span> <span class="o">=</span> <span class="n">myBucket</span> <span class="c1"># The name of the S3 bucket where the results are stored</span>
+<span class="n">prefix</span> <span class="o">=</span> <span class="s1">&#39;batch-results&#39;</span> <span class="c1"># The folder in the S3 bucket where the results are stored</span>
+
+<span class="n">batch_output</span> <span class="o">=</span> <span class="s1">&#39;s3://</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">/results&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="n">prefix</span><span class="p">)</span> <span class="c1"># The location to store the results</span>
+
+<span class="n">tf_transformer</span> <span class="o">=</span> <span class="n">tensorflow_serving_model</span><span class="o">.</span><span class="n">transformer</span><span class="p">(</span><span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">instance_type</span><span class="o">=</span><span class="s1">&#39;ml.m4.xlarge&#39;</span><span class="p">,</span> <span class="n">output_path</span><span class="o">=</span><span class="n">batch_output</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For information about how to package a model as a SageMaker model, see <a class="reference internal" href="../../overview.html#byo-model"><span class="std std-ref">BYO Model</span></a>.
+When you call the <code class="docutils literal notranslate"><span class="pre">tranformer</span></code> method, you specify the type and number of instances to use for the batch transform job, and the location where the results are stored in S3.</p>
+</div>
+<div class="section" id="call-transform">
+<h4><a class="toc-backref" href="using_tf.html#id26">Call transform</a><a class="headerlink" href="using_tf.html#call-transform" title="Permalink to this headline">¶</a></h4>
+<p>After you create a <code class="docutils literal notranslate"><span class="pre">Transformer</span></code> object, you call that object’s <code class="docutils literal notranslate"><span class="pre">transform</span></code> method to start a batch transform job.
+For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">batch_input</span> <span class="o">=</span> <span class="s1">&#39;s3://</span><span class="si">{}</span><span class="s1">/</span><span class="si">{}</span><span class="s1">/test/examples&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">bucket</span><span class="p">,</span> <span class="n">prefix</span><span class="p">)</span> <span class="c1"># The location of the input dataset</span>
+
+<span class="n">tf_transformer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">batch_input</span><span class="p">,</span> <span class="n">data_type</span><span class="o">=</span><span class="s1">&#39;S3Prefix&#39;</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;text/csv&#39;</span><span class="p">,</span> <span class="n">split_type</span><span class="o">=</span><span class="s1">&#39;Line&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In the example, the content type is CSV, and each line in the dataset is treated as a record to get a predition for.</p>
+</div>
+<div class="section" id="batch-transform-supported-data-formats">
+<h4><a class="toc-backref" href="using_tf.html#id27">Batch Transform Supported Data Formats</a><a class="headerlink" href="using_tf.html#batch-transform-supported-data-formats" title="Permalink to this headline">¶</a></h4>
+<p>When you call the <code class="docutils literal notranslate"><span class="pre">tranform</span></code> method to start a batch transform job,
+you specify the data format by providing a MIME type as the value for the <code class="docutils literal notranslate"><span class="pre">content_type</span></code> parameter.</p>
+<p>The following content formats are supported without custom intput and output handling:</p>
+<ul class="simple">
+<li><p>CSV - specify <code class="docutils literal notranslate"><span class="pre">text/csv</span></code> as the value of the <code class="docutils literal notranslate"><span class="pre">content_type</span></code> parameter.</p></li>
+<li><p>JSON - specify <code class="docutils literal notranslate"><span class="pre">application/json</span></code> as the value of the <code class="docutils literal notranslate"><span class="pre">content_type</span></code> parameter.</p></li>
+<li><p>JSON lines - specify <code class="docutils literal notranslate"><span class="pre">application/jsonlines</span></code> as the value of the <code class="docutils literal notranslate"><span class="pre">content_type</span></code> parameter.</p></li>
+</ul>
+<p>For detailed information about how TensorFlow Serving formats these data types for input and output, see <a class="reference internal" href="using_tf.html#tensorflow-serving-input-output"><span class="std std-ref">TensorFlow Serving Input and Output</span></a>.</p>
+<p>You can also accept any custom data format by writing input and output functions, and include them in the <code class="docutils literal notranslate"><span class="pre">inference.py</span></code> file in your model.
+For information, see <a class="reference internal" href="using_tf.html#custom-input-output"><span class="std std-ref">Create Python Scripts for Custom Input and Output Formats</span></a>.</p>
+</div>
+</div>
+<div class="section" id="tensorflow-serving-input-and-output">
+<span id="tensorflow-serving-input-output"></span><h3><a class="toc-backref" href="using_tf.html#id28">TensorFlow Serving Input and Output</a><a class="headerlink" href="using_tf.html#tensorflow-serving-input-and-output" title="Permalink to this headline">¶</a></h3>
+<p>The following sections describe the data formats that TensorFlow Serving endpoints and batch transform jobs accept,
+and how to write input and output functions to input and output custom data formats.</p>
+<div class="section" id="supported-formats">
+<h4><a class="toc-backref" href="using_tf.html#id29">Supported Formats</a><a class="headerlink" href="using_tf.html#supported-formats" title="Permalink to this headline">¶</a></h4>
+<p>SageMaker’s TensforFlow Serving endpoints can also accept some additional input formats that are not part of the
+TensorFlow REST API, including a simplified json format, line-delimited json objects (“jsons” or “jsonlines”), and
+CSV data.</p>
+<div class="section" id="simplified-json-input">
+<h5><a class="toc-backref" href="using_tf.html#id30">Simplified JSON Input</a><a class="headerlink" href="using_tf.html#simplified-json-input" title="Permalink to this headline">¶</a></h5>
+<p>The Endpoint will accept simplified JSON input that doesn’t match the TensorFlow REST API’s Predict request format.
+When the Endpoint receives data like this, it will attempt to transform it into a valid
+Predict request, using a few simple rules:</p>
+<ul class="simple">
+<li><p>python value, dict, or one-dimensional arrays are treated as the input value in a single ‘instance’ Predict request.</p></li>
+<li><p>multidimensional arrays are treated as a multiple values in a multi-instance Predict request.</p></li>
+</ul>
+<p>Combined with the client-side <code class="docutils literal notranslate"><span class="pre">Predictor</span></code> object’s JSON serialization, this allows you to make simple
+requests like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">input</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">],</span>
+  <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">]</span>
+<span class="p">]</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">predictor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+
+<span class="c1"># result contains:</span>
+<span class="p">{</span>
+  <span class="s1">&#39;predictions&#39;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">]</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Or this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># &#39;x&#39; must match name of input tensor in your SavedModel graph</span>
+<span class="c1"># for models with multiple named inputs, just include all the keys in the input dict</span>
+<span class="nb">input</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1"># result contains:</span>
+<span class="p">{</span>
+  <span class="s1">&#39;predictions&#39;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">]</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="line-delimited-json">
+<h5><a class="toc-backref" href="using_tf.html#id31">Line-delimited JSON</a><a class="headerlink" href="using_tf.html#line-delimited-json" title="Permalink to this headline">¶</a></h5>
+<p>The Endpoint will accept line-delimited JSON objects (also known as “jsons” or “jsonlines” data).
+The Endpoint treats each line as a separate instance in a multi-instance Predict request. To use
+this feature from your python code, you need to create a <code class="docutils literal notranslate"><span class="pre">Predictor</span></code> instance that does not
+try to serialize your input to JSON:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a Predictor without JSON serialization</span>
+
+<span class="n">predictor</span> <span class="o">=</span> <span class="n">Predictor</span><span class="p">(</span><span class="s1">&#39;endpoint-name&#39;</span><span class="p">,</span> <span class="n">serializer</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="s1">&#39;application/jsonlines&#39;</span><span class="p">)</span>
+
+<span class="nb">input</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;{&#39;x&#39;: [1.0, 2.0, 5.0]}</span>
+<span class="s1">{&#39;x&#39;: [1.0, 2.0, 5.0]}</span>
+<span class="s1">{&#39;x&#39;: [1.0, 2.0, 5.0]}&#39;&#39;&#39;</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">predictor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+
+<span class="c1"># result contains:</span>
+<span class="p">{</span>
+  <span class="s1">&#39;predictions&#39;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">]</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This feature is especially useful if you are reading data from a file containing jsonlines data.</p>
+<p><strong>CSV (comma-separated values)</strong></p>
+<p>The Endpoint will accept CSV data. Each line is treated as a separate instance. This is a
+compact format for representing multiple instances of 1-d array data. To use this feature
+from your python code, you need to create a <code class="docutils literal notranslate"><span class="pre">Predictor</span></code> instance that can serialize
+your input data to CSV format:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a Predictor with JSON serialization</span>
+
+<span class="n">predictor</span> <span class="o">=</span> <span class="n">Predictor</span><span class="p">(</span><span class="s1">&#39;endpoint-name&#39;</span><span class="p">,</span> <span class="n">serializer</span><span class="o">=</span><span class="n">sagemaker</span><span class="o">.</span><span class="n">serializers</span><span class="o">.</span><span class="n">CSVSerializer</span><span class="p">())</span>
+
+<span class="c1"># CSV-formatted string input</span>
+<span class="nb">input</span> <span class="o">=</span> <span class="s1">&#39;1.0,2.0,5.0</span><span class="se">\n</span><span class="s1">1.0,2.0,5.0</span><span class="se">\n</span><span class="s1">1.0,2.0,5.0&#39;</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">predictor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+
+<span class="c1"># result contains:</span>
+<span class="p">{</span>
+  <span class="s1">&#39;predictions&#39;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">[</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">],</span>
+    <span class="p">[</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">]</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You can also use python arrays or numpy arrays as input and let the <code class="docutils literal notranslate"><span class="pre">CSVSerializer</span></code> object
+convert them to CSV, but the client-size CSV conversion is more sophisticated than the
+CSV parsing on the Endpoint, so if you encounter conversion problems, try using one of the
+JSON options instead.</p>
+</div>
+</div>
+<div class="section" id="create-python-scripts-for-custom-input-and-output-formats">
+<span id="custom-input-output"></span><h4><a class="toc-backref" href="using_tf.html#id32">Create Python Scripts for Custom Input and Output Formats</a><a class="headerlink" href="using_tf.html#create-python-scripts-for-custom-input-and-output-formats" title="Permalink to this headline">¶</a></h4>
+<p>You can add your customized Python code to process your input and output data.
+This customized Python code must be named <code class="docutils literal notranslate"><span class="pre">inference.py</span></code> and is specified through the <code class="docutils literal notranslate"><span class="pre">entry_point</span></code> parameter:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sagemaker.tensorflow</span> <span class="kn">import</span> <span class="n">TensorFlowModel</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">TensorFlowModel</span><span class="p">(</span><span class="n">entry_point</span><span class="o">=</span><span class="s1">&#39;inference.py&#39;</span><span class="p">,</span>
+                        <span class="n">model_data</span><span class="o">=</span><span class="s1">&#39;s3://mybucket/model.tar.gz&#39;</span><span class="p">,</span>
+                        <span class="n">role</span><span class="o">=</span><span class="s1">&#39;MySageMakerRole&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In the example above, <code class="docutils literal notranslate"><span class="pre">inference.py</span></code> is assumed to be a file inside <code class="docutils literal notranslate"><span class="pre">model.tar.gz</span></code>. If you want to use a local file instead, you must add the <code class="docutils literal notranslate"><span class="pre">source_dir</span></code> argument. See the documentation on <a class="reference external" href="../../sagemaker.tensorflow.html#sagemaker.tensorflow.model.TensorFlowModel">TensorFlowModel</a>.</p>
+<div class="section" id="how-to-implement-the-pre-and-or-post-processing-handler-s">
+<h5><a class="toc-backref" href="using_tf.html#id33">How to implement the pre- and/or post-processing handler(s)</a><a class="headerlink" href="using_tf.html#how-to-implement-the-pre-and-or-post-processing-handler-s" title="Permalink to this headline">¶</a></h5>
+<p>Your entry point file must be named <code class="docutils literal notranslate"><span class="pre">inference.py</span></code> and should implement
+either a pair of <code class="docutils literal notranslate"><span class="pre">input_handler</span></code> and <code class="docutils literal notranslate"><span class="pre">output_handler</span></code> functions or
+a single <code class="docutils literal notranslate"><span class="pre">handler</span></code> function.
+Note that if <code class="docutils literal notranslate"><span class="pre">handler</span></code> function is implemented, <code class="docutils literal notranslate"><span class="pre">input_handler</span></code>
+and <code class="docutils literal notranslate"><span class="pre">output_handler</span></code> are ignored.</p>
+<p>To implement pre- and/or post-processing handler(s), use the Context
+object that the Python service creates. The Context object is a namedtuple with the following attributes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">model_name</span> <span class="pre">(string)</span></code>: the name of the model to use for
+inference. For example, ‘half-plus-three’</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">model_version</span> <span class="pre">(string)</span></code>: version of the model. For example, ‘5’</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">method</span> <span class="pre">(string)</span></code>: inference method. For example, ‘predict’,
+‘classify’ or ‘regress’, for more information on methods, please see
+<a class="reference external" href="https://www.tensorflow.org/tfx/serving/api_rest#classify_and_regress_api">Classify and Regress
+API</a>
+and <a class="reference external" href="https://www.tensorflow.org/tfx/serving/api_rest#predict_api">Predict
+API</a></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rest_uri</span> <span class="pre">(string)</span></code>: the TFS REST uri generated by the Python
+service. For example,
+‘<a class="reference external" href="http://localhost:8501/v1/models/half_plus_three:predict">http://localhost:8501/v1/models/half_plus_three:predict</a>’</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">grpc_uri</span> <span class="pre">(string)</span></code>: the GRPC port number generated by the Python
+service. For example, ‘9000’</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">custom_attributes</span> <span class="pre">(string)</span></code>: content of
+‘X-Amzn-SageMaker-Custom-Attributes’ header from the original
+request. For example,
+‘tfs-model-name=half*plus*three,tfs-method=predict’</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">request_content_type</span> <span class="pre">(string)</span></code>: the original request content type,
+defaulted to ‘application/json’ if not provided</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">accept_header</span> <span class="pre">(string)</span></code>: the original request accept type,
+defaulted to ‘application/json’ if not provided</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">content_length</span> <span class="pre">(int)</span></code>: content length of the original request</p></li>
+</ul>
+<p>The following code example implements <code class="docutils literal notranslate"><span class="pre">input_handler</span></code> and
+<code class="docutils literal notranslate"><span class="pre">output_handler</span></code>. By providing these, the Python service posts the
+request to the TFS REST URI with the data pre-processed by <code class="docutils literal notranslate"><span class="pre">input_handler</span></code>
+and passes the response to <code class="docutils literal notranslate"><span class="pre">output_handler</span></code> for post-processing.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="k">def</span> <span class="nf">input_handler</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Pre-process request input before it is sent to TensorFlow Serving REST API</span>
+<span class="sd">    Args:</span>
+<span class="sd">        data (obj): the request data, in format of dict or string</span>
+<span class="sd">        context (Context): an object containing request and configuration details</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        (dict): a JSON-serializable dict that contains request body and headers</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">request_content_type</span> <span class="o">==</span> <span class="s1">&#39;application/json&#39;</span><span class="p">:</span>
+        <span class="c1"># pass through json (assumes it&#39;s correctly formed)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">d</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">request_content_type</span> <span class="o">==</span> <span class="s1">&#39;text/csv&#39;</span><span class="p">:</span>
+        <span class="c1"># very simple csv handler</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
+            <span class="s1">&#39;instances&#39;</span><span class="p">:</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)]</span>
+        <span class="p">})</span>
+
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;{{&quot;error&quot;: &quot;unsupported content type </span><span class="si">{}</span><span class="s1">&quot;}}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">request_content_type</span> <span class="ow">or</span> <span class="s2">&quot;unknown&quot;</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">output_handler</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Post-process TensorFlow Serving output before it is returned to the client.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        data (obj): the TensorFlow serving response</span>
+<span class="sd">        context (Context): an object containing request and configuration details</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        (bytes, string): data to return to client, response content type</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+
+    <span class="n">response_content_type</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">accept_header</span>
+    <span class="n">prediction</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">content</span>
+    <span class="k">return</span> <span class="n">prediction</span><span class="p">,</span> <span class="n">response_content_type</span>
+</pre></div>
+</div>
+<p>You might want to have complete control over the request.
+For example, you might want to make a TFS request (REST or GRPC) to the first model,
+inspect the results, and then make a request to a second model. In this case, implement
+the <code class="docutils literal notranslate"><span class="pre">handler</span></code> method instead of the <code class="docutils literal notranslate"><span class="pre">input_handler</span></code> and <code class="docutils literal notranslate"><span class="pre">output_handler</span></code> methods, as demonstrated
+in the following code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+
+<span class="k">def</span> <span class="nf">handler</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle request.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        data (obj): the request data</span>
+<span class="sd">        context (Context): an object containing request and configuration details</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        (bytes, string): data to return to client, (optional) response content type</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">processed_input</span> <span class="o">=</span> <span class="n">_process_input</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">rest_uri</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">processed_input</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_process_output</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_process_input</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">request_content_type</span> <span class="o">==</span> <span class="s1">&#39;application/json&#39;</span><span class="p">:</span>
+        <span class="c1"># pass through json (assumes it&#39;s correctly formed)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">d</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">request_content_type</span> <span class="o">==</span> <span class="s1">&#39;text/csv&#39;</span><span class="p">:</span>
+        <span class="c1"># very simple csv handler</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
+            <span class="s1">&#39;instances&#39;</span><span class="p">:</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)]</span>
+        <span class="p">})</span>
+
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;{{&quot;error&quot;: &quot;unsupported content type </span><span class="si">{}</span><span class="s1">&quot;}}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">request_content_type</span> <span class="ow">or</span> <span class="s2">&quot;unknown&quot;</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_process_output</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+
+    <span class="n">response_content_type</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">accept_header</span>
+    <span class="n">prediction</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">content</span>
+    <span class="k">return</span> <span class="n">prediction</span><span class="p">,</span> <span class="n">response_content_type</span>
+</pre></div>
+</div>
+<p>You can also bring in external dependencies to help with your data
+processing. There are 2 ways to do this:</p>
+<ol class="arabic simple">
+<li><p>If your model archive contains <code class="docutils literal notranslate"><span class="pre">code/requirements.txt</span></code>, the container will install the Python dependencies at runtime using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span></code>.</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sagemaker.tensorflow</span> <span class="kn">import</span> <span class="n">TensorFlowModel</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">TensorFlowModel</span><span class="p">(</span><span class="n">entry_point</span><span class="o">=</span><span class="s1">&#39;inference.py&#39;</span><span class="p">,</span>
+                        <span class="n">dependencies</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;requirements.txt&#39;</span><span class="p">],</span>
+                        <span class="n">model_data</span><span class="o">=</span><span class="s1">&#39;s3://mybucket/model.tar.gz&#39;</span><span class="p">,</span>
+                        <span class="n">role</span><span class="o">=</span><span class="s1">&#39;MySageMakerRole&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>If you are working in a network-isolation situation or if you don’t
+want to install dependencies at runtime every time your endpoint starts or a batch
+transform job runs, you might want to put
+pre-downloaded dependencies under a <code class="docutils literal notranslate"><span class="pre">lib</span></code> directory and this
+directory as dependency. The container adds the modules to the Python
+path. Note that if both <code class="docutils literal notranslate"><span class="pre">lib</span></code> and <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code>
+are present in the model archive, the <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> is ignored:</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sagemaker.tensorflow</span> <span class="kn">import</span> <span class="n">TensorFlowModel</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">TensorFlowModel</span><span class="p">(</span><span class="n">entry_point</span><span class="o">=</span><span class="s1">&#39;inference.py&#39;</span><span class="p">,</span>
+                       <span class="n">dependencies</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;/path/to/folder/named/lib&#39;</span><span class="p">],</span>
+                       <span class="n">model_data</span><span class="o">=</span><span class="s1">&#39;s3://mybucket/model.tar.gz&#39;</span><span class="p">,</span>
+                       <span class="n">role</span><span class="o">=</span><span class="s1">&#39;MySageMakerRole&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For more information, see: <a class="reference external" href="https://github.com/aws/sagemaker-tensorflow-serving-container#prepost-processing">https://github.com/aws/sagemaker-tensorflow-serving-container#prepost-processing</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="sagemaker-tensorflow-classes">
+<h2><a class="toc-backref" href="using_tf.html#id34">SageMaker TensorFlow Classes</a><a class="headerlink" href="using_tf.html#sagemaker-tensorflow-classes" title="Permalink to this headline">¶</a></h2>
+<p>For information about the different TensorFlow-related classes in the SageMaker Python SDK, see <a class="reference external" href="../../sagemaker.tensorflow.html">https://sagemaker.readthedocs.io/en/stable/sagemaker.tensorflow.html</a>.</p>
+</div>
+<div class="section" id="sagemaker-tensorflow-docker-containers">
+<h2><a class="toc-backref" href="using_tf.html#id35">SageMaker TensorFlow Docker containers</a><a class="headerlink" href="using_tf.html#sagemaker-tensorflow-docker-containers" title="Permalink to this headline">¶</a></h2>
+<p>For information about the SageMaker TensorFlow containers, see:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/aws/sagemaker-tensorflow-container">SageMaker TensorFlow training toolkit</a></p></li>
+<li><p><a class="reference external" href="https://github.com/aws/sagemaker-tensorflow-serving-container">SageMaker TensorFlow serving toolkit</a></p></li>
+<li><p><a class="reference external" href="https://github.com/aws/deep-learning-containers/tree/master/tensorflow">Deep Learning Container (DLC) Dockerfiles for TensorFlow</a></p></li>
+<li><p><a class="reference external" href="https://docs.aws.amazon.com/deep-learning-containers/latest/devguide/deep-learning-containers-images.html">Deep Learning Container (DLC) Images</a> and <a class="reference external" href="https://docs.aws.amazon.com/deep-learning-containers/latest/devguide/dlc-release-notes.html">release notes</a></p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="deploying_tensorflow_serving.html" class="btn btn-neutral float-right" title="Deploying to TensorFlow Serving Endpoints" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="TensorFlow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2023, Amazon
+      <span class="commit">
+        
+        Revision <code>f2ae8ff8</code>.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: stable
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="../../index.html">stable</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.182.0/">v2.182.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.181.0/">v2.181.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.180.0/">v2.180.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.179.0/">v2.179.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.178.0/">v2.178.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.177.1/">v2.177.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.177.0/">v2.177.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.176.0/">v2.176.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.175.0/">v2.175.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.174.0/">v2.174.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.173.0/">v2.173.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.172.0/">v2.172.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.171.0/">v2.171.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.170.0/">v2.170.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.169.0/">v2.169.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.168.0/">v2.168.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.167.0/">v2.167.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.166.0/">v2.166.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.165.0/">v2.165.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.164.0/">v2.164.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.163.0/">v2.163.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.162.0/">v2.162.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.161.0/">v2.161.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.160.0/">v2.160.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.159.0/">v2.159.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.158.0/">v2.158.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.157.0/">v2.157.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.156.0/">v2.156.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.155.0/">v2.155.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.154.0/">v2.154.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.153.0/">v2.153.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.152.0/">v2.152.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.151.0/">v2.151.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.150.0/">v2.150.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.149.0/">v2.149.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.148.0/">v2.148.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.147.0/">v2.147.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.146.1/">v2.146.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.146.0/">v2.146.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.145.0/">v2.145.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.144.0/">v2.144.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.143.0/">v2.143.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.142.0/">v2.142.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.141.0/">v2.141.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.140.1/">v2.140.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.140.0/">v2.140.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.139.0/">v2.139.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.138.0/">v2.138.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.137.0/">v2.137.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.136.0/">v2.136.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.135.1.post0/">v2.135.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.135.1/">v2.135.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.135.0/">v2.135.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.134.1/">v2.134.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.134.0/">v2.134.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.133.0/">v2.133.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.132.0/">v2.132.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.131.1/">v2.131.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.131.0/">v2.131.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.130.0/">v2.130.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.129.0/">v2.129.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.128.0/">v2.128.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.127.0/">v2.127.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.126.0/">v2.126.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.125.0/">v2.125.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.124.0/">v2.124.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.123.0/">v2.123.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.122.0/">v2.122.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.121.2/">v2.121.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.121.1/">v2.121.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.121.0/">v2.121.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.120.0/">v2.120.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.119.0/">v2.119.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.118.0/">v2.118.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.117.0/">v2.117.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.116.0/">v2.116.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.115.0/">v2.115.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.114.0/">v2.114.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.113.0/">v2.113.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.112.2/">v2.112.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.112.1/">v2.112.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.112.0/">v2.112.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.111.0/">v2.111.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.110.0/">v2.110.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.109.0/">v2.109.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.108.0/">v2.108.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.107.0/">v2.107.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.106.0/">v2.106.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.105.0/">v2.105.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.104.0/">v2.104.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.103.0/">v2.103.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.102.0/">v2.102.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.101.1/">v2.101.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.101.0/">v2.101.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.100.0/">v2.100.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.99.0/">v2.99.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.98.0/">v2.98.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.97.0/">v2.97.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.96.0/">v2.96.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.95.0/">v2.95.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.94.0/">v2.94.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.93.1/">v2.93.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.93.0/">v2.93.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.92.2/">v2.92.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.92.1/">v2.92.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.92.0/">v2.92.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.91.1/">v2.91.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.91.0/">v2.91.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.90.0/">v2.90.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.89.0/">v2.89.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.3/">v2.88.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.2/">v2.88.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.1/">v2.88.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.0/">v2.88.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.87.0/">v2.87.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.86.2/">v2.86.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.86.1/">v2.86.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.86.0/">v2.86.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.85.0/">v2.85.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.84.0/">v2.84.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.83.0/">v2.83.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.82.2/">v2.82.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.82.1/">v2.82.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.82.0/">v2.82.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.81.1/">v2.81.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.81.0/">v2.81.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.80.0/">v2.80.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.79.0/">v2.79.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.78.0/">v2.78.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.77.1/">v2.77.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.77.0/">v2.77.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.76.0/">v2.76.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.75.1/">v2.75.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.75.0/">v2.75.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.74.0/">v2.74.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.73.0/">v2.73.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.3/">v2.72.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.2/">v2.72.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.1/">v2.72.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.0/">v2.72.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.71.0/">v2.71.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.70.0/">v2.70.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.69.0/">v2.69.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.68.0/">v2.68.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.67.0/">v2.67.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.2.post0/">v2.66.2.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.2/">v2.66.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.1/">v2.66.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.0/">v2.66.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.65.0/">v2.65.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.64.0/">v2.64.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.63.2/">v2.63.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.63.1/">v2.63.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.63.0/">v2.63.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.62.0/">v2.62.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.61.0/">v2.61.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.60.0/">v2.60.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.8/">v2.59.8</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.7/">v2.59.7</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.6/">v2.59.6</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.5/">v2.59.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.4/">v2.59.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.3.post0/">v2.59.3.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.3/">v2.59.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.2/">v2.59.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.1.post0/">v2.59.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.1/">v2.59.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.0/">v2.59.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.58.0/">v2.58.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.57.0/">v2.57.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.56.0/">v2.56.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.55.0/">v2.55.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.54.0/">v2.54.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.53.0/">v2.53.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.2.post0/">v2.52.2.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.2/">v2.52.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.1/">v2.52.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.0/">v2.52.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.51.0/">v2.51.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.50.1/">v2.50.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.50.0/">v2.50.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.49.2/">v2.49.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.49.1/">v2.49.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.49.0/">v2.49.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.48.2/">v2.48.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.48.1/">v2.48.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.48.0/">v2.48.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.2.post0/">v2.47.2.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.2/">v2.47.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.1/">v2.47.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.0/">v2.47.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.46.1/">v2.46.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.46.0/">v2.46.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.45.0/">v2.45.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.44.0/">v2.44.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.43.0/">v2.43.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.42.1/">v2.42.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.42.0/">v2.42.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.41.0/">v2.41.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.40.0/">v2.40.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.39.1/">v2.39.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.39.0.post0/">v2.39.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.39.0/">v2.39.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.38.0/">v2.38.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.37.0/">v2.37.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.36.0/">v2.36.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.35.0/">v2.35.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.34.0/">v2.34.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.33.0/">v2.33.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.32.1/">v2.32.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.32.0/">v2.32.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.31.1/">v2.31.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.31.0/">v2.31.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.30.0/">v2.30.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.29.2/">v2.29.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.29.1/">v2.29.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.29.0/">v2.29.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.28.0/">v2.28.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.27.1/">v2.27.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.27.0/">v2.27.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.26.0/">v2.26.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.25.2/">v2.25.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.25.1/">v2.25.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.25.0/">v2.25.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.5/">v2.24.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.4/">v2.24.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.3/">v2.24.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.2/">v2.24.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.1/">v2.24.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.0/">v2.24.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.6/">v2.23.6</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.5/">v2.23.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.4.post0/">v2.23.4.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.4/">v2.23.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.3/">v2.23.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.2/">v2.23.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.1/">v2.23.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.0/">v2.23.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.22.0/">v2.22.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.21.0/">v2.21.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.20.0/">v2.20.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.19.0/">v2.19.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.18.0/">v2.18.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.17.0/">v2.17.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.4/">v2.16.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.3.post0/">v2.16.3.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.3/">v2.16.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.2/">v2.16.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.1/">v2.16.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.0.post0/">v2.16.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.0/">v2.16.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.4/">v2.15.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.3/">v2.15.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.2/">v2.15.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.1/">v2.15.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.0/">v2.15.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.14.0/">v2.14.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.13.0/">v2.13.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.12.0/">v2.12.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.11.0/">v2.11.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.10.0/">v2.10.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.9.2/">v2.9.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.9.1/">v2.9.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.9.0/">v2.9.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.8.0/">v2.8.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.7.0/">v2.7.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.6.0/">v2.6.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.5/">v2.5.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.4/">v2.5.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.3/">v2.5.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.2/">v2.5.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.1/">v2.5.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.0/">v2.5.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.4.2/">v2.4.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.4.1/">v2.4.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.4.0/">v2.4.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.3.0/">v2.3.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.2.0/">v2.2.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.1.0/">v2.1.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.1/">v2.0.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.0/">v2.0.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.0.rc1/">v2.0.0.rc1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.0.rc0/">v2.0.0.rc0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.72.1/">v1.72.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.72.0/">v1.72.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.71.1/">v1.71.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.71.0/">v1.71.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.70.2/">v1.70.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.70.1/">v1.70.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.70.0/">v1.70.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.69.0/">v1.69.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.68.0/">v1.68.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.67.1.post0/">v1.67.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.67.1/">v1.67.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.67.0/">v1.67.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.66.0/">v1.66.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.1.post1/">v1.65.1.post1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.1.post0/">v1.65.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.1/">v1.65.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.0/">v1.65.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.64.1/">v1.64.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.64.0/">v1.64.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.63.0/">v1.63.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.62.0/">v1.62.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.61.0/">v1.61.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.60.2/">v1.60.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.59.0/">v1.59.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.58.4/">v1.58.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.58.1/">v1.58.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.58.0/">v1.58.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.57.0/">v1.57.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.3/">v1.56.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.2/">v1.56.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.1.post1/">v1.56.1.post1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.1.post0/">v1.56.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.1/">v1.56.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.0/">v1.56.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.4/">v1.55.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.3/">v1.55.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.2/">v1.55.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.1/">v1.55.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.0.post0/">v1.55.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.0/">v1.55.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.54.0/">v1.54.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.53.0/">v1.53.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.52.1/">v1.52.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.52.0.post0/">v1.52.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.52.0/">v1.52.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.4/">v1.51.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.3/">v1.51.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.1/">v1.51.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.0/">v1.51.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.18.post0/">v1.50.18.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.18/">v1.50.18</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.17.post0/">v1.50.17.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.17/">v1.50.17</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.16/">v1.50.16</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.15/">v1.50.15</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.14.post0/">v1.50.14.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.14/">v1.50.14</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.13/">v1.50.13</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.12/">v1.50.12</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.11/">v1.50.11</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.10.post0/">v1.50.10.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.10/">v1.50.10</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.9.post0/">v1.50.9.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.9/">v1.50.9</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.8/">v1.50.8</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.7/">v1.50.7</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.6.post0/">v1.50.6.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.6/">v1.50.6</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.5/">v1.50.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.4/">v1.50.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.3/">v1.50.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.2/">v1.50.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.1/">v1.50.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.0/">v1.50.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.49.0/">v1.49.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.48.1/">v1.48.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.48.0/">v1.48.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.47.1/">v1.47.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.45.0/">v1.45.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.44.4/">v1.44.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.44.3/">v1.44.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.4.post1/">v1.43.4.post1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.4.post0/">v1.43.4.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.4/">v1.43.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.3/">v1.43.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.2/">v1.43.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.1/">v1.43.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.0/">v1.43.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.42.0/">v1.42.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.41.0/">v1.41.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.40.0/">v1.40.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.39.0/">v1.39.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.38.0/">v1.38.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.37.0/">v1.37.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.36.0/">v1.36.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.35.0/">v1.35.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.34.0/">v1.34.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.33.0/">v1.33.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.32.0/">v1.32.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.31.0/">v1.31.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.30.0/">v1.30.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.29.0/">v1.29.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.28.0/">v1.28.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.27.0/">v1.27.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.26.0/">v1.26.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.25.0/">v1.25.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.24.0/">v1.24.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.23.0/">v1.23.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.22.0/">v1.22.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.21.0/">v1.21.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.20.0/">v1.20.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.19.0/">v1.19.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.18.0/">v1.18.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.17.0/">v1.17.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.15.0/">v1.15.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.14.0/">v1.14.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.13.0/">v1.13.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.12.0/">v1.12.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.11.0/">v1.11.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.10.0/">v1.10.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.9.0/">v1.9.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.8.0/">v1.8.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.7.0/">v1.7.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.6.0/">v1.6.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.5.0/">v1.5.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.4.0/">v1.4.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.3.0/">v1.3.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.2.0/">v1.2.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.1.0/">v1.1.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.0.0/">v1.0.0</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+      </dl>
+      <dl>
+        
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="https://readthedocs.org/projects/sagemaker/?fromdocs=sagemaker">Project Home</a>
+          </dd>
+          <dd>
+            <a href="https://readthedocs.org/builds/sagemaker/?fromdocs=sagemaker">Builds</a>
+          </dd>
+      </dl>
+    </div>
+  </div>
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+   
+
+</body>
+</html>

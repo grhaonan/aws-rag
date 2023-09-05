@@ -1,0 +1,2072 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Use PyTorch with the SageMaker Python SDK &mdash; sagemaker 2.182.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pagination.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/search_accessories.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="https://a0.awsstatic.com/s_code/js/3.0/awshome_s_code.js"></script>
+        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+        <script src="../../_static/js/datatable.js"></script>
+        <script async="async" src="../../../../_/static/javascript/readthedocs-doc-embed.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Reinforcement Learning" href="../rl/index.html" />
+    <link rel="prev" title="PyTorch" href="sagemaker.pytorch.html" /> 
+
+<!-- RTD Extra Head -->
+
+<link rel="stylesheet" href="../../../../_/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": true, "api_host": "https://readthedocs.org", "builder": "sphinx", "canonical_url": null, "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": null, "language": "en", "page": "frameworks/pytorch/using_pytorch", "programming_language": "py", "project": "sagemaker", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "stable"}</script>
+
+<!--
+Using this variable directly instead of using `JSON.parse` is deprecated.
+The READTHEDOCS_DATA global variable will be removed in the future.
+-->
+<script type="text/javascript">
+READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerHTML);
+</script>
+
+<script type="text/javascript" src="../../../../_/static/javascript/readthedocs-analytics.js" async="async"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> sagemaker
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                stable
+              </div>
+            
+          
+
+          <div role="search">
+    <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+        <input type="text" name="q" placeholder="ex. train object detection model, pd.concat" title="Type search term here" />
+        <br />
+        <br />
+        <div style="text-align: left;">
+            <div style="font-size: 0.85rem;">Filters: </div>
+            <div style="display: inline-block;"><label style="color: white;" for="filterExample"><input type="checkbox" id="filterExample" name="filterExample">Example</label></div>
+            <div style="display: inline-block;"><label style="color: white;" for="filterAWSDevGuide"><input type="checkbox" id="filterAWSDevGuide" name="filterAWSDevGuide">Dev Guide</label></div>
+            <div style="display: inline-block;"><label style="color: white;" for="filterSDKGuide"><input type="checkbox" id="filterSDKGuide" name="filterSDKGuide">SDK Guide</label></div>
+        </div>
+        
+    </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Using the SageMaker Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../v2.html">Use Version 2.x of the SageMaker Python SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">APIs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Frameworks</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../mxnet/index.html">Apache MXNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chainer/index.html">Chainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../huggingface/index.html">Hugging Face</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">PyTorch</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="sagemaker.pytorch.html">PyTorch</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="using_pytorch.html#">Use PyTorch with the SageMaker Python SDK</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="using_pytorch.html#train-a-model-with-pytorch">Train a Model with PyTorch</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="using_pytorch.html#prepare-a-pytorch-training-script">Prepare a PyTorch Training Script</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="using_pytorch.html#save-the-model">Save the Model</a></li>
+<li class="toctree-l6"><a class="reference internal" href="using_pytorch.html#using-third-party-libraries">Using third-party libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="using_pytorch.html#create-an-estimator">Create an Estimator</a></li>
+<li class="toctree-l5"><a class="reference internal" href="using_pytorch.html#call-the-fit-method">Call the fit Method</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="using_pytorch.html#fit-required-arguments">fit Required Arguments</a></li>
+<li class="toctree-l6"><a class="reference internal" href="using_pytorch.html#fit-optional-arguments">fit Optional Arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="using_pytorch.html#distributed-pytorch-training">Distributed PyTorch Training</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="using_pytorch.html#adapt-your-training-script">Adapt Your Training Script</a></li>
+<li class="toctree-l6"><a class="reference internal" href="using_pytorch.html#launching-a-distributed-training-job">Launching a Distributed Training Job</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="using_pytorch.html#distributed-training-with-pytorch-neuron-on-trn1-instances">Distributed Training with PyTorch Neuron on Trn1 instances</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="using_pytorch.html#adapt-your-training-script-to-initialize-with-the-xla-backend">Adapt Your Training Script to Initialize with the XLA backend</a></li>
+<li class="toctree-l6"><a class="reference internal" href="using_pytorch.html#launching-a-distributed-training-job-on-trainium">Launching a Distributed Training Job on Trainium</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="using_pytorch.html#deploy-pytorch-models">Deploy PyTorch Models</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="using_pytorch.html#elastic-inference">Elastic Inference</a></li>
+<li class="toctree-l5"><a class="reference internal" href="using_pytorch.html#model-directory-structure">Model Directory Structure</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="using_pytorch.html#for-versions-1-2-and-higher">For versions 1.2 and higher</a></li>
+<li class="toctree-l6"><a class="reference internal" href="using_pytorch.html#for-versions-1-1-and-lower">For versions 1.1 and lower</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="using_pytorch.html#id4">The SageMaker PyTorch Model Server</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="using_pytorch.html#load-a-model">Load a Model</a></li>
+<li class="toctree-l6"><a class="reference internal" href="using_pytorch.html#serve-a-pytorch-model">Serve a PyTorch Model</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="using_pytorch.html#bring-your-own-model">Bring your own model</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="using_pytorch.html#write-an-inference-script">Write an inference script</a></li>
+<li class="toctree-l6"><a class="reference internal" href="using_pytorch.html#create-the-directory-structure-for-your-model-files">Create the directory structure for your model files</a></li>
+<li class="toctree-l6"><a class="reference internal" href="using_pytorch.html#create-a-pytorchmodel-object">Create a <code class="docutils literal notranslate"><span class="pre">PyTorchModel</span></code> object</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="using_pytorch.html#attach-an-estimator-to-an-existing-training-job">Attach an estimator to an existing training job</a></li>
+<li class="toctree-l4"><a class="reference internal" href="using_pytorch.html#pytorch-training-examples">PyTorch Training Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="using_pytorch.html#sagemaker-pytorch-classes">SageMaker PyTorch Classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="using_pytorch.html#id11">SageMaker PyTorch Docker Containers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../rl/index.html">Reinforcement Learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sklearn/index.html">Scikit-Learn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sparkml/index.html">SparkML Serving</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tensorflow/index.html">TensorFlow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../xgboost/index.html">XGBoost</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../djl/index.html">Deep Java Library (DJL)</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/index.html">Built-in Algorithms</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../workflows/index.html">Workflows</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../experiments/index.html">Amazon SageMaker Experiments</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../amazon_sagemaker_debugger.html">Amazon SageMaker Debugger</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../amazon_sagemaker_featurestore.html">Amazon SageMaker Feature Store</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../amazon_sagemaker_model_monitoring.html">Amazon SageMaker Model Monitor</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../amazon_sagemaker_processing.html">Amazon SageMaker Processing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../amazon_sagemaker_model_building_pipeline.html">Amazon SageMaker Model Building Pipeline</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">sagemaker</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Frameworks</a> &raquo;</li>
+        
+          <li><a href="index.html">PyTorch</a> &raquo;</li>
+        
+      <li>Use PyTorch with the SageMaker Python SDK</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/aws/sagemaker-python-sdk/blob/f2ae8ff8b6ed82eb89110887eb5e74c953e6372a/doc/frameworks/pytorch/using_pytorch.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="use-pytorch-with-the-sagemaker-python-sdk">
+<h1><a class="toc-backref" href="using_pytorch.html#id12">Use PyTorch with the SageMaker Python SDK</a><a class="headerlink" href="using_pytorch.html#use-pytorch-with-the-sagemaker-python-sdk" title="Permalink to this headline">¶</a></h1>
+<p>With PyTorch Estimators and Models, you can train and host PyTorch models on Amazon SageMaker.</p>
+<p>For information about supported versions of PyTorch, see the <a class="reference external" href="https://docs.aws.amazon.com/deep-learning-containers/latest/devguide/deep-learning-containers-images.html">AWS documentation</a>.</p>
+<p>We recommend that you use the latest supported version because that’s where we focus our development efforts.</p>
+<p>You can visit the PyTorch repository at <a class="reference external" href="https://github.com/pytorch/pytorch">https://github.com/pytorch/pytorch</a>.</p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="using_pytorch.html#use-pytorch-with-the-sagemaker-python-sdk" id="id12">Use PyTorch with the SageMaker Python SDK</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_pytorch.html#train-a-model-with-pytorch" id="id13">Train a Model with PyTorch</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_pytorch.html#prepare-a-pytorch-training-script" id="id14">Prepare a PyTorch Training Script</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_pytorch.html#save-the-model" id="id15">Save the Model</a></p></li>
+<li><p><a class="reference internal" href="using_pytorch.html#using-third-party-libraries" id="id16">Using third-party libraries</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="using_pytorch.html#create-an-estimator" id="id17">Create an Estimator</a></p></li>
+<li><p><a class="reference internal" href="using_pytorch.html#call-the-fit-method" id="id18">Call the fit Method</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_pytorch.html#fit-required-arguments" id="id19">fit Required Arguments</a></p></li>
+<li><p><a class="reference internal" href="using_pytorch.html#fit-optional-arguments" id="id20">fit Optional Arguments</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="using_pytorch.html#distributed-pytorch-training" id="id21">Distributed PyTorch Training</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_pytorch.html#adapt-your-training-script" id="id22">Adapt Your Training Script</a></p></li>
+<li><p><a class="reference internal" href="using_pytorch.html#launching-a-distributed-training-job" id="id23">Launching a Distributed Training Job</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="using_pytorch.html#distributed-training-with-pytorch-neuron-on-trn1-instances" id="id24">Distributed Training with PyTorch Neuron on Trn1 instances</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_pytorch.html#adapt-your-training-script-to-initialize-with-the-xla-backend" id="id25">Adapt Your Training Script to Initialize with the XLA backend</a></p></li>
+<li><p><a class="reference internal" href="using_pytorch.html#launching-a-distributed-training-job-on-trainium" id="id26">Launching a Distributed Training Job on Trainium</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="using_pytorch.html#deploy-pytorch-models" id="id27">Deploy PyTorch Models</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_pytorch.html#elastic-inference" id="id28">Elastic Inference</a></p></li>
+<li><p><a class="reference internal" href="using_pytorch.html#model-directory-structure" id="id29">Model Directory Structure</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_pytorch.html#for-versions-1-2-and-higher" id="id30">For versions 1.2 and higher</a></p></li>
+<li><p><a class="reference internal" href="using_pytorch.html#for-versions-1-1-and-lower" id="id31">For versions 1.1 and lower</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="using_pytorch.html#id4" id="id32">The SageMaker PyTorch Model Server</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_pytorch.html#load-a-model" id="id33">Load a Model</a></p></li>
+<li><p><a class="reference internal" href="using_pytorch.html#serve-a-pytorch-model" id="id34">Serve a PyTorch Model</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_pytorch.html#process-model-input" id="id35">Process Model Input</a></p></li>
+<li><p><a class="reference internal" href="using_pytorch.html#get-predictions-from-a-pytorch-model" id="id36">Get Predictions from a PyTorch Model</a></p></li>
+<li><p><a class="reference internal" href="using_pytorch.html#process-model-output" id="id37">Process Model Output</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="using_pytorch.html#bring-your-own-model" id="id38">Bring your own model</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_pytorch.html#write-an-inference-script" id="id39">Write an inference script</a></p></li>
+<li><p><a class="reference internal" href="using_pytorch.html#create-the-directory-structure-for-your-model-files" id="id40">Create the directory structure for your model files</a></p></li>
+<li><p><a class="reference internal" href="using_pytorch.html#create-a-pytorchmodel-object" id="id41">Create a <code class="docutils literal notranslate"><span class="pre">PyTorchModel</span></code> object</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="using_pytorch.html#attach-an-estimator-to-an-existing-training-job" id="id42">Attach an estimator to an existing training job</a></p></li>
+<li><p><a class="reference internal" href="using_pytorch.html#pytorch-training-examples" id="id43">PyTorch Training Examples</a></p></li>
+<li><p><a class="reference internal" href="using_pytorch.html#sagemaker-pytorch-classes" id="id44">SageMaker PyTorch Classes</a></p></li>
+<li><p><a class="reference internal" href="using_pytorch.html#id11" id="id45">SageMaker PyTorch Docker Containers</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="train-a-model-with-pytorch">
+<h2><a class="toc-backref" href="using_pytorch.html#id13">Train a Model with PyTorch</a><a class="headerlink" href="using_pytorch.html#train-a-model-with-pytorch" title="Permalink to this headline">¶</a></h2>
+<p>To train a PyTorch model by using the SageMaker Python SDK:</p>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="using_pytorch.html#prepare-a-pytorch-training-script">Prepare a training script</a></p></li>
+<li><p><a class="reference external" href="using_pytorch.html#create-an-estimator">Create a <code class="docutils literal notranslate"><span class="pre">sagemaker.pytorch.PyTorch</span></code> Estimator</a></p></li>
+<li><p><a class="reference external" href="using_pytorch.html#call-the-fit-method">Call the estimator’s <code class="docutils literal notranslate"><span class="pre">fit</span></code> method</a></p></li>
+</ol>
+<div class="section" id="prepare-a-pytorch-training-script">
+<h3><a class="toc-backref" href="using_pytorch.html#id14">Prepare a PyTorch Training Script</a><a class="headerlink" href="using_pytorch.html#prepare-a-pytorch-training-script" title="Permalink to this headline">¶</a></h3>
+<p>Your PyTorch training script must be a Python 3.6 compatible source file.</p>
+<p>Prepare your script in a separate source file than the notebook, terminal session, or source file you’re
+using to submit the script to SageMaker via a <code class="docutils literal notranslate"><span class="pre">PyTorch</span></code> Estimator. This will be discussed in further detail below.</p>
+<p>The training script is very similar to a training script you might run outside of SageMaker, but you
+can access useful properties about the training environment through various environment variables.
+For example:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">SM_NUM_GPUS</span></code>: An integer representing the number of GPUs available to the host.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SM_MODEL_DIR</span></code>: A string representing the path to the directory to write model artifacts to.
+These artifacts are uploaded to S3 for model hosting.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SM_OUTPUT_DATA_DIR</span></code>: A string representing the filesystem path to write output artifacts to. Output artifacts may
+include checkpoints, graphs, and other files to save, not including model artifacts. These artifacts are compressed
+and uploaded to S3 to the same S3 prefix as the model artifacts.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SM_CHANNEL_XXXX</span></code>: A string that represents the path to the directory that contains the input data for the specified channel.
+For example, if you specify two input channels in the PyTorch estimator’s <code class="docutils literal notranslate"><span class="pre">fit</span></code> call, named ‘train’ and ‘test’,
+the environment variables <code class="docutils literal notranslate"><span class="pre">SM_CHANNEL_TRAIN</span></code> and <code class="docutils literal notranslate"><span class="pre">SM_CHANNEL_TEST</span></code> are set.</p></li>
+</ul>
+<p>A typical training script loads data from the input channels, configures training with hyperparameters, trains a model,
+and saves a model to <code class="docutils literal notranslate"><span class="pre">model_dir</span></code> so that it can be hosted later. Hyperparameters are passed to your script as arguments
+and can be retrieved with an argparse.ArgumentParser instance. For example, a training script might start
+with the following:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span><span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+
+    <span class="c1"># hyperparameters sent by the client are passed as command-line arguments to the script.</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--epochs&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--batch-size&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--learning-rate&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--use-cuda&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">bool</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># Data, model, and output directories</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--output-data-dir&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;SM_OUTPUT_DATA_DIR&#39;</span><span class="p">])</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--model-dir&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;SM_MODEL_DIR&#39;</span><span class="p">])</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--train&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;SM_CHANNEL_TRAIN&#39;</span><span class="p">])</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--test&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;SM_CHANNEL_TEST&#39;</span><span class="p">])</span>
+
+    <span class="n">args</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()</span>
+
+    <span class="c1"># ... load from args.train and args.test, train a model, write model to args.model_dir.</span>
+</pre></div>
+</div>
+<p>Because SageMaker imports your training script, you should put your training code in a main guard
+(<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">__name__=='__main__':</span></code>) if you are using the same script to host your model, so that SageMaker does not
+inadvertently run your training code at the wrong point in execution.</p>
+<p>Note that SageMaker doesn’t support argparse actions. If you want to use, for example, boolean hyperparameters,
+you need to specify <cite>type</cite> as <cite>bool</cite> in your script and provide an explicit <cite>True</cite> or <cite>False</cite> value for this hyperparameter
+when instantiating PyTorch Estimator.</p>
+<p>For more on training environment variables, see the <a class="reference external" href="https://github.com/aws/sagemaker-training-toolkit/blob/master/ENVIRONMENT_VARIABLES.md">SageMaker Training Toolkit</a>.</p>
+<div class="section" id="save-the-model">
+<h4><a class="toc-backref" href="using_pytorch.html#id15">Save the Model</a><a class="headerlink" href="using_pytorch.html#save-the-model" title="Permalink to this headline">¶</a></h4>
+<p>In order to save your trained PyTorch model for deployment on SageMaker, your training script should save your model
+to a certain filesystem path called <code class="docutils literal notranslate"><span class="pre">model_dir</span></code>. This value is accessible through the environment variable
+<code class="docutils literal notranslate"><span class="pre">SM_MODEL_DIR</span></code>. The following code demonstrates how to save a trained PyTorch model named <code class="docutils literal notranslate"><span class="pre">model</span></code> as
+<code class="docutils literal notranslate"><span class="pre">model.pth</span></code> at the :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># default to the value in environment variable `SM_MODEL_DIR`. Using args makes the script more portable.</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--model-dir&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;SM_MODEL_DIR&#39;</span><span class="p">])</span>
+    <span class="n">args</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()</span>
+
+    <span class="c1"># ... train `model`, then save it to `model_dir`</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">model_dir</span><span class="p">,</span> <span class="s1">&#39;model.pth&#39;</span><span class="p">),</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>After your training job is complete, SageMaker compresses and uploads the serialized model to S3, and your model data
+will be available in the S3 <code class="docutils literal notranslate"><span class="pre">output_path</span></code> you specified when you created the PyTorch Estimator.</p>
+<p>If you are using Elastic Inference, you must convert your models to the TorchScript format and use <code class="docutils literal notranslate"><span class="pre">torch.jit.save</span></code> to save the model.
+For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="c1"># ... train `model`, then save it to `model_dir`</span>
+<span class="n">model_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_dir</span><span class="p">,</span> <span class="s2">&quot;model.pt&quot;</span><span class="p">)</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">jit</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">model_dir</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-third-party-libraries">
+<h4><a class="toc-backref" href="using_pytorch.html#id16">Using third-party libraries</a><a class="headerlink" href="using_pytorch.html#using-third-party-libraries" title="Permalink to this headline">¶</a></h4>
+<p>When running your training script on SageMaker, it will have access to some pre-installed third-party libraries including <code class="docutils literal notranslate"><span class="pre">torch</span></code>, <code class="docutils literal notranslate"><span class="pre">torchvision</span></code>, and <code class="docutils literal notranslate"><span class="pre">numpy</span></code>.
+For more information on the runtime environment, including specific package versions, see <a class="reference external" href="https://github.com/aws/deep-learning-containers/tree/master/pytorch">SageMaker PyTorch Docker containers</a>.</p>
+<p>If there are other packages you want to use with your script, you can include a <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file in the same directory as your training script to install other dependencies at runtime. Both <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> and your training script should be put in the same folder. You must specify this folder in <code class="docutils literal notranslate"><span class="pre">source_dir</span></code> argument when creating PyTorch estimator.</p>
+<p>The function of installing packages using <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> is supported for all PyTorch versions during training. When serving a PyTorch model, support for this function varies with PyTorch versions. For PyTorch 1.3.1 or newer, <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> must be under folder <code class="docutils literal notranslate"><span class="pre">code</span></code>. The SageMaker PyTorch Estimator will automatically save <code class="docutils literal notranslate"><span class="pre">code</span></code> in <code class="docutils literal notranslate"><span class="pre">model.tar.gz</span></code> after training (assuming you set up your script and <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> correctly as stipulated in the previous paragraph). In the case of bringing your own trained model for deployment, you must save <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> under folder <code class="docutils literal notranslate"><span class="pre">code</span></code> in <code class="docutils literal notranslate"><span class="pre">model.tar.gz</span></code> yourself or specify it through <code class="docutils literal notranslate"><span class="pre">dependencies</span></code>. For PyTorch 1.2.0, <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> is not supported for inference. For PyTorch 0.4.0 to 1.1.0, <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> must be in <code class="docutils literal notranslate"><span class="pre">source_dir</span></code>.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file is a text file that contains a list of items that are installed by using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code>. You can also specify the version of an item to install. For information about the format of a <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file, see <a class="reference external" href="https://pip.pypa.io/en/stable/user_guide/#requirements-files">Requirements Files</a> in the pip documentation.</p>
+</div>
+</div>
+<div class="section" id="create-an-estimator">
+<h3><a class="toc-backref" href="using_pytorch.html#id17">Create an Estimator</a><a class="headerlink" href="using_pytorch.html#create-an-estimator" title="Permalink to this headline">¶</a></h3>
+<p>You run PyTorch training scripts on SageMaker by creating <code class="docutils literal notranslate"><span class="pre">PyTorch</span></code> Estimators.
+SageMaker training of your script is invoked when you call <code class="docutils literal notranslate"><span class="pre">fit</span></code> on a <code class="docutils literal notranslate"><span class="pre">PyTorch</span></code> Estimator.
+The following code sample shows how you train a custom PyTorch script “pytorch-train.py”, passing
+in three hyperparameters (‘epochs’, ‘batch-size’, and ‘learning-rate’), and using two input channel
+directories (‘train’ and ‘test’).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pytorch_estimator</span> <span class="o">=</span> <span class="n">PyTorch</span><span class="p">(</span><span class="s1">&#39;pytorch-train.py&#39;</span><span class="p">,</span>
+                            <span class="n">instance_type</span><span class="o">=</span><span class="s1">&#39;ml.p3.2xlarge&#39;</span><span class="p">,</span>
+                            <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                            <span class="n">framework_version</span><span class="o">=</span><span class="s1">&#39;1.8.0&#39;</span><span class="p">,</span>
+                            <span class="n">py_version</span><span class="o">=</span><span class="s1">&#39;py3&#39;</span><span class="p">,</span>
+                            <span class="n">hyperparameters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;epochs&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;batch-size&#39;</span><span class="p">:</span> <span class="mi">64</span><span class="p">,</span> <span class="s1">&#39;learning-rate&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">})</span>
+<span class="n">pytorch_estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">({</span><span class="s1">&#39;train&#39;</span><span class="p">:</span> <span class="s1">&#39;s3://my-data-bucket/path/to/my/training/data&#39;</span><span class="p">,</span>
+                       <span class="s1">&#39;test&#39;</span><span class="p">:</span> <span class="s1">&#39;s3://my-data-bucket/path/to/my/test/data&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="call-the-fit-method">
+<h3><a class="toc-backref" href="using_pytorch.html#id18">Call the fit Method</a><a class="headerlink" href="using_pytorch.html#call-the-fit-method" title="Permalink to this headline">¶</a></h3>
+<p>You start your training script by calling <code class="docutils literal notranslate"><span class="pre">fit</span></code> on a <code class="docutils literal notranslate"><span class="pre">PyTorch</span></code> Estimator. <code class="docutils literal notranslate"><span class="pre">fit</span></code> takes both required and optional
+arguments.</p>
+<div class="section" id="fit-required-arguments">
+<h4><a class="toc-backref" href="using_pytorch.html#id19">fit Required Arguments</a><a class="headerlink" href="using_pytorch.html#fit-required-arguments" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">inputs</span></code>: This can take one of the following forms: A string
+S3 URI, for example <code class="docutils literal notranslate"><span class="pre">s3://my-bucket/my-training-data</span></code>. In this
+case, the S3 objects rooted at the <code class="docutils literal notranslate"><span class="pre">my-training-data</span></code> prefix will
+be available in the default <code class="docutils literal notranslate"><span class="pre">train</span></code> channel. A dict from
+string channel names to S3 URIs. In this case, the objects rooted at
+each S3 prefix will be available as files in each channel directory.</p></li>
+</ul>
+<p>For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;train&#39;</span><span class="p">:</span><span class="s1">&#39;s3://my-bucket/my-training-data&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;eval&#39;</span><span class="p">:</span><span class="s1">&#39;s3://my-bucket/my-evaluation-data&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="fit-optional-arguments">
+<h4><a class="toc-backref" href="using_pytorch.html#id20">fit Optional Arguments</a><a class="headerlink" href="using_pytorch.html#fit-optional-arguments" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">wait</span></code>: Defaults to True, whether to block and wait for the
+training script to complete before returning.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">logs</span></code>: Defaults to True, whether to show logs produced by training
+job in the Python session. Only meaningful when wait is True.</p></li>
+</ul>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="distributed-pytorch-training">
+<h3><a class="toc-backref" href="using_pytorch.html#id21">Distributed PyTorch Training</a><a class="headerlink" href="using_pytorch.html#distributed-pytorch-training" title="Permalink to this headline">¶</a></h3>
+<p>SageMaker supports the <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.parallel.DistributedDataParallel.html">PyTorch DistributedDataParallel (DDP)</a>
+package. You simply need to check the variables in your training script,
+such as the world size and the rank of the current host, when initializing
+process groups for distributed training.
+And then, launch the training job using the
+<a class="reference internal" href="sagemaker.pytorch.html#sagemaker.pytorch.estimator.PyTorch" title="sagemaker.pytorch.estimator.PyTorch"><code class="xref py py-class docutils literal notranslate"><span class="pre">sagemaker.pytorch.estimator.PyTorch</span></code></a> estimator class
+with the <code class="docutils literal notranslate"><span class="pre">pytorchddp</span></code> option as the distribution strategy.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This PyTorch DDP support is available
+in the SageMaker PyTorch Deep Learning Containers v1.12 and later.</p>
+</div>
+<div class="section" id="adapt-your-training-script">
+<h4><a class="toc-backref" href="using_pytorch.html#id22">Adapt Your Training Script</a><a class="headerlink" href="using_pytorch.html#adapt-your-training-script" title="Permalink to this headline">¶</a></h4>
+<p>To initialize distributed training in your script, call
+<a class="reference external" href="https://pytorch.org/docs/master/distributed.html#torch.distributed.init_process_group">torch.distributed.init_process_group</a>
+with the desired backend and the rank of the current host.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch.distributed</span> <span class="k">as</span> <span class="nn">dist</span>
+
+<span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">distributed</span><span class="p">:</span>
+    <span class="c1"># Initialize the distributed environment.</span>
+    <span class="n">world_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">hosts</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;WORLD_SIZE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">world_size</span><span class="p">)</span>
+    <span class="n">host_rank</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">hosts</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">current_host</span><span class="p">)</span>
+    <span class="n">dist</span><span class="o">.</span><span class="n">init_process_group</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">backend</span><span class="p">,</span> <span class="n">rank</span><span class="o">=</span><span class="n">host_rank</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>SageMaker sets <code class="docutils literal notranslate"><span class="pre">'MASTER_ADDR'</span></code> and <code class="docutils literal notranslate"><span class="pre">'MASTER_PORT'</span></code> environment variables for you,
+but you can also overwrite them.</p>
+<p><strong>Supported backends:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">gloo</span></code> and <code class="docutils literal notranslate"><span class="pre">tcp</span></code> for CPU instances</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gloo</span></code> and <code class="docutils literal notranslate"><span class="pre">nccl</span></code> for GPU instances</p></li>
+</ul>
+</div>
+<div class="section" id="launching-a-distributed-training-job">
+<h4><a class="toc-backref" href="using_pytorch.html#id23">Launching a Distributed Training Job</a><a class="headerlink" href="using_pytorch.html#launching-a-distributed-training-job" title="Permalink to this headline">¶</a></h4>
+<p>You can run multi-node distributed PyTorch training jobs using the
+<a class="reference internal" href="sagemaker.pytorch.html#sagemaker.pytorch.estimator.PyTorch" title="sagemaker.pytorch.estimator.PyTorch"><code class="xref py py-class docutils literal notranslate"><span class="pre">sagemaker.pytorch.estimator.PyTorch</span></code></a> estimator class.
+With <code class="docutils literal notranslate"><span class="pre">instance_count=1</span></code>, the estimator submits a
+single-node training job to SageMaker; with <code class="docutils literal notranslate"><span class="pre">instance_count</span></code> greater
+than one, a multi-node training job is launched.</p>
+<p>To run a distributed training script that adopts
+the <a class="reference external" href="https://pytorch.org/docs/master/generated/torch.nn.parallel.DistributedDataParallel.html">PyTorch DistributedDataParallel (DDP) package</a>,
+choose the <code class="docutils literal notranslate"><span class="pre">pytorchddp</span></code> as the distributed training option in the <code class="docutils literal notranslate"><span class="pre">PyTorch</span></code> estimator.</p>
+<p>With the <code class="docutils literal notranslate"><span class="pre">pytorchddp</span></code> option, the SageMaker PyTorch estimator runs a SageMaker
+training container for PyTorch, sets up the environment for MPI, and launches
+the training job using the <code class="docutils literal notranslate"><span class="pre">mpirun</span></code> command on each worker with the given information
+during the PyTorch DDP initialization.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The SageMaker PyTorch estimator can operate both <code class="docutils literal notranslate"><span class="pre">mpirun</span></code> (for PyTorch 1.12.0 and later)
+and <code class="docutils literal notranslate"><span class="pre">torchrun</span></code> (for PyTorch 1.13.1 and later) in the backend for distributed training.</p>
+</div>
+<p>For more information about setting up PyTorch DDP in your training script,
+see <a class="reference external" href="https://pytorch.org/tutorials/intermediate/ddp_tutorial.html">Getting Started with Distributed Data Parallel</a> in the
+PyTorch documentation.</p>
+<p>The following examples show how to set a PyTorch estimator
+to run a distributed training job on two <code class="docutils literal notranslate"><span class="pre">ml.p4d.24xlarge</span></code> instances.</p>
+<p><strong>Using PyTorch DDP with the mpirun backend</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sagemaker.pytorch</span> <span class="kn">import</span> <span class="n">PyTorch</span>
+
+<span class="n">pt_estimator</span> <span class="o">=</span> <span class="n">PyTorch</span><span class="p">(</span>
+    <span class="n">entry_point</span><span class="o">=</span><span class="s2">&quot;train_ptddp.py&quot;</span><span class="p">,</span>
+    <span class="n">role</span><span class="o">=</span><span class="s2">&quot;SageMakerRole&quot;</span><span class="p">,</span>
+    <span class="n">framework_version</span><span class="o">=</span><span class="s2">&quot;1.12.0&quot;</span><span class="p">,</span>
+    <span class="n">py_version</span><span class="o">=</span><span class="s2">&quot;py38&quot;</span><span class="p">,</span>
+    <span class="n">instance_count</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">instance_type</span><span class="o">=</span><span class="s2">&quot;ml.p4d.24xlarge&quot;</span><span class="p">,</span>
+    <span class="n">distribution</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;pytorchddp&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">True</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Using PyTorch DDP with the torchrun backend</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sagemaker.pytorch</span> <span class="kn">import</span> <span class="n">PyTorch</span>
+
+<span class="n">pt_estimator</span> <span class="o">=</span> <span class="n">PyTorch</span><span class="p">(</span>
+    <span class="n">entry_point</span><span class="o">=</span><span class="s2">&quot;train_ptddp.py&quot;</span><span class="p">,</span>
+    <span class="n">role</span><span class="o">=</span><span class="s2">&quot;SageMakerRole&quot;</span><span class="p">,</span>
+    <span class="n">framework_version</span><span class="o">=</span><span class="s2">&quot;1.13.1&quot;</span><span class="p">,</span>
+    <span class="n">py_version</span><span class="o">=</span><span class="s2">&quot;py38&quot;</span><span class="p">,</span>
+    <span class="n">instance_count</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">instance_type</span><span class="o">=</span><span class="s2">&quot;ml.p4d.24xlarge&quot;</span><span class="p">,</span>
+    <span class="n">distribution</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;torch_distributed&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">True</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For more information about setting up <code class="docutils literal notranslate"><span class="pre">torchrun</span></code> in your training script,
+see <a class="reference external" href="https://pytorch.org/docs/stable/elastic/run.html">torchrun (Elastic Launch)</a> in <em>the
+PyTorch documentation</em>.</p>
+</div>
+<hr class="docutils" />
+</div>
+</div>
+<div class="section" id="distributed-training-with-pytorch-neuron-on-trn1-instances">
+<span id="distributed-pytorch-training-on-trainium"></span><h3><a class="toc-backref" href="using_pytorch.html#id24">Distributed Training with PyTorch Neuron on Trn1 instances</a><a class="headerlink" href="using_pytorch.html#distributed-training-with-pytorch-neuron-on-trn1-instances" title="Permalink to this headline">¶</a></h3>
+<p>SageMaker Training supports Amazon EC2 Trn1 instances powered by
+<a class="reference external" href="https://aws.amazon.com/machine-learning/trainium/">AWS Trainium</a> device,
+the second generation purpose-built machine learning accelerator from AWS.
+Each Trn1 instance consists of up to 16 Trainium devices, and each
+Trainium device consists of two <a class="reference external" href="https://awsdocs-neuron.readthedocs-hosted.com/en/latest/general/arch/neuron-hardware/trn1-arch.html#trainium-architecture">NeuronCores</a>
+in the <em>AWS Neuron Documentation</em>.</p>
+<p>You can run distributed training job on Trn1 instances.
+SageMaker supports the <code class="docutils literal notranslate"><span class="pre">xla</span></code> package through <code class="docutils literal notranslate"><span class="pre">torchrun</span></code>.
+With this, you do not need to manually pass <code class="docutils literal notranslate"><span class="pre">RANK</span></code>,
+<code class="docutils literal notranslate"><span class="pre">WORLD_SIZE</span></code>, <code class="docutils literal notranslate"><span class="pre">MASTER_ADDR</span></code>, and <code class="docutils literal notranslate"><span class="pre">MASTER_PORT</span></code>.
+You can launch the training job using the
+<a class="reference internal" href="sagemaker.pytorch.html#sagemaker.pytorch.estimator.PyTorch" title="sagemaker.pytorch.estimator.PyTorch"><code class="xref py py-class docutils literal notranslate"><span class="pre">sagemaker.pytorch.estimator.PyTorch</span></code></a> estimator class
+with the <code class="docutils literal notranslate"><span class="pre">torch_distributed</span></code> option as the distribution strategy.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This <code class="docutils literal notranslate"><span class="pre">torch_distributed</span></code> support is available
+in the AWS Deep Learning Containers for PyTorch Neuron starting v1.11.0.
+To find a complete list of supported versions of PyTorch Neuron, see
+<a class="reference external" href="https://github.com/aws/deep-learning-containers/blob/master/available_images.md#neuron-containers">Neuron Containers</a>
+in the <em>AWS Deep Learning Containers GitHub repository</em>.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>SageMaker Debugger is not compatible with Trn1 instances.</p>
+</div>
+<div class="section" id="adapt-your-training-script-to-initialize-with-the-xla-backend">
+<h4><a class="toc-backref" href="using_pytorch.html#id25">Adapt Your Training Script to Initialize with the XLA backend</a><a class="headerlink" href="using_pytorch.html#adapt-your-training-script-to-initialize-with-the-xla-backend" title="Permalink to this headline">¶</a></h4>
+<p>To initialize distributed training in your script, call
+<a class="reference external" href="https://pytorch.org/docs/master/distributed.html#torch.distributed.init_process_group">torch.distributed.init_process_group</a>
+with the <code class="docutils literal notranslate"><span class="pre">xla</span></code> backend as shown below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch.distributed</span> <span class="k">as</span> <span class="nn">dist</span>
+
+<span class="n">dist</span><span class="o">.</span><span class="n">init_process_group</span><span class="p">(</span><span class="s1">&#39;xla&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>SageMaker takes care of <code class="docutils literal notranslate"><span class="pre">'MASTER_ADDR'</span></code> and <code class="docutils literal notranslate"><span class="pre">'MASTER_PORT'</span></code> for you via <code class="docutils literal notranslate"><span class="pre">torchrun</span></code></p>
+<p>For detailed documentation about modifying your training script for Trainium, see <a class="reference external" href="https://awsdocs-neuron.readthedocs-hosted.com/en/latest/frameworks/torch/torch-neuronx/tutorials/training/mlp.html?highlight=torchrun#multi-worker-data-parallel-mlp-training-using-torchrun">Multi-worker data-parallel MLP training using torchrun</a> in the <em>AWS Neuron Documentation</em>.</p>
+<p><strong>Currently Supported backends:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">xla</span></code> for Trainium (Trn1) instances</p></li>
+</ul>
+<p>For up-to-date information on supported backends for Trn1 instances, see <a class="reference external" href="https://awsdocs-neuron.readthedocs-hosted.com/en/latest/index.html">AWS Neuron Documentation</a>.</p>
+</div>
+<div class="section" id="launching-a-distributed-training-job-on-trainium">
+<h4><a class="toc-backref" href="using_pytorch.html#id26">Launching a Distributed Training Job on Trainium</a><a class="headerlink" href="using_pytorch.html#launching-a-distributed-training-job-on-trainium" title="Permalink to this headline">¶</a></h4>
+<p>You can run multi-node distributed PyTorch training jobs on Trn1 instances using the
+<a class="reference internal" href="sagemaker.pytorch.html#sagemaker.pytorch.estimator.PyTorch" title="sagemaker.pytorch.estimator.PyTorch"><code class="xref py py-class docutils literal notranslate"><span class="pre">sagemaker.pytorch.estimator.PyTorch</span></code></a> estimator class.
+With <code class="docutils literal notranslate"><span class="pre">instance_count=1</span></code>, the estimator submits a
+single-node training job to SageMaker; with <code class="docutils literal notranslate"><span class="pre">instance_count</span></code> greater
+than one, a multi-node training job is launched.</p>
+<p>With the <code class="docutils literal notranslate"><span class="pre">torch_distributed</span></code> option, the SageMaker PyTorch estimator runs a SageMaker
+training container for PyTorch Neuron, sets up the environment, and launches
+the training job using the <code class="docutils literal notranslate"><span class="pre">torchrun</span></code> command on each worker with the given information.</p>
+<p><strong>Examples</strong></p>
+<p>The following examples show how to run a PyTorch training using <code class="docutils literal notranslate"><span class="pre">torch_distributed</span></code> in SageMaker
+on one <code class="docutils literal notranslate"><span class="pre">ml.trn1.2xlarge</span></code> instance and two <code class="docutils literal notranslate"><span class="pre">ml.trn1.32xlarge</span></code> instances:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sagemaker.pytorch</span> <span class="kn">import</span> <span class="n">PyTorch</span>
+
+<span class="n">pt_estimator</span> <span class="o">=</span> <span class="n">PyTorch</span><span class="p">(</span>
+    <span class="n">entry_point</span><span class="o">=</span><span class="s2">&quot;train_torch_distributed.py&quot;</span><span class="p">,</span>
+    <span class="n">role</span><span class="o">=</span><span class="s2">&quot;SageMakerRole&quot;</span><span class="p">,</span>
+    <span class="n">framework_version</span><span class="o">=</span><span class="s2">&quot;1.11.0&quot;</span><span class="p">,</span>
+    <span class="n">py_version</span><span class="o">=</span><span class="s2">&quot;py38&quot;</span><span class="p">,</span>
+    <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">instance_type</span><span class="o">=</span><span class="s2">&quot;ml.trn1.2xlarge&quot;</span><span class="p">,</span>
+    <span class="n">distribution</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;torch_distributed&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">True</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">pt_estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="s2">&quot;s3://bucket/path/to/training/data&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sagemaker.pytorch</span> <span class="kn">import</span> <span class="n">PyTorch</span>
+
+<span class="n">pt_estimator</span> <span class="o">=</span> <span class="n">PyTorch</span><span class="p">(</span>
+    <span class="n">entry_point</span><span class="o">=</span><span class="s2">&quot;train_torch_distributed.py&quot;</span><span class="p">,</span>
+    <span class="n">role</span><span class="o">=</span><span class="s2">&quot;SageMakerRole&quot;</span><span class="p">,</span>
+    <span class="n">framework_version</span><span class="o">=</span><span class="s2">&quot;1.11.0&quot;</span><span class="p">,</span>
+    <span class="n">py_version</span><span class="o">=</span><span class="s2">&quot;py38&quot;</span><span class="p">,</span>
+    <span class="n">instance_count</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">instance_type</span><span class="o">=</span><span class="s2">&quot;ml.trn1.32xlarge&quot;</span><span class="p">,</span>
+    <span class="n">distribution</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;torch_distributed&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="kc">True</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="n">pt_estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="s2">&quot;s3://bucket/path/to/training/data&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="deploy-pytorch-models">
+<h2><a class="toc-backref" href="using_pytorch.html#id27">Deploy PyTorch Models</a><a class="headerlink" href="using_pytorch.html#deploy-pytorch-models" title="Permalink to this headline">¶</a></h2>
+<p>After a PyTorch Estimator has been fit, you can host the newly created model in SageMaker.</p>
+<p>After calling <code class="docutils literal notranslate"><span class="pre">fit</span></code>, you can call <code class="docutils literal notranslate"><span class="pre">deploy</span></code> on a <code class="docutils literal notranslate"><span class="pre">PyTorch</span></code> Estimator to create a SageMaker Endpoint.
+The Endpoint runs a SageMaker-provided PyTorch model server and hosts the model produced by your training script,
+which was run when you called <code class="docutils literal notranslate"><span class="pre">fit</span></code>. This was the model you saved to <code class="docutils literal notranslate"><span class="pre">model_dir</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">deploy</span></code> returns a <code class="docutils literal notranslate"><span class="pre">Predictor</span></code> object, which you can use to do inference on the Endpoint hosting your PyTorch model.
+Each <code class="docutils literal notranslate"><span class="pre">Predictor</span></code> provides a <code class="docutils literal notranslate"><span class="pre">predict</span></code> method which can do inference with numpy arrays or Python lists.
+Inference arrays or lists are serialized and sent to the PyTorch model server by an <code class="docutils literal notranslate"><span class="pre">InvokeEndpoint</span></code> SageMaker
+operation.</p>
+<p><code class="docutils literal notranslate"><span class="pre">predict</span></code> returns the result of inference against your model. By default, the inference result a NumPy array.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Train my estimator</span>
+<span class="n">pytorch_estimator</span> <span class="o">=</span> <span class="n">PyTorch</span><span class="p">(</span><span class="n">entry_point</span><span class="o">=</span><span class="s1">&#39;train_and_deploy.py&#39;</span><span class="p">,</span>
+                            <span class="n">instance_type</span><span class="o">=</span><span class="s1">&#39;ml.p3.2xlarge&#39;</span><span class="p">,</span>
+                            <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                            <span class="n">framework_version</span><span class="o">=</span><span class="s1">&#39;1.8.0&#39;</span><span class="p">,</span>
+                            <span class="n">py_version</span><span class="o">=</span><span class="s1">&#39;py3&#39;</span><span class="p">)</span>
+<span class="n">pytorch_estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="s1">&#39;s3://my_bucket/my_training_data/&#39;</span><span class="p">)</span>
+
+<span class="c1"># Deploy my estimator to a SageMaker Endpoint and get a Predictor</span>
+<span class="n">predictor</span> <span class="o">=</span> <span class="n">pytorch_estimator</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span><span class="n">instance_type</span><span class="o">=</span><span class="s1">&#39;ml.m4.xlarge&#39;</span><span class="p">,</span>
+                                     <span class="n">initial_instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># `data` is a NumPy array or a Python list.</span>
+<span class="c1"># `response` is a NumPy array.</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">predictor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You use the SageMaker PyTorch model server to host your PyTorch model when you call <code class="docutils literal notranslate"><span class="pre">deploy</span></code> on an <code class="docutils literal notranslate"><span class="pre">PyTorch</span></code>
+Estimator. The model server runs inside a SageMaker Endpoint, which your call to <code class="docutils literal notranslate"><span class="pre">deploy</span></code> creates.
+You can access the name of the Endpoint by the <code class="docutils literal notranslate"><span class="pre">name</span></code> property on the returned <code class="docutils literal notranslate"><span class="pre">Predictor</span></code>.</p>
+<div class="section" id="elastic-inference">
+<h3><a class="toc-backref" href="using_pytorch.html#id28">Elastic Inference</a><a class="headerlink" href="using_pytorch.html#elastic-inference" title="Permalink to this headline">¶</a></h3>
+<p>PyTorch on Amazon SageMaker has support for <a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/ei.html">Elastic Inference</a>, which allows for inference acceleration to a hosted endpoint for a fraction of the cost of using a full GPU instance.
+In order to attach an Elastic Inference accelerator to your endpoint provide the accelerator type to <code class="docutils literal notranslate"><span class="pre">accelerator_type</span></code> to your <code class="docutils literal notranslate"><span class="pre">deploy</span></code> call.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">predictor</span> <span class="o">=</span> <span class="n">pytorch_estimator</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span><span class="n">instance_type</span><span class="o">=</span><span class="s1">&#39;ml.m4.xlarge&#39;</span><span class="p">,</span>
+                                     <span class="n">initial_instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                     <span class="n">accelerator_type</span><span class="o">=</span><span class="s1">&#39;ml.eia2.medium&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="model-directory-structure">
+<h3><a class="toc-backref" href="using_pytorch.html#id29">Model Directory Structure</a><a class="headerlink" href="using_pytorch.html#model-directory-structure" title="Permalink to this headline">¶</a></h3>
+<p>In general, if you use the same version of PyTorch for both training and inference with the SageMaker Python SDK,
+the SDK should take care of ensuring that the contents of your <code class="docutils literal notranslate"><span class="pre">model.tar.gz</span></code> file are organized correctly.</p>
+<div class="section" id="for-versions-1-2-and-higher">
+<h4><a class="toc-backref" href="using_pytorch.html#id30">For versions 1.2 and higher</a><a class="headerlink" href="using_pytorch.html#for-versions-1-2-and-higher" title="Permalink to this headline">¶</a></h4>
+<p>For PyTorch versions 1.2 and higher, the contents of <code class="docutils literal notranslate"><span class="pre">model.tar.gz</span></code> should be organized as follows:</p>
+<ul class="simple">
+<li><p>Model files in the top-level directory</p></li>
+<li><p>Inference script (and any other source files) in a directory named <code class="docutils literal notranslate"><span class="pre">code/</span></code> (for more about the inference script, see <a class="reference external" href="using_pytorch.html#the-sagemaker-pytorch-model-server">The SageMaker PyTorch Model Server</a>)</p></li>
+<li><p>Optional requirements file located at <code class="docutils literal notranslate"><span class="pre">code/requirements.txt</span></code> (for more about requirements files, see <a class="reference external" href="using_pytorch.html#using-third-party-libraries">Using third-party libraries</a>)</p></li>
+</ul>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span><span class="o">/</span>
+<span class="o">|-</span> <span class="n">model</span><span class="o">.</span><span class="n">pth</span>
+<span class="o">|-</span> <span class="n">code</span><span class="o">/</span>
+  <span class="o">|-</span> <span class="n">inference</span><span class="o">.</span><span class="n">py</span>
+  <span class="o">|-</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>  <span class="c1"># only for versions 1.3.1 and higher</span>
+</pre></div>
+</div>
+<p>In this example, <code class="docutils literal notranslate"><span class="pre">model.pth</span></code> is the model file saved from training, <code class="docutils literal notranslate"><span class="pre">inference.py</span></code> is the inference script, and <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> is a requirements file.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">PyTorch</span></code> and <code class="docutils literal notranslate"><span class="pre">PyTorchModel</span></code> classes repack <code class="docutils literal notranslate"><span class="pre">model.tar.gz</span></code> to include the inference script (and related files),
+as long as the <code class="docutils literal notranslate"><span class="pre">framework_version</span></code> is set to 1.2 or higher.</p>
+</div>
+<div class="section" id="for-versions-1-1-and-lower">
+<h4><a class="toc-backref" href="using_pytorch.html#id31">For versions 1.1 and lower</a><a class="headerlink" href="using_pytorch.html#for-versions-1-1-and-lower" title="Permalink to this headline">¶</a></h4>
+<p>For PyTorch versions 1.1 and lower, <code class="docutils literal notranslate"><span class="pre">model.tar.gz</span></code> should contain only the model files,
+while your inference script and optional requirements file are packed in a separate tarball, named <code class="docutils literal notranslate"><span class="pre">sourcedir.tar.gz</span></code> by default.</p>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span><span class="o">/</span>
+<span class="o">|-</span> <span class="n">model</span><span class="o">.</span><span class="n">pth</span>
+
+<span class="n">sourcedir</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span><span class="o">/</span>
+<span class="o">|-</span> <span class="n">script</span><span class="o">.</span><span class="n">py</span>
+<span class="o">|-</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>In this example, <code class="docutils literal notranslate"><span class="pre">model.pth</span></code> is the model file saved from training, <code class="docutils literal notranslate"><span class="pre">script.py</span></code> is the inference script, and <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> is a requirements file.</p>
+</div>
+</div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="using_pytorch.html#id32">The SageMaker PyTorch Model Server</a><a class="headerlink" href="using_pytorch.html#id4" title="Permalink to this headline">¶</a></h3>
+<p>The PyTorch Endpoint you create with <code class="docutils literal notranslate"><span class="pre">deploy</span></code> runs a SageMaker PyTorch model server.
+The model server loads the model that was saved by your training script and performs inference on the model in response
+to SageMaker InvokeEndpoint API calls.</p>
+<p>You can configure two components of the SageMaker PyTorch model server: Model loading and model serving.
+Model loading is the process of deserializing your saved model back into a PyTorch model.
+Serving is the process of translating InvokeEndpoint requests to inference calls on the loaded model.</p>
+<p>You configure the PyTorch model server by defining functions in the Python source file you passed to the PyTorch constructor.</p>
+<div class="section" id="load-a-model">
+<h4><a class="toc-backref" href="using_pytorch.html#id33">Load a Model</a><a class="headerlink" href="using_pytorch.html#load-a-model" title="Permalink to this headline">¶</a></h4>
+<p>Before a model can be served, it must be loaded. The SageMaker PyTorch model server loads your model by invoking a
+<code class="docutils literal notranslate"><span class="pre">model_fn</span></code> function that you must provide in your script when you are not using Elastic Inference. The <code class="docutils literal notranslate"><span class="pre">model_fn</span></code> should have the following signature:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">model_fn</span><span class="p">(</span><span class="n">model_dir</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">context</span></code> is an optional argument that contains additional serving information, such as the GPU ID and batch size.
+If specified in the function declaration, the context will be created and passed to the function by SageMaker.
+For more information about <code class="docutils literal notranslate"><span class="pre">context</span></code>, see the <a class="reference external" href="https://github.com/pytorch/serve/blob/master/ts/context.py">Serving Context class</a>.</p>
+<p>SageMaker will inject the directory where your model files and sub-directories, saved by <code class="docutils literal notranslate"><span class="pre">save</span></code>, have been mounted.
+Your model function should return a model object that can be used for model serving.</p>
+<p>The following code-snippet shows an example <code class="docutils literal notranslate"><span class="pre">model_fn</span></code> implementation.
+It loads the model parameters from a <code class="docutils literal notranslate"><span class="pre">model.pth</span></code> file in the SageMaker model directory <code class="docutils literal notranslate"><span class="pre">model_dir</span></code>. As explained in the preceding example,
+<code class="docutils literal notranslate"><span class="pre">context</span></code> is an optional argument that passes additional information.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">def</span> <span class="nf">model_fn</span><span class="p">(</span><span class="n">model_dir</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">Your_Model</span><span class="p">()</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_dir</span><span class="p">,</span> <span class="s1">&#39;model.pth&#39;</span><span class="p">),</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">model</span>
+</pre></div>
+</div>
+<p>However, if you are using PyTorch Elastic Inference 1.3.1, you do not have to provide a <code class="docutils literal notranslate"><span class="pre">model_fn</span></code> since the PyTorch serving
+container has a default one for you. But please note that if you are utilizing the default <code class="docutils literal notranslate"><span class="pre">model_fn</span></code>, please save
+your ScriptModule as <code class="docutils literal notranslate"><span class="pre">model.pt</span></code>. If you are implementing your own <code class="docutils literal notranslate"><span class="pre">model_fn</span></code>, please use TorchScript and <code class="docutils literal notranslate"><span class="pre">torch.jit.save</span></code>
+to save your ScriptModule, then load it in your <code class="docutils literal notranslate"><span class="pre">model_fn</span></code> with <code class="docutils literal notranslate"><span class="pre">torch.jit.load(...,</span> <span class="pre">map_location=torch.device('cpu'))</span></code>.</p>
+<p>If you are using PyTorch Elastic Inference 1.5.1, you should provide <code class="docutils literal notranslate"><span class="pre">model_fn</span></code> like below in your script to use new api <code class="docutils literal notranslate"><span class="pre">attach_eia</span></code>. Reference can be find in <a class="reference external" href="https://docs.aws.amazon.com/elastic-inference/latest/developerguide/ei-pytorch-using.html">Elastic Inference documentation</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+
+
+<span class="k">def</span> <span class="nf">model_fn</span><span class="p">(</span><span class="n">model_dir</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">jit</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;model.pth&#39;</span><span class="p">,</span> <span class="n">map_location</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cpu&#39;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">__version__</span> <span class="o">==</span> <span class="s1">&#39;1.5.1&#39;</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">torcheia</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="c1"># attach_eia() is introduced in PyTorch Elastic Inference 1.5.1,</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">torcheia</span><span class="o">.</span><span class="n">jit</span><span class="o">.</span><span class="n">attach_eia</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">model</span>
+</pre></div>
+</div>
+<p>The client-side Elastic Inference framework is CPU-only, even though inference still happens in a CUDA context on the server. Thus, the default <code class="docutils literal notranslate"><span class="pre">model_fn</span></code> for Elastic Inference loads the model to CPU. Tracing models may lead to tensor creation on a specific device, which may cause device-related errors when loading a model onto a different device. Providing an explicit <code class="docutils literal notranslate"><span class="pre">map_location=torch.device('cpu')</span></code> argument forces all tensors to CPU.</p>
+<p>For more information on the default inference handler functions, please refer to:
+<a class="reference external" href="https://github.com/aws/sagemaker-pytorch-inference-toolkit/blob/master/src/sagemaker_pytorch_serving_container/default_pytorch_inference_handler.py">SageMaker PyTorch Default Inference Handler</a>.</p>
+</div>
+<div class="section" id="serve-a-pytorch-model">
+<h4><a class="toc-backref" href="using_pytorch.html#id34">Serve a PyTorch Model</a><a class="headerlink" href="using_pytorch.html#serve-a-pytorch-model" title="Permalink to this headline">¶</a></h4>
+<p>After the SageMaker model server has loaded your model by calling <code class="docutils literal notranslate"><span class="pre">model_fn</span></code>, SageMaker will serve your model.
+Model serving is the process of responding to inference requests, received by SageMaker InvokeEndpoint API calls.
+The SageMaker PyTorch model server breaks request handling into three steps:</p>
+<ul class="simple">
+<li><p>input processing,</p></li>
+<li><p>prediction, and</p></li>
+<li><p>output processing.</p></li>
+</ul>
+<p>In a similar way to model loading, you configure these steps by defining functions in your Python source file.</p>
+<p>Each step involves invoking a python function, with information about the request and the return value from the previous
+function in the chain. Inside the SageMaker PyTorch model server, the process looks like:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Deserialize the Invoke request body into an object we can perform prediction on</span>
+<span class="n">input_object</span> <span class="o">=</span> <span class="n">input_fn</span><span class="p">(</span><span class="n">request_body</span><span class="p">,</span> <span class="n">request_content_type</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+
+<span class="c1"># Perform prediction on the deserialized object, with the loaded model</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">predict_fn</span><span class="p">(</span><span class="n">input_object</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+
+<span class="c1"># Serialize the prediction result into the desired response content type</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">output_fn</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">response_content_type</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The above code sample shows the three function definitions:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">input_fn</span></code>: Takes request data and deserializes the data into an
+object for prediction.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">predict_fn</span></code>: Takes the deserialized request object and performs
+inference against the loaded model.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output_fn</span></code>: Takes the result of prediction and serializes this
+according to the response content type.</p></li>
+</ul>
+<p>The SageMaker PyTorch model server provides default implementations of these functions.
+You can provide your own implementations for these functions in your hosting script.
+If you omit any definition then the SageMaker PyTorch model server will use its default implementation for that
+function.
+If you use PyTorch Elastic Inference 1.5.1, remember to implement <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code> yourself.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Predictor</span></code> used by PyTorch in the SageMaker Python SDK serializes NumPy arrays to the <a class="reference external" href="https://docs.scipy.org/doc/numpy/neps/npy-format.html">NPY</a> format
+by default, with Content-Type <code class="docutils literal notranslate"><span class="pre">application/x-npy</span></code>. The SageMaker PyTorch model server can deserialize NPY-formatted
+data (along with JSON and CSV data).</p>
+<p>If you rely solely on the SageMaker PyTorch model server defaults, you get the following functionality:</p>
+<ul class="simple">
+<li><p>Prediction on models that implement the <code class="docutils literal notranslate"><span class="pre">__call__</span></code> method</p></li>
+<li><p>Serialization and deserialization of torch.Tensor.</p></li>
+</ul>
+<p>The default <code class="docutils literal notranslate"><span class="pre">input_fn</span></code> and <code class="docutils literal notranslate"><span class="pre">output_fn</span></code> are meant to make it easy to predict on torch.Tensors. If your model expects
+a torch.Tensor and returns a torch.Tensor, then these functions do not have to be overridden when sending NPY-formatted
+data.</p>
+<p>In the following sections we describe the default implementations of input_fn, predict_fn, and output_fn.
+We describe the input arguments and expected return types of each, so you can define your own implementations.</p>
+<div class="section" id="process-model-input">
+<h5><a class="toc-backref" href="using_pytorch.html#id35">Process Model Input</a><a class="headerlink" href="using_pytorch.html#process-model-input" title="Permalink to this headline">¶</a></h5>
+<p>When an InvokeEndpoint operation is made against an Endpoint running a SageMaker PyTorch model server,
+the model server receives two pieces of information:</p>
+<ul class="simple">
+<li><p>The request Content-Type, for example “application/x-npy”</p></li>
+<li><p>The request data body, a byte array</p></li>
+</ul>
+<p>The SageMaker PyTorch model server will invoke an <code class="docutils literal notranslate"><span class="pre">input_fn</span></code> function in your hosting script,
+passing in this information. If you define an <code class="docutils literal notranslate"><span class="pre">input_fn</span></code> function definition,
+it should return an object that can be passed to <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code> and have the following signature:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">input_fn</span><span class="p">(</span><span class="n">request_body</span><span class="p">,</span> <span class="n">request_content_type</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">request_body</span></code> is a byte buffer and <code class="docutils literal notranslate"><span class="pre">request_content_type</span></code> is a Python string.</p>
+<p><code class="docutils literal notranslate"><span class="pre">context</span></code> is an optional argument that contains additional serving information, such as the GPU ID and batch size.
+If specified in the function declaration, the context will be created and passed to the function by SageMaker.
+For more information about <code class="docutils literal notranslate"><span class="pre">context</span></code>, see the <a class="reference external" href="https://github.com/pytorch/serve/blob/master/ts/context.py">Serving Context class</a>.</p>
+<p>The SageMaker PyTorch model server provides a default implementation of <code class="docutils literal notranslate"><span class="pre">input_fn</span></code>.
+This function deserializes JSON, CSV, or NPY encoded data into a torch.Tensor.</p>
+<p>Default NPY deserialization requires <code class="docutils literal notranslate"><span class="pre">request_body</span></code> to follow the <a class="reference external" href="https://docs.scipy.org/doc/numpy/neps/npy-format.html">NPY</a> format. For PyTorch, the Python SDK
+defaults to sending prediction requests with this format.</p>
+<p>Default JSON deserialization requires <code class="docutils literal notranslate"><span class="pre">request_body</span></code> contain a single json list.
+Sending multiple JSON objects within the same <code class="docutils literal notranslate"><span class="pre">request_body</span></code> is not supported.
+The list must have a dimensionality compatible with the model loaded in <code class="docutils literal notranslate"><span class="pre">model_fn</span></code>.
+The list’s shape must be identical to the model’s input shape, for all dimensions after the first (which first
+dimension is the batch size).</p>
+<p>Default csv deserialization requires <code class="docutils literal notranslate"><span class="pre">request_body</span></code> contain one or more lines of CSV numerical data.
+The data is loaded into a two-dimensional array, where each line break defines the boundaries of the first dimension.</p>
+<p>The example below shows a custom <code class="docutils literal notranslate"><span class="pre">input_fn</span></code> for preparing pickled torch.Tensor.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">six</span> <span class="kn">import</span> <span class="n">BytesIO</span>
+
+<span class="k">def</span> <span class="nf">input_fn</span><span class="p">(</span><span class="n">request_body</span><span class="p">,</span> <span class="n">request_content_type</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An input_fn that loads a pickled tensor&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">request_content_type</span> <span class="o">==</span> <span class="s1">&#39;application/python-pickle&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">request_body</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Handle other content-types here or raise an Exception</span>
+        <span class="c1"># if the content type is not supported.</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-predictions-from-a-pytorch-model">
+<h5><a class="toc-backref" href="using_pytorch.html#id36">Get Predictions from a PyTorch Model</a><a class="headerlink" href="using_pytorch.html#get-predictions-from-a-pytorch-model" title="Permalink to this headline">¶</a></h5>
+<p>After the inference request has been deserialized by <code class="docutils literal notranslate"><span class="pre">input_fn</span></code>, the SageMaker PyTorch model server invokes
+<code class="docutils literal notranslate"><span class="pre">predict_fn</span></code> on the return value of <code class="docutils literal notranslate"><span class="pre">input_fn</span></code>.</p>
+<p>As with <code class="docutils literal notranslate"><span class="pre">input_fn</span></code>, you can define your own <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code> or use the SageMaker PyTorch model server default.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code> function has the following signature:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">predict_fn</span><span class="p">(</span><span class="n">input_object</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">input_object</span></code> is the object returned from <code class="docutils literal notranslate"><span class="pre">input_fn</span></code> and
+<code class="docutils literal notranslate"><span class="pre">model</span></code> is the model loaded by <code class="docutils literal notranslate"><span class="pre">model_fn</span></code>.
+If you are using multiple GPUs, then specify the <code class="docutils literal notranslate"><span class="pre">context</span></code> argument, which contains information such as the GPU ID for a dynamically-selected GPU and the batch size.
+One of the examples below demonstrates how to configure <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code> with the <code class="docutils literal notranslate"><span class="pre">context</span></code> argument to handle multiple GPUs. For more information about <code class="docutils literal notranslate"><span class="pre">context</span></code>, see the <a class="reference external" href="https://github.com/pytorch/serve/blob/master/ts/context.py">Serving Context class</a>.
+If you are using CPUs or a single GPU, then you do not need to specify the <code class="docutils literal notranslate"><span class="pre">context</span></code> argument.</p>
+<p>The default implementation of <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code> invokes the loaded model’s <code class="docutils literal notranslate"><span class="pre">__call__</span></code> function on <code class="docutils literal notranslate"><span class="pre">input_object</span></code>,
+and returns the resulting value. The return-type should be a torch.Tensor to be compatible with the default
+<code class="docutils literal notranslate"><span class="pre">output_fn</span></code>.</p>
+<p>The following example shows an overridden <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">predict_fn</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s1">&#39;cuda&#39;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;cpu&#39;</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">model</span><span class="p">(</span><span class="n">input_data</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The following example is for use cases with multiple GPUs and shows an overridden <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code> that uses the <code class="docutils literal notranslate"><span class="pre">context</span></code> argument to dynamically select a GPU device for making predictions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">predict_fn</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">system_properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;gpu_id&quot;</span><span class="p">))</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">model</span><span class="p">(</span><span class="n">input_data</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>If you implement your own prediction function, you should take care to ensure that:</p>
+<ul class="simple">
+<li><p>The first argument is expected to be the return value from input_fn.
+If you use the default input_fn, this will be a torch.Tensor.</p></li>
+<li><p>The second argument is the loaded model.</p></li>
+<li><p>The return value should be of the correct type to be passed as the
+first argument to <code class="docutils literal notranslate"><span class="pre">output_fn</span></code>. If you use the default
+<code class="docutils literal notranslate"><span class="pre">output_fn</span></code>, this should be a torch.Tensor.</p></li>
+</ul>
+<p>The default Elastic Inference <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code> is similar but runs the TorchScript model using <code class="docutils literal notranslate"><span class="pre">torch.jit.optimized_execution</span></code>.
+If you are implementing your own <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code>, please also use the <code class="docutils literal notranslate"><span class="pre">torch.jit.optimized_execution</span></code>
+block, for example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">predict_fn</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">input_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">jit</span><span class="o">.</span><span class="n">optimized_execution</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;target_device&quot;</span><span class="p">:</span> <span class="s2">&quot;eia:0&quot;</span><span class="p">}):</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you use PyTorch Elastic Inference 1.5.1, please implement your own <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code> like below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+
+
+<span class="k">def</span> <span class="nf">predict_fn</span><span class="p">(</span><span class="n">input_data</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+    <span class="n">input_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="c1"># make sure torcheia is imported so that Elastic Inference api call will be invoked</span>
+    <span class="kn">import</span> <span class="nn">torcheia</span>
+    <span class="c1"># we need to set the profiling executor for EIA</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">_C</span><span class="o">.</span><span class="n">_jit_set_profiling_executor</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">jit</span><span class="o">.</span><span class="n">optimized_execution</span><span class="p">(</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="process-model-output">
+<h5><a class="toc-backref" href="using_pytorch.html#id37">Process Model Output</a><a class="headerlink" href="using_pytorch.html#process-model-output" title="Permalink to this headline">¶</a></h5>
+<p>After invoking <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code>, the model server invokes <code class="docutils literal notranslate"><span class="pre">output_fn</span></code>, passing in the return value from <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code>
+and the content type for the response, as specified by the InvokeEndpoint request.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">output_fn</span></code> has the following signature:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">output_fn</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">content_type</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">prediction</span></code> is the result of invoking <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code> and
+the content type for the response, as specified by the InvokeEndpoint request. The function should return a byte array of data serialized to <code class="docutils literal notranslate"><span class="pre">content_type</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">context</span></code> is an optional argument that contains additional serving information, such as the GPU ID and batch size.
+If specified in the function declaration, the context will be created and passed to the function by SageMaker.
+For more information about <code class="docutils literal notranslate"><span class="pre">context</span></code>, see the <a class="reference external" href="https://github.com/pytorch/serve/blob/master/ts/context.py">Serving Context class</a>.</p>
+<p>The default implementation expects <code class="docutils literal notranslate"><span class="pre">prediction</span></code> to be a torch.Tensor and can serialize the result to JSON, CSV, or NPY.
+It accepts response content types of “application/json”, “text/csv”, and “application/x-npy”.</p>
+</div>
+</div>
+</div>
+<div class="section" id="bring-your-own-model">
+<h3><a class="toc-backref" href="using_pytorch.html#id38">Bring your own model</a><a class="headerlink" href="using_pytorch.html#bring-your-own-model" title="Permalink to this headline">¶</a></h3>
+<p>You can deploy a PyTorch model that you trained outside of SageMaker by using the <code class="docutils literal notranslate"><span class="pre">PyTorchModel</span></code> class.
+Typically, you save a PyTorch model as a file with extension <code class="docutils literal notranslate"><span class="pre">.pt</span></code> or <code class="docutils literal notranslate"><span class="pre">.pth</span></code>.
+To do this, you need to:</p>
+<ul class="simple">
+<li><p>Write an inference script.</p></li>
+<li><p>Create the directory structure for your model files.</p></li>
+<li><p>Create the <code class="docutils literal notranslate"><span class="pre">PyTorchModel</span></code> object.</p></li>
+</ul>
+<div class="section" id="write-an-inference-script">
+<h4><a class="toc-backref" href="using_pytorch.html#id39">Write an inference script</a><a class="headerlink" href="using_pytorch.html#write-an-inference-script" title="Permalink to this headline">¶</a></h4>
+<p>You must create an inference script that implements (at least) the <code class="docutils literal notranslate"><span class="pre">model_fn</span></code> function that calls the loaded model to get a prediction.</p>
+<p><strong>Note</strong>: If you use elastic inference with PyTorch, you can use the default <code class="docutils literal notranslate"><span class="pre">model_fn</span></code> implementation provided in the serving container.</p>
+<p>Optionally, you can also implement <code class="docutils literal notranslate"><span class="pre">input_fn</span></code> and <code class="docutils literal notranslate"><span class="pre">output_fn</span></code> to process input and output,
+and <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code> to customize how the model server gets predictions from the loaded model.
+For information about how to write an inference script, see <a class="reference external" href="using_pytorch.html#serve-a-pytorch-model">Serve a PyTorch Model</a>.
+Save the inference script in the same folder where you saved your PyTorch model.
+Pass the filename of the inference script as the <code class="docutils literal notranslate"><span class="pre">entry_point</span></code> parameter when you create the <code class="docutils literal notranslate"><span class="pre">PyTorchModel</span></code> object.</p>
+</div>
+<div class="section" id="create-the-directory-structure-for-your-model-files">
+<h4><a class="toc-backref" href="using_pytorch.html#id40">Create the directory structure for your model files</a><a class="headerlink" href="using_pytorch.html#create-the-directory-structure-for-your-model-files" title="Permalink to this headline">¶</a></h4>
+<p>You have to create a directory structure and place your model files in the correct location.
+The <code class="docutils literal notranslate"><span class="pre">PyTorchModel</span></code> constructor packs the files into a <code class="docutils literal notranslate"><span class="pre">tar.gz</span></code> file and uploads it to S3.</p>
+<p>The directory structure where you saved your PyTorch model should look something like the following:</p>
+<p><strong>Note:</strong> This directory struture is for PyTorch versions 1.2 and higher.
+For the directory structure for versions 1.1 and lower,
+see <a class="reference external" href="using_pytorch.html#for-versions-1.1-and-lower">For versions 1.1 and lower</a>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">|</span>   <span class="n">my_model</span>
+<span class="o">|</span>           <span class="o">|--</span><span class="n">model</span><span class="o">.</span><span class="n">pth</span>
+<span class="o">|</span>
+<span class="o">|</span>           <span class="n">code</span>
+<span class="o">|</span>               <span class="o">|--</span><span class="n">inference</span><span class="o">.</span><span class="n">py</span>
+<span class="o">|</span>               <span class="o">|--</span><span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> is an optional file that specifies dependencies on third-party libraries.</p>
+</div>
+<div class="section" id="create-a-pytorchmodel-object">
+<h4><a class="toc-backref" href="using_pytorch.html#id41">Create a <code class="docutils literal notranslate"><span class="pre">PyTorchModel</span></code> object</a><a class="headerlink" href="using_pytorch.html#create-a-pytorchmodel-object" title="Permalink to this headline">¶</a></h4>
+<p>Now call the <a class="reference internal" href="sagemaker.pytorch.html#sagemaker.pytorch.model.PyTorchModel" title="sagemaker.pytorch.model.PyTorchModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">sagemaker.pytorch.model.PyTorchModel</span></code></a> constructor to create a model object, and then call its <code class="docutils literal notranslate"><span class="pre">deploy()</span></code> method to deploy your model for inference.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sagemaker</span> <span class="kn">import</span> <span class="n">get_execution_role</span>
+<span class="n">role</span> <span class="o">=</span> <span class="n">get_execution_role</span><span class="p">()</span>
+
+<span class="n">pytorch_model</span> <span class="o">=</span> <span class="n">PyTorchModel</span><span class="p">(</span><span class="n">model_data</span><span class="o">=</span><span class="s1">&#39;s3://my-bucket/my-path/model.tar.gz&#39;</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">role</span><span class="p">,</span>
+                             <span class="n">entry_point</span><span class="o">=</span><span class="s1">&#39;inference.py&#39;</span><span class="p">)</span>
+
+<span class="n">predictor</span> <span class="o">=</span> <span class="n">pytorch_model</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span><span class="n">instance_type</span><span class="o">=</span><span class="s1">&#39;ml.c4.xlarge&#39;</span><span class="p">,</span> <span class="n">initial_instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now you can call the <code class="docutils literal notranslate"><span class="pre">predict()</span></code> method to get predictions from your deployed model.</p>
+</div>
+</div>
+</div>
+<div class="section" id="attach-an-estimator-to-an-existing-training-job">
+<h2><a class="toc-backref" href="using_pytorch.html#id42">Attach an estimator to an existing training job</a><a class="headerlink" href="using_pytorch.html#attach-an-estimator-to-an-existing-training-job" title="Permalink to this headline">¶</a></h2>
+<p>You can attach a PyTorch Estimator to an existing training job using the
+<code class="docutils literal notranslate"><span class="pre">attach</span></code> method.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_training_job_name</span> <span class="o">=</span> <span class="s1">&#39;MyAwesomePyTorchTrainingJob&#39;</span>
+<span class="n">pytorch_estimator</span> <span class="o">=</span> <span class="n">PyTorch</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">my_training_job_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>After attaching, if the training job has finished with job status “Completed”, it can be
+<code class="docutils literal notranslate"><span class="pre">deploy</span></code>ed to create a SageMaker Endpoint and return a
+<code class="docutils literal notranslate"><span class="pre">Predictor</span></code>. If the training job is in progress,
+attach will block and display log messages from the training job, until the training job completes.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">attach</span></code> method accepts the following arguments:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">training_job_name:</span></code> The name of the training job to attach
+to.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sagemaker_session:</span></code> The Session used
+to interact with SageMaker</p></li>
+</ul>
+</div>
+<div class="section" id="pytorch-training-examples">
+<h2><a class="toc-backref" href="using_pytorch.html#id43">PyTorch Training Examples</a><a class="headerlink" href="using_pytorch.html#pytorch-training-examples" title="Permalink to this headline">¶</a></h2>
+<p>Amazon provides several example Jupyter notebooks that demonstrate end-to-end training on Amazon SageMaker using PyTorch.
+Please refer to:</p>
+<p><a class="reference external" href="https://github.com/awslabs/amazon-sagemaker-examples/tree/master/sagemaker-python-sdk">https://github.com/awslabs/amazon-sagemaker-examples/tree/master/sagemaker-python-sdk</a></p>
+<p>These are also available in SageMaker Notebook Instance hosted Jupyter notebooks under the sample notebooks folder.</p>
+</div>
+<div class="section" id="sagemaker-pytorch-classes">
+<h2><a class="toc-backref" href="using_pytorch.html#id44">SageMaker PyTorch Classes</a><a class="headerlink" href="using_pytorch.html#sagemaker-pytorch-classes" title="Permalink to this headline">¶</a></h2>
+<p>For information about the different PyTorch-related classes in the SageMaker Python SDK, see <a class="reference external" href="sagemaker.pytorch.html">https://sagemaker.readthedocs.io/en/stable/frameworks/pytorch/sagemaker.pytorch.html</a>.</p>
+</div>
+<div class="section" id="id11">
+<h2><a class="toc-backref" href="using_pytorch.html#id45">SageMaker PyTorch Docker Containers</a><a class="headerlink" href="using_pytorch.html#id11" title="Permalink to this headline">¶</a></h2>
+<p>For information about the SageMaker PyTorch containers, see:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/aws/sagemaker-pytorch-container">SageMaker PyTorch training toolkit</a></p></li>
+<li><p><a class="reference external" href="https://github.com/aws/sagemaker-pytorch-serving-container">SageMaker PyTorch serving toolkit</a></p></li>
+<li><p><a class="reference external" href="https://github.com/aws/deep-learning-containers/tree/master/pytorch">Deep Learning Container (DLC) Dockerfiles for PyTorch</a></p></li>
+<li><p><a class="reference external" href="https://docs.aws.amazon.com/deep-learning-containers/latest/devguide/deep-learning-containers-images.html">Deep Learning Container (DLC) Images</a> and <a class="reference external" href="https://docs.aws.amazon.com/deep-learning-containers/latest/devguide/dlc-release-notes.html">release notes</a></p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../rl/index.html" class="btn btn-neutral float-right" title="Reinforcement Learning" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sagemaker.pytorch.html" class="btn btn-neutral float-left" title="PyTorch" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2023, Amazon
+      <span class="commit">
+        
+        Revision <code>f2ae8ff8</code>.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: stable
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="../../index.html">stable</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.182.0/">v2.182.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.181.0/">v2.181.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.180.0/">v2.180.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.179.0/">v2.179.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.178.0/">v2.178.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.177.1/">v2.177.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.177.0/">v2.177.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.176.0/">v2.176.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.175.0/">v2.175.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.174.0/">v2.174.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.173.0/">v2.173.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.172.0/">v2.172.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.171.0/">v2.171.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.170.0/">v2.170.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.169.0/">v2.169.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.168.0/">v2.168.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.167.0/">v2.167.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.166.0/">v2.166.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.165.0/">v2.165.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.164.0/">v2.164.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.163.0/">v2.163.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.162.0/">v2.162.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.161.0/">v2.161.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.160.0/">v2.160.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.159.0/">v2.159.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.158.0/">v2.158.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.157.0/">v2.157.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.156.0/">v2.156.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.155.0/">v2.155.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.154.0/">v2.154.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.153.0/">v2.153.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.152.0/">v2.152.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.151.0/">v2.151.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.150.0/">v2.150.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.149.0/">v2.149.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.148.0/">v2.148.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.147.0/">v2.147.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.146.1/">v2.146.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.146.0/">v2.146.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.145.0/">v2.145.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.144.0/">v2.144.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.143.0/">v2.143.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.142.0/">v2.142.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.141.0/">v2.141.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.140.1/">v2.140.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.140.0/">v2.140.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.139.0/">v2.139.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.138.0/">v2.138.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.137.0/">v2.137.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.136.0/">v2.136.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.135.1.post0/">v2.135.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.135.1/">v2.135.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.135.0/">v2.135.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.134.1/">v2.134.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.134.0/">v2.134.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.133.0/">v2.133.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.132.0/">v2.132.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.131.1/">v2.131.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.131.0/">v2.131.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.130.0/">v2.130.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.129.0/">v2.129.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.128.0/">v2.128.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.127.0/">v2.127.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.126.0/">v2.126.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.125.0/">v2.125.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.124.0/">v2.124.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.123.0/">v2.123.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.122.0/">v2.122.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.121.2/">v2.121.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.121.1/">v2.121.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.121.0/">v2.121.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.120.0/">v2.120.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.119.0/">v2.119.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.118.0/">v2.118.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.117.0/">v2.117.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.116.0/">v2.116.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.115.0/">v2.115.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.114.0/">v2.114.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.113.0/">v2.113.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.112.2/">v2.112.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.112.1/">v2.112.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.112.0/">v2.112.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.111.0/">v2.111.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.110.0/">v2.110.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.109.0/">v2.109.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.108.0/">v2.108.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.107.0/">v2.107.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.106.0/">v2.106.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.105.0/">v2.105.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.104.0/">v2.104.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.103.0/">v2.103.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.102.0/">v2.102.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.101.1/">v2.101.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.101.0/">v2.101.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.100.0/">v2.100.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.99.0/">v2.99.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.98.0/">v2.98.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.97.0/">v2.97.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.96.0/">v2.96.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.95.0/">v2.95.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.94.0/">v2.94.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.93.1/">v2.93.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.93.0/">v2.93.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.92.2/">v2.92.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.92.1/">v2.92.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.92.0/">v2.92.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.91.1/">v2.91.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.91.0/">v2.91.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.90.0/">v2.90.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.89.0/">v2.89.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.3/">v2.88.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.2/">v2.88.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.1/">v2.88.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.0/">v2.88.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.87.0/">v2.87.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.86.2/">v2.86.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.86.1/">v2.86.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.86.0/">v2.86.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.85.0/">v2.85.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.84.0/">v2.84.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.83.0/">v2.83.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.82.2/">v2.82.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.82.1/">v2.82.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.82.0/">v2.82.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.81.1/">v2.81.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.81.0/">v2.81.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.80.0/">v2.80.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.79.0/">v2.79.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.78.0/">v2.78.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.77.1/">v2.77.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.77.0/">v2.77.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.76.0/">v2.76.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.75.1/">v2.75.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.75.0/">v2.75.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.74.0/">v2.74.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.73.0/">v2.73.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.3/">v2.72.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.2/">v2.72.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.1/">v2.72.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.0/">v2.72.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.71.0/">v2.71.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.70.0/">v2.70.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.69.0/">v2.69.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.68.0/">v2.68.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.67.0/">v2.67.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.2.post0/">v2.66.2.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.2/">v2.66.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.1/">v2.66.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.0/">v2.66.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.65.0/">v2.65.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.64.0/">v2.64.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.63.2/">v2.63.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.63.1/">v2.63.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.63.0/">v2.63.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.62.0/">v2.62.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.61.0/">v2.61.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.60.0/">v2.60.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.8/">v2.59.8</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.7/">v2.59.7</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.6/">v2.59.6</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.5/">v2.59.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.4/">v2.59.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.3.post0/">v2.59.3.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.3/">v2.59.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.2/">v2.59.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.1.post0/">v2.59.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.1/">v2.59.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.0/">v2.59.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.58.0/">v2.58.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.57.0/">v2.57.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.56.0/">v2.56.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.55.0/">v2.55.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.54.0/">v2.54.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.53.0/">v2.53.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.2.post0/">v2.52.2.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.2/">v2.52.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.1/">v2.52.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.0/">v2.52.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.51.0/">v2.51.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.50.1/">v2.50.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.50.0/">v2.50.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.49.2/">v2.49.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.49.1/">v2.49.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.49.0/">v2.49.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.48.2/">v2.48.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.48.1/">v2.48.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.48.0/">v2.48.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.2.post0/">v2.47.2.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.2/">v2.47.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.1/">v2.47.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.0/">v2.47.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.46.1/">v2.46.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.46.0/">v2.46.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.45.0/">v2.45.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.44.0/">v2.44.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.43.0/">v2.43.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.42.1/">v2.42.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.42.0/">v2.42.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.41.0/">v2.41.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.40.0/">v2.40.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.39.1/">v2.39.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.39.0.post0/">v2.39.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.39.0/">v2.39.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.38.0/">v2.38.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.37.0/">v2.37.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.36.0/">v2.36.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.35.0/">v2.35.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.34.0/">v2.34.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.33.0/">v2.33.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.32.1/">v2.32.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.32.0/">v2.32.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.31.1/">v2.31.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.31.0/">v2.31.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.30.0/">v2.30.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.29.2/">v2.29.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.29.1/">v2.29.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.29.0/">v2.29.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.28.0/">v2.28.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.27.1/">v2.27.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.27.0/">v2.27.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.26.0/">v2.26.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.25.2/">v2.25.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.25.1/">v2.25.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.25.0/">v2.25.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.5/">v2.24.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.4/">v2.24.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.3/">v2.24.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.2/">v2.24.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.1/">v2.24.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.0/">v2.24.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.6/">v2.23.6</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.5/">v2.23.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.4.post0/">v2.23.4.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.4/">v2.23.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.3/">v2.23.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.2/">v2.23.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.1/">v2.23.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.0/">v2.23.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.22.0/">v2.22.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.21.0/">v2.21.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.20.0/">v2.20.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.19.0/">v2.19.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.18.0/">v2.18.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.17.0/">v2.17.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.4/">v2.16.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.3.post0/">v2.16.3.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.3/">v2.16.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.2/">v2.16.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.1/">v2.16.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.0.post0/">v2.16.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.0/">v2.16.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.4/">v2.15.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.3/">v2.15.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.2/">v2.15.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.1/">v2.15.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.0/">v2.15.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.14.0/">v2.14.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.13.0/">v2.13.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.12.0/">v2.12.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.11.0/">v2.11.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.10.0/">v2.10.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.9.2/">v2.9.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.9.1/">v2.9.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.9.0/">v2.9.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.8.0/">v2.8.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.7.0/">v2.7.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.6.0/">v2.6.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.5/">v2.5.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.4/">v2.5.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.3/">v2.5.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.2/">v2.5.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.1/">v2.5.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.0/">v2.5.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.4.2/">v2.4.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.4.1/">v2.4.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.4.0/">v2.4.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.3.0/">v2.3.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.2.0/">v2.2.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.1.0/">v2.1.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.1/">v2.0.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.0/">v2.0.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.0.rc1/">v2.0.0.rc1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.0.rc0/">v2.0.0.rc0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.72.1/">v1.72.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.72.0/">v1.72.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.71.1/">v1.71.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.71.0/">v1.71.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.70.2/">v1.70.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.70.1/">v1.70.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.70.0/">v1.70.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.69.0/">v1.69.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.68.0/">v1.68.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.67.1.post0/">v1.67.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.67.1/">v1.67.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.67.0/">v1.67.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.66.0/">v1.66.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.1.post1/">v1.65.1.post1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.1.post0/">v1.65.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.1/">v1.65.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.0/">v1.65.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.64.1/">v1.64.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.64.0/">v1.64.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.63.0/">v1.63.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.62.0/">v1.62.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.61.0/">v1.61.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.60.2/">v1.60.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.59.0/">v1.59.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.58.4/">v1.58.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.58.1/">v1.58.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.58.0/">v1.58.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.57.0/">v1.57.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.3/">v1.56.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.2/">v1.56.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.1.post1/">v1.56.1.post1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.1.post0/">v1.56.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.1/">v1.56.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.0/">v1.56.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.4/">v1.55.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.3/">v1.55.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.2/">v1.55.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.1/">v1.55.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.0.post0/">v1.55.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.0/">v1.55.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.54.0/">v1.54.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.53.0/">v1.53.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.52.1/">v1.52.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.52.0.post0/">v1.52.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.52.0/">v1.52.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.4/">v1.51.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.3/">v1.51.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.1/">v1.51.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.0/">v1.51.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.18.post0/">v1.50.18.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.18/">v1.50.18</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.17.post0/">v1.50.17.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.17/">v1.50.17</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.16/">v1.50.16</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.15/">v1.50.15</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.14.post0/">v1.50.14.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.14/">v1.50.14</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.13/">v1.50.13</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.12/">v1.50.12</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.11/">v1.50.11</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.10.post0/">v1.50.10.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.10/">v1.50.10</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.9.post0/">v1.50.9.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.9/">v1.50.9</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.8/">v1.50.8</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.7/">v1.50.7</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.6.post0/">v1.50.6.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.6/">v1.50.6</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.5/">v1.50.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.4/">v1.50.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.3/">v1.50.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.2/">v1.50.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.1/">v1.50.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.0/">v1.50.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.49.0/">v1.49.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.48.1/">v1.48.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.48.0/">v1.48.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.47.1/">v1.47.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.45.0/">v1.45.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.44.4/">v1.44.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.44.3/">v1.44.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.4.post1/">v1.43.4.post1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.4.post0/">v1.43.4.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.4/">v1.43.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.3/">v1.43.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.2/">v1.43.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.1/">v1.43.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.0/">v1.43.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.42.0/">v1.42.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.41.0/">v1.41.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.40.0/">v1.40.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.39.0/">v1.39.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.38.0/">v1.38.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.37.0/">v1.37.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.36.0/">v1.36.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.35.0/">v1.35.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.34.0/">v1.34.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.33.0/">v1.33.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.32.0/">v1.32.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.31.0/">v1.31.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.30.0/">v1.30.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.29.0/">v1.29.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.28.0/">v1.28.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.27.0/">v1.27.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.26.0/">v1.26.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.25.0/">v1.25.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.24.0/">v1.24.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.23.0/">v1.23.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.22.0/">v1.22.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.21.0/">v1.21.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.20.0/">v1.20.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.19.0/">v1.19.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.18.0/">v1.18.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.17.0/">v1.17.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.15.0/">v1.15.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.14.0/">v1.14.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.13.0/">v1.13.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.12.0/">v1.12.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.11.0/">v1.11.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.10.0/">v1.10.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.9.0/">v1.9.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.8.0/">v1.8.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.7.0/">v1.7.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.6.0/">v1.6.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.5.0/">v1.5.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.4.0/">v1.4.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.3.0/">v1.3.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.2.0/">v1.2.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.1.0/">v1.1.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.0.0/">v1.0.0</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+      </dl>
+      <dl>
+        
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="https://readthedocs.org/projects/sagemaker/?fromdocs=sagemaker">Project Home</a>
+          </dd>
+          <dd>
+            <a href="https://readthedocs.org/builds/sagemaker/?fromdocs=sagemaker">Builds</a>
+          </dd>
+      </dl>
+    </div>
+  </div>
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+   
+
+</body>
+</html>

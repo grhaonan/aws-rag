@@ -1,0 +1,1797 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Use MXNet with the SageMaker Python SDK &mdash; sagemaker 2.182.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pagination.css" type="text/css" />
+  <link rel="stylesheet" href="_static/search_accessories.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="https://a0.awsstatic.com/s_code/js/3.0/awshome_s_code.js"></script>
+        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+        <script src="_static/js/datatable.js"></script>
+        <script async="async" src="../../_/static/javascript/readthedocs-doc-embed.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="MXNet Classes" href="sagemaker.mxnet.html" />
+    <link rel="prev" title="Apache MXNet" href="frameworks/mxnet/index.html" /> 
+
+<!-- RTD Extra Head -->
+
+<link rel="stylesheet" href="../../_/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": true, "api_host": "https://readthedocs.org", "builder": "sphinx", "canonical_url": null, "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": null, "language": "en", "page": "frameworks/mxnet/using_mxnet", "programming_language": "py", "project": "sagemaker", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "stable"}</script>
+
+<!--
+Using this variable directly instead of using `JSON.parse` is deprecated.
+The READTHEDOCS_DATA global variable will be removed in the future.
+-->
+<script type="text/javascript">
+READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerHTML);
+</script>
+
+<script type="text/javascript" src="../../_/static/javascript/readthedocs-analytics.js" async="async"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> sagemaker
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                stable
+              </div>
+            
+          
+
+          <div role="search">
+    <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
+        <input type="text" name="q" placeholder="ex. train object detection model, pd.concat" title="Type search term here" />
+        <br />
+        <br />
+        <div style="text-align: left;">
+            <div style="font-size: 0.85rem;">Filters: </div>
+            <div style="display: inline-block;"><label style="color: white;" for="filterExample"><input type="checkbox" id="filterExample" name="filterExample">Example</label></div>
+            <div style="display: inline-block;"><label style="color: white;" for="filterAWSDevGuide"><input type="checkbox" id="filterAWSDevGuide" name="filterAWSDevGuide">Dev Guide</label></div>
+            <div style="display: inline-block;"><label style="color: white;" for="filterSDKGuide"><input type="checkbox" id="filterSDKGuide" name="filterSDKGuide">SDK Guide</label></div>
+        </div>
+        
+    </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Using the SageMaker Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="v2.html">Use Version 2.x of the SageMaker Python SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/index.html">APIs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="frameworks/index.html">Frameworks</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="frameworks/mxnet/index.html">Apache MXNet</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="using_mxnet.html#">Use MXNet with the SageMaker Python SDK</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="using_mxnet.html#train-a-model-with-mxnet">Train a Model with MXNet</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="using_mxnet.html#prepare-an-mxnet-training-script">Prepare an MXNet Training Script</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="using_mxnet.html#save-a-checkpoint">Save a Checkpoint</a></li>
+<li class="toctree-l6"><a class="reference internal" href="using_mxnet.html#save-the-model">Save the Model</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="using_mxnet.html#use-third-party-libraries">Use third-party libraries</a></li>
+<li class="toctree-l5"><a class="reference internal" href="using_mxnet.html#create-an-estimator">Create an Estimator</a></li>
+<li class="toctree-l5"><a class="reference internal" href="using_mxnet.html#distributed-training">Distributed training</a></li>
+<li class="toctree-l5"><a class="reference internal" href="using_mxnet.html#call-the-fit-method">Call the fit Method</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="using_mxnet.html#deploy-mxnet-models">Deploy MXNet models</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="using_mxnet.html#elastic-inference">Elastic Inference</a></li>
+<li class="toctree-l5"><a class="reference internal" href="using_mxnet.html#model-directory-structure">Model Directory Structure</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="using_mxnet.html#for-versions-1-4-and-higher">For versions 1.4 and higher</a></li>
+<li class="toctree-l6"><a class="reference internal" href="using_mxnet.html#for-versions-1-3-and-lower">For versions 1.3 and lower</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="using_mxnet.html#id3">The SageMaker MXNet Model Server</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="using_mxnet.html#load-a-model">Load a Model</a></li>
+<li class="toctree-l6"><a class="reference internal" href="using_mxnet.html#serve-an-mxnet-model">Serve an MXNet Model</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="using_mxnet.html#work-with-existing-model-data-and-training-jobs">Work with Existing Model Data and Training Jobs</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="using_mxnet.html#attach-to-existing-training-jobs">Attach to Existing Training Jobs</a></li>
+<li class="toctree-l5"><a class="reference internal" href="using_mxnet.html#deploy-endpoints-from-model-data">Deploy Endpoints from Model Data</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="using_mxnet.html#examples">Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="using_mxnet.html#sagemaker-mxnet-classes">SageMaker MXNet Classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="using_mxnet.html#sagemaker-mxnet-containers">SageMaker MXNet Containers</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="sagemaker.mxnet.html">MXNet Classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="frameworks/chainer/index.html">Chainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frameworks/huggingface/index.html">Hugging Face</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frameworks/pytorch/index.html">PyTorch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frameworks/rl/index.html">Reinforcement Learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frameworks/sklearn/index.html">Scikit-Learn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frameworks/sparkml/index.html">SparkML Serving</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frameworks/tensorflow/index.html">TensorFlow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frameworks/xgboost/index.html">XGBoost</a></li>
+<li class="toctree-l2"><a class="reference internal" href="frameworks/djl/index.html">Deep Java Library (DJL)</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="algorithms/index.html">Built-in Algorithms</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="workflows/index.html">Workflows</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="experiments/index.html">Amazon SageMaker Experiments</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="amazon_sagemaker_debugger.html">Amazon SageMaker Debugger</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="amazon_sagemaker_featurestore.html">Amazon SageMaker Feature Store</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="amazon_sagemaker_model_monitoring.html">Amazon SageMaker Model Monitor</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="amazon_sagemaker_processing.html">Amazon SageMaker Processing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="amazon_sagemaker_model_building_pipeline.html">Amazon SageMaker Model Building Pipeline</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">sagemaker</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="frameworks/index.html">Frameworks</a> &raquo;</li>
+        
+          <li><a href="frameworks/mxnet/index.html">Apache MXNet</a> &raquo;</li>
+        
+      <li>Use MXNet with the SageMaker Python SDK</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/aws/sagemaker-python-sdk/blob/f2ae8ff8b6ed82eb89110887eb5e74c953e6372a/doc/frameworks/mxnet/using_mxnet.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="use-mxnet-with-the-sagemaker-python-sdk">
+<h1><a class="toc-backref" href="using_mxnet.html#id4">Use MXNet with the SageMaker Python SDK</a><a class="headerlink" href="using_mxnet.html#use-mxnet-with-the-sagemaker-python-sdk" title="Permalink to this headline">¶</a></h1>
+<p>With the SageMaker Python SDK, you can train and host MXNet models on Amazon SageMaker.</p>
+<p>For information about supported versions of MXNet, see the <a class="reference external" href="https://docs.aws.amazon.com/deep-learning-containers/latest/devguide/deep-learning-containers-images.html">AWS documentation</a>.
+We recommend that you use the latest supported version because that’s where we focus our development efforts.</p>
+<p>For general information about using the SageMaker Python SDK, see <a class="reference internal" href="overview.html#using-the-sagemaker-python-sdk"><span class="std std-ref">Using the SageMaker Python SDK</span></a>.</p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="using_mxnet.html#use-mxnet-with-the-sagemaker-python-sdk" id="id4">Use MXNet with the SageMaker Python SDK</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_mxnet.html#train-a-model-with-mxnet" id="id5">Train a Model with MXNet</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_mxnet.html#prepare-an-mxnet-training-script" id="id6">Prepare an MXNet Training Script</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_mxnet.html#save-a-checkpoint" id="id7">Save a Checkpoint</a></p></li>
+<li><p><a class="reference internal" href="using_mxnet.html#save-the-model" id="id8">Save the Model</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="using_mxnet.html#use-third-party-libraries" id="id9">Use third-party libraries</a></p></li>
+<li><p><a class="reference internal" href="using_mxnet.html#create-an-estimator" id="id10">Create an Estimator</a></p></li>
+<li><p><a class="reference internal" href="using_mxnet.html#distributed-training" id="id11">Distributed training</a></p></li>
+<li><p><a class="reference internal" href="using_mxnet.html#call-the-fit-method" id="id12">Call the fit Method</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="using_mxnet.html#deploy-mxnet-models" id="id13">Deploy MXNet models</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_mxnet.html#elastic-inference" id="id14">Elastic Inference</a></p></li>
+<li><p><a class="reference internal" href="using_mxnet.html#model-directory-structure" id="id15">Model Directory Structure</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_mxnet.html#for-versions-1-4-and-higher" id="id16">For versions 1.4 and higher</a></p></li>
+<li><p><a class="reference internal" href="using_mxnet.html#for-versions-1-3-and-lower" id="id17">For versions 1.3 and lower</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="using_mxnet.html#id3" id="id18">The SageMaker MXNet Model Server</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_mxnet.html#load-a-model" id="id19">Load a Model</a></p></li>
+<li><p><a class="reference internal" href="using_mxnet.html#serve-an-mxnet-model" id="id20">Serve an MXNet Model</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_mxnet.html#use-input-fn-predict-fn-and-output-fn" id="id21">Use <code class="docutils literal notranslate"><span class="pre">input_fn</span></code>, <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code>, and <code class="docutils literal notranslate"><span class="pre">output_fn</span></code></a></p>
+<ul>
+<li><p><a class="reference internal" href="using_mxnet.html#process-model-input" id="id22">Process Model Input</a></p></li>
+<li><p><a class="reference internal" href="using_mxnet.html#predict-from-a-deployed-model" id="id23">Predict from a Deployed Model</a></p></li>
+<li><p><a class="reference internal" href="using_mxnet.html#process-model-output" id="id24">Process Model Output</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="using_mxnet.html#use-transform-fn" id="id25">Use <code class="docutils literal notranslate"><span class="pre">transform_fn</span></code></a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="using_mxnet.html#work-with-existing-model-data-and-training-jobs" id="id26">Work with Existing Model Data and Training Jobs</a></p>
+<ul>
+<li><p><a class="reference internal" href="using_mxnet.html#attach-to-existing-training-jobs" id="id27">Attach to Existing Training Jobs</a></p></li>
+<li><p><a class="reference internal" href="using_mxnet.html#deploy-endpoints-from-model-data" id="id28">Deploy Endpoints from Model Data</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="using_mxnet.html#examples" id="id29">Examples</a></p></li>
+<li><p><a class="reference internal" href="using_mxnet.html#sagemaker-mxnet-classes" id="id30">SageMaker MXNet Classes</a></p></li>
+<li><p><a class="reference internal" href="using_mxnet.html#sagemaker-mxnet-containers" id="id31">SageMaker MXNet Containers</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="train-a-model-with-mxnet">
+<h2><a class="toc-backref" href="using_mxnet.html#id5">Train a Model with MXNet</a><a class="headerlink" href="using_mxnet.html#train-a-model-with-mxnet" title="Permalink to this headline">¶</a></h2>
+<p>To train an MXNet model by using the SageMaker Python SDK:</p>
+<ol class="arabic simple">
+<li><p><a class="reference external" href="using_mxnet.html#prepare-an-mxnet-training-script">Prepare a training script</a></p></li>
+<li><p><a class="reference external" href="using_mxnet.html#create-an-estimator">Create a <code class="docutils literal notranslate"><span class="pre">sagemaker.mxnet.MXNet</span></code> Estimator</a></p></li>
+<li><p><a class="reference external" href="using_mxnet.html#call-the-fit-method">Call the estimator’s <code class="docutils literal notranslate"><span class="pre">fit</span></code> method</a></p></li>
+</ol>
+<div class="section" id="prepare-an-mxnet-training-script">
+<h3><a class="toc-backref" href="using_mxnet.html#id6">Prepare an MXNet Training Script</a><a class="headerlink" href="using_mxnet.html#prepare-an-mxnet-training-script" title="Permalink to this headline">¶</a></h3>
+<p>The training script is very similar to a training script you might run outside of Amazon SageMaker, but you can access useful properties about the training environment through various environment variables, including the following:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">SM_MODEL_DIR</span></code>: A string that represents the path where the training job writes the model artifacts to.
+After training, artifacts in this directory are uploaded to Amazon S3 for model hosting.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SM_NUM_GPUS</span></code>: An integer representing the number of GPUs available to the host.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SM_CHANNEL_XXXX</span></code>: A string that represents the path to the directory that contains the input data for the specified channel.
+For example, if you specify two input channels in the MXNet estimator’s <code class="docutils literal notranslate"><span class="pre">fit</span></code> call, named ‘train’ and ‘test’, the environment variables <code class="docutils literal notranslate"><span class="pre">SM_CHANNEL_TRAIN</span></code> and <code class="docutils literal notranslate"><span class="pre">SM_CHANNEL_TEST</span></code> are set.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SM_HPS</span></code>: A JSON dump of the hyperparameters preserving JSON types (boolean, integer, etc.)</p></li>
+</ul>
+<p>For the exhaustive list of available environment variables, see the <a class="reference external" href="https://github.com/aws/sagemaker-containers#list-of-provided-environment-variables-by-sagemaker-containers">SageMaker Containers documentation</a>.</p>
+<p>A typical training script loads data from the input channels, configures training with hyperparameters, trains a model, and saves a model to <code class="docutils literal notranslate"><span class="pre">model_dir</span></code> so that it can be deployed for inference later.
+Hyperparameters are passed to your script as arguments and can be retrieved with an <code class="docutils literal notranslate"><span class="pre">argparse.ArgumentParser</span></code> instance.
+For example, a training script might start with the following:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span><span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+
+    <span class="c1"># hyperparameters sent by the client are passed as command-line arguments to the script.</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--epochs&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--batch-size&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--learning-rate&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+
+    <span class="c1"># an alternative way to load hyperparameters via SM_HPS environment variable.</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--sm-hps&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;SM_HPS&#39;</span><span class="p">])</span>
+
+    <span class="c1"># input data and model directories</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--model-dir&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;SM_MODEL_DIR&#39;</span><span class="p">])</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--train&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;SM_CHANNEL_TRAIN&#39;</span><span class="p">])</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;--test&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;SM_CHANNEL_TEST&#39;</span><span class="p">])</span>
+
+    <span class="n">args</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()</span>
+
+    <span class="c1"># ... load from args.train and args.test, train a model, write model to args.model_dir.</span>
+</pre></div>
+</div>
+<p>Because Amazon SageMaker imports your training script, you should put your training code in a main guard (<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">__name__=='__main__':</span></code>) if you are using the same script to host your model,
+so that Amazon SageMaker does not inadvertently run your training code at the wrong point in execution.</p>
+<p>Note that Amazon SageMaker doesn’t support argparse actions.
+If you want to use, for example, boolean hyperparameters, you need to specify <code class="docutils literal notranslate"><span class="pre">type</span></code> as <code class="docutils literal notranslate"><span class="pre">bool</span></code> in your script and provide an explicit <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code> value for this hyperparameter when instantiating your MXNet estimator.</p>
+<p>For more on training environment variables, please visit <a class="reference external" href="https://github.com/aws/sagemaker-containers">SageMaker Containers</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you want to use MXNet 1.2 or lower, see <a class="reference external" href="https://sagemaker.readthedocs.io/en/v1.61.0/frameworks/mxnet/using_mxnet.html">an older version of this page</a>.</p>
+</div>
+<div class="section" id="save-a-checkpoint">
+<h4><a class="toc-backref" href="using_mxnet.html#id7">Save a Checkpoint</a><a class="headerlink" href="using_mxnet.html#save-a-checkpoint" title="Permalink to this headline">¶</a></h4>
+<p>It is good practice to save the best model after each training epoch,
+so that you can resume a training job if it gets interrupted.
+This is particularly important if you are using Managed Spot training.</p>
+<p>To save MXNet model checkpoints, do the following in your training script:</p>
+<ul>
+<li><p>Set the <code class="docutils literal notranslate"><span class="pre">CHECKPOINTS_DIR</span></code> environment variable and enable checkpoints.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">CHECKPOINTS_DIR</span> <span class="o">=</span> <span class="s1">&#39;/opt/ml/checkpoints&#39;</span>
+<span class="n">checkpoints_enabled</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">CHECKPOINTS_DIR</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Make sure you are emitting a validation metric to test the model. For information, see <a class="reference external" href="https://mxnet.incubator.apache.org/api/python/metric/metric.html">Evaluation Metric API</a>.</p></li>
+<li><p>After each training epoch, test whether the current model performs the best with respect to the validation metric, and if it does, save that model to <code class="docutils literal notranslate"><span class="pre">CHECKPOINTS_DIR</span></code>.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">checkpoints_enabled</span> <span class="ow">and</span> <span class="n">current_host</span> <span class="o">==</span> <span class="n">hosts</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+       <span class="k">if</span> <span class="n">val_acc</span> <span class="o">&gt;</span> <span class="n">best_accuracy</span><span class="p">:</span>
+           <span class="n">best_accuracy</span> <span class="o">=</span> <span class="n">val_acc</span>
+           <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Saving the model, params and optimizer state&#39;</span><span class="p">)</span>
+           <span class="n">net</span><span class="o">.</span><span class="n">export</span><span class="p">(</span><span class="n">CHECKPOINTS_DIR</span> <span class="o">+</span> <span class="s2">&quot;/</span><span class="si">%.4f</span><span class="s2">-cifar10&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">best_accuracy</span><span class="p">),</span> <span class="n">epoch</span><span class="p">)</span>
+           <span class="n">trainer</span><span class="o">.</span><span class="n">save_states</span><span class="p">(</span><span class="n">CHECKPOINTS_DIR</span> <span class="o">+</span> <span class="s1">&#39;/</span><span class="si">%.4f</span><span class="s1">-cifar10-</span><span class="si">%d</span><span class="s1">.states&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">best_accuracy</span><span class="p">,</span> <span class="n">epoch</span><span class="p">))</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<p>For a complete example of an MXNet training script that impelements checkpointing, see <a class="reference external" href="https://github.com/awslabs/amazon-sagemaker-examples/blob/master/sagemaker-python-sdk/mxnet_gluon_cifar10/cifar10.py">https://github.com/awslabs/amazon-sagemaker-examples/blob/master/sagemaker-python-sdk/mxnet_gluon_cifar10/cifar10.py</a>.</p>
+</div>
+<div class="section" id="save-the-model">
+<h4><a class="toc-backref" href="using_mxnet.html#id8">Save the Model</a><a class="headerlink" href="using_mxnet.html#save-the-model" title="Permalink to this headline">¶</a></h4>
+<p>There is a default save method that can be imported when training on SageMaker:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sagemaker_mxnet_training.training_utils</span> <span class="kn">import</span> <span class="n">save</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># arg parsing and training (shown above) goes here</span>
+
+    <span class="n">save</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">model_dir</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The default serialization system generates three files:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">model-shapes.json</span></code>: A JSON list, containing a serialization of the
+<code class="docutils literal notranslate"><span class="pre">Module</span></code> <code class="docutils literal notranslate"><span class="pre">data_shapes</span></code> property. Each object in the list contains
+the serialization of one <code class="docutils literal notranslate"><span class="pre">DataShape</span></code> in the returned <code class="docutils literal notranslate"><span class="pre">Module</span></code>.
+Each object has a <code class="docutils literal notranslate"><span class="pre">name</span></code> property, containing the <code class="docutils literal notranslate"><span class="pre">DataShape</span></code>
+name and a <code class="docutils literal notranslate"><span class="pre">shape</span></code> property, which is a list of that dimensions for
+the shape of that <code class="docutils literal notranslate"><span class="pre">DataShape</span></code>. For example:</p></li>
+</ul>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="s2">&quot;images&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;shape&quot;</span><span class="o">:</span><span class="p">[</span><span class="mf">100</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">28</span><span class="p">,</span><span class="w"> </span><span class="mf">28</span><span class="p">]},</span>
+<span class="w">    </span><span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="o">:</span><span class="s2">&quot;labels&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;shape&quot;</span><span class="o">:</span><span class="p">[</span><span class="mf">100</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">]}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">model-symbol.json</span></code>: The MXNet <code class="docutils literal notranslate"><span class="pre">Module</span></code> <code class="docutils literal notranslate"><span class="pre">Symbol</span></code> serialization,
+produced by invoking <code class="docutils literal notranslate"><span class="pre">save</span></code> on the <code class="docutils literal notranslate"><span class="pre">symbol</span></code> property of the
+<code class="docutils literal notranslate"><span class="pre">Module</span></code> being saved.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">modle.params</span></code>: The MXNet <code class="docutils literal notranslate"><span class="pre">Module</span></code> parameters, produced by
+invoking <code class="docutils literal notranslate"><span class="pre">save_params</span></code> on the <code class="docutils literal notranslate"><span class="pre">Module</span></code> being saved.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="use-third-party-libraries">
+<h3><a class="toc-backref" href="using_mxnet.html#id9">Use third-party libraries</a><a class="headerlink" href="using_mxnet.html#use-third-party-libraries" title="Permalink to this headline">¶</a></h3>
+<p>When running your training script on Amazon SageMaker, it has access to some pre-installed third-party libraries, including <code class="docutils literal notranslate"><span class="pre">mxnet</span></code>, <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">onnx</span></code>, and <code class="docutils literal notranslate"><span class="pre">keras-mxnet</span></code>.
+For more information on the runtime environment, including specific package versions, see <a class="reference external" href="using_mxnet.html#sagemaker-mxnet-containers">SageMaker MXNet Containers</a>.</p>
+<p>If there are other packages you want to use with your script, you can include a <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file in the same directory as your training script to install other dependencies at runtime.
+Both <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> and your training script should be put in the same folder.
+You must specify this folder in <code class="docutils literal notranslate"><span class="pre">source_dir</span></code> argument when creating an MXNet estimator.</p>
+<p>The function of installing packages using <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> is supported for MXNet versions 1.3.0 and higher during training.</p>
+<p>When serving an MXNet model, support for this function varies with MXNet versions.
+For MXNet 1.6.0 or newer, <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> must be under folder <code class="docutils literal notranslate"><span class="pre">code</span></code>.
+The SageMaker MXNet Estimator automatically saves <code class="docutils literal notranslate"><span class="pre">code</span></code> in <code class="docutils literal notranslate"><span class="pre">model.tar.gz</span></code> after training (assuming you set up your script and <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> correctly as stipulated in the previous paragraph).
+In the case of bringing your own trained model for deployment, you must save <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> under folder <code class="docutils literal notranslate"><span class="pre">code</span></code> in <code class="docutils literal notranslate"><span class="pre">model.tar.gz</span></code> yourself or specify it through <code class="docutils literal notranslate"><span class="pre">dependencies</span></code>.
+For MXNet 0.12.1-1.2.1, 1.4.0-1.4.1, <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> is not supported for inference.
+For MXNet 1.3.0, <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> must be in <code class="docutils literal notranslate"><span class="pre">source_dir</span></code>.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file is a text file that contains a list of items that are installed by using <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code>.
+You can also specify the version of an item to install.
+For information about the format of a <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file, see <a class="reference external" href="https://pip.pypa.io/en/stable/user_guide/#requirements-files">Requirements Files</a> in the pip documentation.</p>
+</div>
+<div class="section" id="create-an-estimator">
+<h3><a class="toc-backref" href="using_mxnet.html#id10">Create an Estimator</a><a class="headerlink" href="using_mxnet.html#create-an-estimator" title="Permalink to this headline">¶</a></h3>
+<p>You run MXNet training scripts on Amazon SageMaker by creating an <code class="docutils literal notranslate"><span class="pre">MXNet</span></code> estimator.
+When you call <code class="docutils literal notranslate"><span class="pre">fit</span></code> on an <code class="docutils literal notranslate"><span class="pre">MXNet</span></code> estimator, Amazon SageMaker starts a training job using your script as training code.
+The following code sample shows how you train a custom MXNet script “train.py”.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mxnet_estimator</span> <span class="o">=</span> <span class="n">MXNet</span><span class="p">(</span><span class="s1">&#39;train.py&#39;</span><span class="p">,</span>
+                        <span class="n">instance_type</span><span class="o">=</span><span class="s1">&#39;ml.p2.xlarge&#39;</span><span class="p">,</span>
+                        <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                        <span class="n">framework_version</span><span class="o">=</span><span class="s1">&#39;1.6.0&#39;</span><span class="p">,</span>
+                        <span class="n">py_version</span><span class="o">=</span><span class="s1">&#39;py3&#39;</span><span class="p">,</span>
+                        <span class="n">hyperparameters</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;batch-size&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+                                         <span class="s1">&#39;epochs&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+                                         <span class="s1">&#39;learning-rate&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">})</span>
+<span class="n">mxnet_estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="s1">&#39;s3://my_bucket/my_training_data/&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For more information about the sagemaker.mxnet.MXNet estimator, see <a class="reference internal" href="using_mxnet.html#sagemaker-mxnet-classes">SageMaker MXNet Classes</a>.</p>
+</div>
+<div class="section" id="distributed-training">
+<h3><a class="toc-backref" href="using_mxnet.html#id11">Distributed training</a><a class="headerlink" href="using_mxnet.html#distributed-training" title="Permalink to this headline">¶</a></h3>
+<p>If you want to use parameter servers for distributed training, set the following parameter in your <code class="docutils literal notranslate"><span class="pre">MXNet</span></code> constructor:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">distribution</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;parameter_server&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;enabled&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p>Then, when writing a distributed training script, use an MXNet kvstore to store and share model parameters.
+During training, Amazon SageMaker automatically starts an MXNet kvstore server and scheduler processes on hosts in your training job cluster.
+Your script runs as an MXNet worker task, with one server process on each host in your cluster.
+One host is selected arbitrarily to run the scheduler process.</p>
+<p>To learn more about writing distributed MXNet programs, please see <a class="reference external" href="https://mxnet.incubator.apache.org/versions/master/faq/distributed_training.html">Distributed Training</a> in the MXNet docs.</p>
+</div>
+<div class="section" id="call-the-fit-method">
+<h3><a class="toc-backref" href="using_mxnet.html#id12">Call the fit Method</a><a class="headerlink" href="using_mxnet.html#call-the-fit-method" title="Permalink to this headline">¶</a></h3>
+<p>Start your training script by calling <code class="docutils literal notranslate"><span class="pre">fit</span></code> on an <code class="docutils literal notranslate"><span class="pre">MXNet</span></code> Estimator.
+<code class="docutils literal notranslate"><span class="pre">fit</span></code> takes both required and optional arguments.
+For what arguments can be passed into <code class="docutils literal notranslate"><span class="pre">fit</span></code>, see the <a class="reference external" href="estimators.html#sagemaker.estimator.Framework">API reference</a>.</p>
+</div>
+</div>
+<div class="section" id="deploy-mxnet-models">
+<h2><a class="toc-backref" href="using_mxnet.html#id13">Deploy MXNet models</a><a class="headerlink" href="using_mxnet.html#deploy-mxnet-models" title="Permalink to this headline">¶</a></h2>
+<p>Once you have a trained MXNet model, you can host it in Amazon SageMaker by creating an Amazon SageMaker Endpoint.
+The endpoint runs a SageMaker-provided MXNet model server and hosts the model produced by your training script.
+This model can be one you trained in Amazon SageMaker or a pretrained one from somewhere else.</p>
+<p>If you use the <code class="docutils literal notranslate"><span class="pre">MXNet</span></code> estimator to train the model, you can call <code class="docutils literal notranslate"><span class="pre">deploy</span></code> to create an Amazon SageMaker Endpoint:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Train my estimator</span>
+<span class="n">mxnet_estimator</span> <span class="o">=</span> <span class="n">MXNet</span><span class="p">(</span><span class="s1">&#39;train.py&#39;</span><span class="p">,</span>
+                        <span class="n">framework_version</span><span class="o">=</span><span class="s1">&#39;1.6.0&#39;</span><span class="p">,</span>
+                        <span class="n">py_version</span><span class="o">=</span><span class="s1">&#39;py3&#39;</span><span class="p">,</span>
+                        <span class="n">instance_type</span><span class="o">=</span><span class="s1">&#39;ml.p2.xlarge&#39;</span><span class="p">,</span>
+                        <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">mxnet_estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="s1">&#39;s3://my_bucket/my_training_data/&#39;</span><span class="p">)</span>
+
+<span class="c1"># Deploy my estimator to an Amazon SageMaker Endpoint and get a Predictor</span>
+<span class="n">predictor</span> <span class="o">=</span> <span class="n">mxnet_estimator</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span><span class="n">instance_type</span><span class="o">=</span><span class="s1">&#39;ml.m4.xlarge&#39;</span><span class="p">,</span>
+                                   <span class="n">initial_instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If using a pretrained model, create an <code class="docutils literal notranslate"><span class="pre">MXNetModel</span></code> object, and then call <code class="docutils literal notranslate"><span class="pre">deploy</span></code> to create the Amazon SageMaker Endpoint:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mxnet_model</span> <span class="o">=</span> <span class="n">MXNetModel</span><span class="p">(</span><span class="n">model_data</span><span class="o">=</span><span class="s1">&#39;s3://my_bucket/pretrained_model/model.tar.gz&#39;</span><span class="p">,</span>
+                         <span class="n">role</span><span class="o">=</span><span class="n">role</span><span class="p">,</span>
+                         <span class="n">entry_point</span><span class="o">=</span><span class="s1">&#39;inference.py&#39;</span><span class="p">,</span>
+                         <span class="n">framework_version</span><span class="o">=</span><span class="s1">&#39;1.6.0&#39;</span><span class="p">,</span>
+                         <span class="n">py_version</span><span class="o">=</span><span class="s1">&#39;py3&#39;</span><span class="p">)</span>
+<span class="n">predictor</span> <span class="o">=</span> <span class="n">mxnet_model</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span><span class="n">instance_type</span><span class="o">=</span><span class="s1">&#39;ml.m4.xlarge&#39;</span><span class="p">,</span>
+                               <span class="n">initial_instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In both cases, <code class="docutils literal notranslate"><span class="pre">deploy</span></code> returns a <code class="docutils literal notranslate"><span class="pre">Predictor</span></code> object, which you can use to do inference on the endpoint hosting your MXNet model.</p>
+<p>Each <code class="docutils literal notranslate"><span class="pre">Predictor</span></code> provides a <code class="docutils literal notranslate"><span class="pre">predict</span></code> method, which can do inference with numpy arrays or Python lists.
+Inference arrays or lists are serialized and sent to the MXNet model server by an <code class="docutils literal notranslate"><span class="pre">InvokeEndpoint</span></code> SageMaker operation.
+<code class="docutils literal notranslate"><span class="pre">predict</span></code> returns the result of inference against your model.
+By default, the inference result is either a Python list or dictionary.</p>
+<div class="section" id="elastic-inference">
+<h3><a class="toc-backref" href="using_mxnet.html#id14">Elastic Inference</a><a class="headerlink" href="using_mxnet.html#elastic-inference" title="Permalink to this headline">¶</a></h3>
+<p>MXNet on Amazon SageMaker has support for <a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/ei.html">Elastic Inference</a>, which allows for inference acceleration to a hosted endpoint for a fraction of the cost of using a full GPU instance.
+In order to attach an Elastic Inference accelerator to your endpoint provide the accelerator type to <code class="docutils literal notranslate"><span class="pre">accelerator_type</span></code> to your <code class="docutils literal notranslate"><span class="pre">deploy</span></code> call.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">predictor</span> <span class="o">=</span> <span class="n">mxnet_estimator</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span><span class="n">instance_type</span><span class="o">=</span><span class="s1">&#39;ml.m4.xlarge&#39;</span><span class="p">,</span>
+                                   <span class="n">initial_instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                   <span class="n">accelerator_type</span><span class="o">=</span><span class="s1">&#39;ml.eia1.medium&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="model-directory-structure">
+<h3><a class="toc-backref" href="using_mxnet.html#id15">Model Directory Structure</a><a class="headerlink" href="using_mxnet.html#model-directory-structure" title="Permalink to this headline">¶</a></h3>
+<p>In general, if you use the same version of MXNet for both training and inference with the SageMaker Python SDK,
+the SDK should take care of ensuring that the contents of your <code class="docutils literal notranslate"><span class="pre">model.tar.gz</span></code> file are organized correctly.</p>
+<div class="section" id="for-versions-1-4-and-higher">
+<h4><a class="toc-backref" href="using_mxnet.html#id16">For versions 1.4 and higher</a><a class="headerlink" href="using_mxnet.html#for-versions-1-4-and-higher" title="Permalink to this headline">¶</a></h4>
+<p>For MXNet versions 1.4 and higher, the contents of <code class="docutils literal notranslate"><span class="pre">model.tar.gz</span></code> should be organized as follows:</p>
+<ul class="simple">
+<li><p>Model files in the top-level directory</p></li>
+<li><p>Inference script (and any other source files) in a directory named <code class="docutils literal notranslate"><span class="pre">code/</span></code> (for more about the inference script, see <a class="reference external" href="using_mxnet.html#the-sagemaker-mxnet-model-server">The SageMaker MXNet Model Server</a>)</p></li>
+<li><p>Optional requirements file located at <code class="docutils literal notranslate"><span class="pre">code/requirements.txt</span></code> (for more about requirements files, see <a class="reference external" href="using_mxnet.html#use-third-party-libraries">Use third-party libraries</a>)</p></li>
+</ul>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span><span class="o">/</span>
+<span class="o">|-</span> <span class="n">model</span><span class="o">-</span><span class="n">symbol</span><span class="o">.</span><span class="n">json</span>
+<span class="o">|-</span> <span class="n">model</span><span class="o">-</span><span class="n">shapes</span><span class="o">.</span><span class="n">json</span>
+<span class="o">|-</span> <span class="n">model</span><span class="o">-</span><span class="mf">0000.</span><span class="n">params</span>
+<span class="o">|-</span> <span class="n">code</span><span class="o">/</span>
+  <span class="o">|-</span> <span class="n">inference</span><span class="o">.</span><span class="n">py</span>
+  <span class="o">|-</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>  <span class="c1"># only for versions 1.6.0 and higher</span>
+</pre></div>
+</div>
+<p>In this example, <code class="docutils literal notranslate"><span class="pre">model-symbol.json</span></code>, <code class="docutils literal notranslate"><span class="pre">model-shapes.json</span></code>, and <code class="docutils literal notranslate"><span class="pre">model-0000.params</span></code> are the model files saved from training,
+<code class="docutils literal notranslate"><span class="pre">inference.py</span></code> is the inference script, and <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> is a requirements file.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">MXNet</span></code> and <code class="docutils literal notranslate"><span class="pre">MXNetModel</span></code> classes repack <code class="docutils literal notranslate"><span class="pre">model.tar.gz</span></code> to include the inference script (and related files),
+as long as the <code class="docutils literal notranslate"><span class="pre">framework_version</span></code> is set to 1.4 or higher.</p>
+</div>
+<div class="section" id="for-versions-1-3-and-lower">
+<h4><a class="toc-backref" href="using_mxnet.html#id17">For versions 1.3 and lower</a><a class="headerlink" href="using_mxnet.html#for-versions-1-3-and-lower" title="Permalink to this headline">¶</a></h4>
+<p>For MXNet versions 1.3 and lower, <code class="docutils literal notranslate"><span class="pre">model.tar.gz</span></code> should contain only the model files,
+while your inference script and optional requirements file are packed in a separate tarball, named <code class="docutils literal notranslate"><span class="pre">sourcedir.tar.gz</span></code> by default.</p>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span><span class="o">/</span>
+<span class="o">|-</span> <span class="n">model</span><span class="o">-</span><span class="n">symbol</span><span class="o">.</span><span class="n">json</span>
+<span class="o">|-</span> <span class="n">model</span><span class="o">-</span><span class="n">shapes</span><span class="o">.</span><span class="n">json</span>
+<span class="o">|-</span> <span class="n">model</span><span class="o">-</span><span class="mf">0000.</span><span class="n">params</span>
+
+<span class="n">sourcedir</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span><span class="o">/</span>
+<span class="o">|-</span> <span class="n">script</span><span class="o">.</span><span class="n">py</span>
+<span class="o">|-</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>  <span class="c1"># only for versions 0.12.1-1.3.0</span>
+</pre></div>
+</div>
+<p>In this example, <code class="docutils literal notranslate"><span class="pre">model-symbol.json</span></code>, <code class="docutils literal notranslate"><span class="pre">model-shapes.json</span></code>, and <code class="docutils literal notranslate"><span class="pre">model-0000.params</span></code> are the model files saved from training,
+<code class="docutils literal notranslate"><span class="pre">script.py</span></code> is the inference script, and <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> is a requirements file.</p>
+</div>
+</div>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="using_mxnet.html#id18">The SageMaker MXNet Model Server</a><a class="headerlink" href="using_mxnet.html#id3" title="Permalink to this headline">¶</a></h3>
+<p>The MXNet endpoint you create with <code class="docutils literal notranslate"><span class="pre">deploy</span></code> runs a SageMaker MXNet model server.
+The model server loads the model provided and performs inference on the model in response to SageMaker <code class="docutils literal notranslate"><span class="pre">InvokeEndpoint</span></code> API calls.</p>
+<p>You can configure two components of the model server: model loading and model serving.
+Model loading is the process of deserializing your saved model back into an MXNet model.
+Serving is the process of translating <code class="docutils literal notranslate"><span class="pre">InvokeEndpoint</span></code> requests to inference calls on the loaded model.
+These are configured by defining functions in the Python source file you pass to the <code class="docutils literal notranslate"><span class="pre">MXNet</span></code> or <code class="docutils literal notranslate"><span class="pre">MXNetModel</span></code> constructor.</p>
+<div class="section" id="load-a-model">
+<h4><a class="toc-backref" href="using_mxnet.html#id19">Load a Model</a><a class="headerlink" href="using_mxnet.html#load-a-model" title="Permalink to this headline">¶</a></h4>
+<p>Before a model can be served, it must be loaded.
+The model server loads your model by invoking the <code class="docutils literal notranslate"><span class="pre">model_fn</span></code> function in your inference script.
+If you don’t provide a <code class="docutils literal notranslate"><span class="pre">model_fn</span></code> function, the model server uses a default <code class="docutils literal notranslate"><span class="pre">model_fn</span></code> function.
+The default function works with MXNet Module model objects saved via the default <code class="docutils literal notranslate"><span class="pre">save</span></code> function.</p>
+<p>If you wrote your own save logic, then you may need to write a custom <code class="docutils literal notranslate"><span class="pre">model_fn</span></code> function.
+The <code class="docutils literal notranslate"><span class="pre">model_fn</span></code> function must have the following signature:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">model_fn</span><span class="p">(</span><span class="n">model_dir</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Amazon SageMaker injects the directory where your model files and sub-directories have been mounted.
+Your model function should return a model object that can be used for model serving.</p>
+<p>The following code snippet shows an example custom <code class="docutils literal notranslate"><span class="pre">model_fn</span></code> implementation.
+This returns an MXNet Gluon net model for resnet-34 inference.
+It loads the model parameters from a <code class="docutils literal notranslate"><span class="pre">model.params</span></code> file in the SageMaker model directory.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">model_fn</span><span class="p">(</span><span class="n">model_dir</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load the Gluon model. Called when the hosting service starts.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model_dir (str): The directory where model files are stored.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        mxnet.gluon.nn.Block: a Gluon network (for this example)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">net</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="s1">&#39;resnet34_v2&#39;</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">mx</span><span class="o">.</span><span class="n">cpu</span><span class="p">(),</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">load_params</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/model.params&#39;</span> <span class="o">%</span> <span class="n">model_dir</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">mx</span><span class="o">.</span><span class="n">cpu</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">net</span>
+</pre></div>
+</div>
+<p>MXNet on Amazon SageMaker has support for <a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/ei.html">Elastic Inference</a>, which allows for inference acceleration to a hosted endpoint for a fraction of the cost of using a full GPU instance.
+In order to load and serve your MXNet model through Amazon Elastic Inference, import the <code class="docutils literal notranslate"><span class="pre">eimx</span></code> Python package and make one change in the code to partition your model and optimize it for the <code class="docutils literal notranslate"><span class="pre">EIA</span></code> back end, as shown <a class="reference external" href="https://docs.aws.amazon.com/dlami/latest/devguide/tutorial-mxnet-elastic-inference.html#ei-mxnet">here</a>.</p>
+<p>Based on the example above, the following code-snippet shows an example custom <code class="docutils literal notranslate"><span class="pre">model_fn</span></code> implementation, which enables loading and serving our MXNet model through Amazon Elastic Inference.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">model_fn</span><span class="p">(</span><span class="n">model_dir</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load the Gluon model. Called when the hosting service starts.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        model_dir (str): The directory where model files are stored.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        mxnet.gluon.nn.Block: a Gluon network (for this example)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">net</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="s1">&#39;resnet34_v2&#39;</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">mx</span><span class="o">.</span><span class="n">cpu</span><span class="p">(),</span> <span class="n">pretrained</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">load_params</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">/model.params&#39;</span> <span class="o">%</span> <span class="n">model_dir</span><span class="p">,</span> <span class="n">ctx</span><span class="o">=</span><span class="n">mx</span><span class="o">.</span><span class="n">cpu</span><span class="p">())</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">hybridize</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="s1">&#39;EIA&#39;</span><span class="p">,</span> <span class="n">static_alloc</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">static_shape</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">net</span>
+</pre></div>
+</div>
+<p>If you are using MXNet 1.5.1 and earlier, the <a class="reference external" href="https://github.com/aws/sagemaker-mxnet-container/pull/55/files#diff-aabf018d906ed282a3c738377d19a8deR71">default_model_fn</a> loads and serve your model through Elastic Inference, if applicable, within the Amazon SageMaker MXNet containers.</p>
+<p>For more information on how to enable MXNet to interact with Amazon Elastic Inference, see <a class="reference external" href="https://docs.aws.amazon.com/dlami/latest/devguide/tutorial-mxnet-elastic-inference.html">Use Elastic Inference with MXNet</a>.</p>
+</div>
+<div class="section" id="serve-an-mxnet-model">
+<h4><a class="toc-backref" href="using_mxnet.html#id20">Serve an MXNet Model</a><a class="headerlink" href="using_mxnet.html#serve-an-mxnet-model" title="Permalink to this headline">¶</a></h4>
+<p>After the MXNet model server loads your model by calling either the default <code class="docutils literal notranslate"><span class="pre">model_fn</span></code> or the implementation in your script, it serves your model.
+Model serving is the process of responding to inference requests received by SageMaker <code class="docutils literal notranslate"><span class="pre">InvokeEndpoint</span></code> API calls.
+Defining how to handle these requests can be done in one of two ways:</p>
+<ul class="simple">
+<li><p>using <code class="docutils literal notranslate"><span class="pre">input_fn</span></code>, <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code>, and <code class="docutils literal notranslate"><span class="pre">output_fn</span></code>, some of which may be your own implementations</p></li>
+<li><p>writing your own <code class="docutils literal notranslate"><span class="pre">transform_fn</span></code> for handling input processing, prediction, and output processing</p></li>
+</ul>
+<div class="section" id="use-input-fn-predict-fn-and-output-fn">
+<h5><a class="toc-backref" href="using_mxnet.html#id21">Use <code class="docutils literal notranslate"><span class="pre">input_fn</span></code>, <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code>, and <code class="docutils literal notranslate"><span class="pre">output_fn</span></code></a><a class="headerlink" href="using_mxnet.html#use-input-fn-predict-fn-and-output-fn" title="Permalink to this headline">¶</a></h5>
+<p>The SageMaker MXNet model server breaks request handling into three steps:</p>
+<ul class="simple">
+<li><p>input processing</p></li>
+<li><p>prediction</p></li>
+<li><p>output processing</p></li>
+</ul>
+<p>Just like with <code class="docutils literal notranslate"><span class="pre">model_fn</span></code>, you configure these steps by defining functions in your Python source file.</p>
+<p>Each step has its own Python function, which takes in information about the request and the return value from the previous function in the chain.
+Inside the MXNet model server, the process looks like:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Deserialize the Invoke request body into an object we can perform prediction on</span>
+<span class="n">input_object</span> <span class="o">=</span> <span class="n">input_fn</span><span class="p">(</span><span class="n">request_body</span><span class="p">,</span> <span class="n">request_content_type</span><span class="p">)</span>
+
+<span class="c1"># Perform prediction on the deserialized object, with the loaded model</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">predict_fn</span><span class="p">(</span><span class="n">input_object</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+
+<span class="c1"># Serialize the prediction result into the desired response content type</span>
+<span class="n">ouput</span> <span class="o">=</span> <span class="n">output_fn</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">response_content_type</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The above code sample shows the three function definitions that correlate to the three steps mentioned above:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">input_fn</span></code>: Takes request data and deserializes the data into an
+object for prediction.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">predict_fn</span></code>: Takes the deserialized request object and performs
+inference against the loaded model.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">output_fn</span></code>: Takes the result of prediction and serializes this
+according to the response content type.</p></li>
+</ul>
+<p>The MXNet model server provides default implementations of these functions.
+These work with both Gluon API and Module API model objects.
+The following content types are supported:</p>
+<ul class="simple">
+<li><p>Gluon API: ‘application/json’, ‘application/x-npy’</p></li>
+<li><p>Module API: ‘application/json’, ‘application/x-npy’, ‘text-csv’</p></li>
+</ul>
+<p>You can also provide your own implementations for these functions in your training script.
+If you omit any definition, the MXNet model server uses its default implementation for that function.</p>
+<p>If you rely solely on the SageMaker MXNet model server defaults, you get the following functionality:</p>
+<ul class="simple">
+<li><p>Prediction on MXNet Gluon API <code class="docutils literal notranslate"><span class="pre">net</span></code> and Module API <code class="docutils literal notranslate"><span class="pre">Module</span></code> objects.</p></li>
+<li><p>Deserialization from CSV and JSON to NDArrayIters.</p></li>
+<li><p>Serialization of NDArrayIters to CSV or JSON.</p></li>
+</ul>
+<p>In the following sections, we describe the default implementations of <code class="docutils literal notranslate"><span class="pre">input_fn</span></code>, <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code>, and <code class="docutils literal notranslate"><span class="pre">output_fn</span></code>.
+We describe the input arguments and expected return types of each, so you can define your own implementations.</p>
+<div class="section" id="process-model-input">
+<h6><a class="toc-backref" href="using_mxnet.html#id22">Process Model Input</a><a class="headerlink" href="using_mxnet.html#process-model-input" title="Permalink to this headline">¶</a></h6>
+<p>When an <code class="docutils literal notranslate"><span class="pre">InvokeEndpoint</span></code> operation is made against an endpoint running an MXNet model server, the model server receives two pieces of information:</p>
+<ul class="simple">
+<li><p>The request’s content type, e.g. ‘application/json’</p></li>
+<li><p>The request data body as a byte array</p></li>
+</ul>
+<p>The MXNet model server invokes <code class="docutils literal notranslate"><span class="pre">input_fn</span></code>, passing in this information.
+If you define an <code class="docutils literal notranslate"><span class="pre">input_fn</span></code> function definition, it should return an object that can be passed to <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code> and have the following signature:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">input_fn</span><span class="p">(</span><span class="n">request_body</span><span class="p">,</span> <span class="n">request_content_type</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">request_body</span></code> is a byte buffer and <code class="docutils literal notranslate"><span class="pre">request_content_type</span></code> is the content type of the request.</p>
+<p>The MXNet model server provides a default implementation of <code class="docutils literal notranslate"><span class="pre">input_fn</span></code>. This function deserializes JSON or CSV encoded data into an MXNet <code class="docutils literal notranslate"><span class="pre">NDArrayIter</span></code> <a class="reference external" href="https://mxnet.incubator.apache.org/api/python/io.html#mxnet.io.NDArrayIter">(external API docs)</a> multi-dimensional array iterator. This works with the default <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code> implementation, which expects an <code class="docutils literal notranslate"><span class="pre">NDArrayIter</span></code> as input.</p>
+<p>Default JSON deserialization requires <code class="docutils literal notranslate"><span class="pre">request_body</span></code> contain a single JSON list. Sending multiple JSON objects within the same <code class="docutils literal notranslate"><span class="pre">request_body</span></code> is not supported. The list must have a dimensionality compatible with the MXNet <code class="docutils literal notranslate"><span class="pre">net</span></code> or <code class="docutils literal notranslate"><span class="pre">Module</span></code> object. Specifically, after the list is loaded, it’s either padded or split to fit the first dimension of the model input shape. The list’s shape must be identical to the model’s input shape, for all dimensions after the first.</p>
+<p>Default CSV deserialization requires <code class="docutils literal notranslate"><span class="pre">request_body</span></code> contain one or more lines of CSV numerical data. The data is loaded into a two-dimensional array, where each line break defines the boundaries of the first dimension. This two-dimensional array is then re-shaped to be compatible with the shape expected by the model object. Specifically, the first dimension is kept unchanged, but the second dimension is reshaped to be consistent with the shape of all dimensions in the model, following the first dimension.</p>
+<p>If you provide your own implementation of input_fn, you should abide by the <code class="docutils literal notranslate"><span class="pre">input_fn</span></code> signature. If you want to use this with the default
+<code class="docutils literal notranslate"><span class="pre">predict_fn</span></code>, then you should return an <code class="docutils literal notranslate"><span class="pre">NDArrayIter</span></code>. The <code class="docutils literal notranslate"><span class="pre">NDArrayIter</span></code> should have a shape identical to the shape of the model being predicted on. The example below shows a custom <code class="docutils literal notranslate"><span class="pre">input_fn</span></code> for preparing pickled numpy arrays.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">mxnet</span> <span class="k">as</span> <span class="nn">mx</span>
+
+<span class="k">def</span> <span class="nf">input_fn</span><span class="p">(</span><span class="n">request_body</span><span class="p">,</span> <span class="n">request_content_type</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An input_fn that loads a pickled numpy array&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">request_content_type</span> <span class="o">==</span> <span class="s1">&#39;application/python-pickle&#39;</span><span class="p">:</span>
+        <span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">StringIO</span><span class="p">(</span><span class="n">request_body</span><span class="p">))</span>
+        <span class="n">array</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">data_shapes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">mx</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">NDArrayIter</span><span class="p">(</span><span class="n">mx</span><span class="o">.</span><span class="n">ndarray</span><span class="p">(</span><span class="n">array</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Handle other content-types here or raise an Exception</span>
+        <span class="c1"># if the content type is not supported.</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="predict-from-a-deployed-model">
+<h6><a class="toc-backref" href="using_mxnet.html#id23">Predict from a Deployed Model</a><a class="headerlink" href="using_mxnet.html#predict-from-a-deployed-model" title="Permalink to this headline">¶</a></h6>
+<p>After the inference request has been deserialized by <code class="docutils literal notranslate"><span class="pre">input_fn</span></code>, the MXNet model server invokes <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code>.
+As with the other functions, you can define your own <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code> or use the model server’s default.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code> function has the following signature:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">predict_fn</span><span class="p">(</span><span class="n">input_object</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">input_object</span></code> is the object returned from <code class="docutils literal notranslate"><span class="pre">input_fn</span></code> and
+<code class="docutils literal notranslate"><span class="pre">model</span></code> is the model loaded by <code class="docutils literal notranslate"><span class="pre">model_fn</span></code>.</p>
+<p>The default implementation of <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code> requires <code class="docutils literal notranslate"><span class="pre">input_object</span></code> be an <code class="docutils literal notranslate"><span class="pre">NDArrayIter</span></code>, which is the return-type of the default
+<code class="docutils literal notranslate"><span class="pre">input_fn</span></code>. It also requires that <code class="docutils literal notranslate"><span class="pre">model</span></code> be either an MXNet Gluon API <code class="docutils literal notranslate"><span class="pre">net</span></code> object or a Module API <code class="docutils literal notranslate"><span class="pre">Module</span></code> object.</p>
+<p>The default implementation performs inference with the input
+<code class="docutils literal notranslate"><span class="pre">NDArrayIter</span></code> on the Gluon or Module object. If the model is a Gluon
+<code class="docutils literal notranslate"><span class="pre">net</span></code> it performs: <code class="docutils literal notranslate"><span class="pre">net.forward(input_object)</span></code>. If the model is a Module object it performs <code class="docutils literal notranslate"><span class="pre">module.predict(input_object)</span></code>. In both cases, it returns the result of that call.</p>
+<p>If you implement your own prediction function, you should take care to ensure that:</p>
+<ul class="simple">
+<li><p>The first argument is expected to be the return value from input_fn.
+If you use the default input_fn, this is an <code class="docutils literal notranslate"><span class="pre">NDArrayIter</span></code>.</p></li>
+<li><p>The second argument is the loaded model. If you use the default
+<code class="docutils literal notranslate"><span class="pre">model_fn</span></code> implementation, this is an MXNet Module object.
+Otherwise, it is the return value of your <code class="docutils literal notranslate"><span class="pre">model_fn</span></code> implementation.</p></li>
+<li><p>The return value should be of the correct type to be passed as the
+first argument to <code class="docutils literal notranslate"><span class="pre">output_fn</span></code>. If you use the default
+<code class="docutils literal notranslate"><span class="pre">output_fn</span></code>, this should be an <code class="docutils literal notranslate"><span class="pre">NDArrayIter</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="process-model-output">
+<h6><a class="toc-backref" href="using_mxnet.html#id24">Process Model Output</a><a class="headerlink" href="using_mxnet.html#process-model-output" title="Permalink to this headline">¶</a></h6>
+<p>After invoking <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code>, the model server invokes <code class="docutils literal notranslate"><span class="pre">output_fn</span></code>, passing in the return value from <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code> and the <code class="docutils literal notranslate"><span class="pre">InvokeEndpoint</span></code> requested response content type.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">output_fn</span></code> has the following signature:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">output_fn</span><span class="p">(</span><span class="n">prediction</span><span class="p">,</span> <span class="n">content_type</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">prediction</span></code> is the result of invoking <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code> and <code class="docutils literal notranslate"><span class="pre">content_type</span></code> is the requested response content type for <code class="docutils literal notranslate"><span class="pre">InvokeEndpoint</span></code>.
+The function should return an array of bytes serialized to the expected content type.</p>
+<p>The default implementation expects <code class="docutils literal notranslate"><span class="pre">prediction</span></code> to be an <code class="docutils literal notranslate"><span class="pre">NDArray</span></code> and can serialize the result to either JSON or CSV. It accepts response content types of “application/json” and “text/csv”.</p>
+</div>
+</div>
+<div class="section" id="use-transform-fn">
+<h5><a class="toc-backref" href="using_mxnet.html#id25">Use <code class="docutils literal notranslate"><span class="pre">transform_fn</span></code></a><a class="headerlink" href="using_mxnet.html#use-transform-fn" title="Permalink to this headline">¶</a></h5>
+<p>If you would rather not structure your code around the three methods described above, you can instead define your own <code class="docutils literal notranslate"><span class="pre">transform_fn</span></code> to handle inference requests.
+An error is thrown if a <code class="docutils literal notranslate"><span class="pre">transform_fn</span></code> is present in conjunction with any <code class="docutils literal notranslate"><span class="pre">input_fn</span></code>, <code class="docutils literal notranslate"><span class="pre">predict_fn</span></code>, and/or <code class="docutils literal notranslate"><span class="pre">output_fn</span></code>.
+<code class="docutils literal notranslate"><span class="pre">transform_fn</span></code> has the following signature:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">transform_fn</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">request_body</span><span class="p">,</span> <span class="n">content_type</span><span class="p">,</span> <span class="n">accept_type</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Where <code class="docutils literal notranslate"><span class="pre">model</span></code> is the model objected loaded by <code class="docutils literal notranslate"><span class="pre">model_fn</span></code>, <code class="docutils literal notranslate"><span class="pre">request_body</span></code> is the data from the inference request, <code class="docutils literal notranslate"><span class="pre">content_type</span></code> is the content type of the request, and <code class="docutils literal notranslate"><span class="pre">accept_type</span></code> is the request content type for the response.</p>
+<p>This one function should handle processing the input, performing a prediction, and processing the output.
+The return object should be one of the following:</p>
+<p>For versions 1.4 and higher:</p>
+<ul class="simple">
+<li><p>a tuple with two items: the response data and <code class="docutils literal notranslate"><span class="pre">accept_type</span></code> (the content type of the response data), or</p></li>
+<li><p>the response data: (the content type of the response is set to either the accept header in the initial request or default to “application/json”)</p></li>
+</ul>
+<p>For versions 1.3 and lower:</p>
+<ul class="simple">
+<li><p>a tuple with two items: the response data and <code class="docutils literal notranslate"><span class="pre">accept_type</span></code> (the content type of the response data), or</p></li>
+<li><p>a Flask response object: <a class="reference external" href="http://flask.pocoo.org/docs/1.0/api/#response-objects">http://flask.pocoo.org/docs/1.0/api/#response-objects</a></p></li>
+</ul>
+<p>For an example inference script using this structure, see the <a class="reference external" href="https://github.com/awslabs/amazon-sagemaker-examples/blob/master/sagemaker-python-sdk/mxnet_gluon_sentiment/sentiment.py#L344-L387">mxnet_gluon_sentiment</a> notebook.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="work-with-existing-model-data-and-training-jobs">
+<h2><a class="toc-backref" href="using_mxnet.html#id26">Work with Existing Model Data and Training Jobs</a><a class="headerlink" href="using_mxnet.html#work-with-existing-model-data-and-training-jobs" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="attach-to-existing-training-jobs">
+<h3><a class="toc-backref" href="using_mxnet.html#id27">Attach to Existing Training Jobs</a><a class="headerlink" href="using_mxnet.html#attach-to-existing-training-jobs" title="Permalink to this headline">¶</a></h3>
+<p>You can attach an MXNet Estimator to an existing training job using the
+<code class="docutils literal notranslate"><span class="pre">attach</span></code> method.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_training_job_name</span> <span class="o">=</span> <span class="s1">&#39;MyAwesomeMXNetTrainingJob&#39;</span>
+<span class="n">mxnet_estimator</span> <span class="o">=</span> <span class="n">MXNet</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">my_training_job_name</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>After attaching, if the training job’s status is “Complete”, it can be <code class="docutils literal notranslate"><span class="pre">deploy</span></code>ed to create an Amazon SageMaker Endpoint and return a <code class="docutils literal notranslate"><span class="pre">Predictor</span></code>.
+If the training job is in progress, <code class="docutils literal notranslate"><span class="pre">attach</span></code> blocks and displays log messages from the training job until the training job completes.</p>
+<p>For information about arguments that <code class="docutils literal notranslate"><span class="pre">attach</span></code> accepts, see <a class="reference external" href="estimators.html#sagemaker.estimator.Framework.attach">the function’s API reference</a>.</p>
+</div>
+<div class="section" id="deploy-endpoints-from-model-data">
+<h3><a class="toc-backref" href="using_mxnet.html#id28">Deploy Endpoints from Model Data</a><a class="headerlink" href="using_mxnet.html#deploy-endpoints-from-model-data" title="Permalink to this headline">¶</a></h3>
+<p>As well as attaching to existing training jobs, you can deploy models directly from model data in Amazon S3. The following code sample shows how to do this, using the <code class="docutils literal notranslate"><span class="pre">MXNetModel</span></code> class.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mxnet_model</span> <span class="o">=</span> <span class="n">MXNetModel</span><span class="p">(</span><span class="n">model_data</span><span class="o">=</span><span class="s1">&#39;s3://bucket/model.tar.gz&#39;</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="s1">&#39;SageMakerRole&#39;</span><span class="p">,</span> <span class="n">entry_point</span><span class="o">=</span><span class="s1">&#39;trasform_script.py&#39;</span><span class="p">)</span>
+
+<span class="n">predictor</span> <span class="o">=</span> <span class="n">mxnet_model</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span><span class="n">instance_type</span><span class="o">=</span><span class="s1">&#39;ml.c4.xlarge&#39;</span><span class="p">,</span> <span class="n">initial_instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For information about arguments that the <code class="docutils literal notranslate"><span class="pre">MXNetModel</span></code> constructor accepts, see <a class="reference external" href="sagemaker.mxnet.html#sagemaker.mxnet.model.MXNetModel">the class’s API reference</a>.</p>
+<p>Your model data must be a .tar.gz file in Amazon S3. Amazon SageMaker Training Job model data is saved to .tar.gz files in Amazon S3, however if you have local data you want to deploy, you can prepare the data yourself.</p>
+<p>Assuming you have a local directory containing your model data named “my_model” you can tar and gzip compress the file and upload to Amazon S3 using the following commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tar</span> <span class="o">-</span><span class="n">czf</span> <span class="n">model</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span> <span class="n">my_model</span>
+<span class="n">aws</span> <span class="n">s3</span> <span class="n">cp</span> <span class="n">model</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span> <span class="n">s3</span><span class="p">:</span><span class="o">//</span><span class="n">my</span><span class="o">-</span><span class="n">bucket</span><span class="o">/</span><span class="n">my</span><span class="o">-</span><span class="n">path</span><span class="o">/</span><span class="n">model</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+</pre></div>
+</div>
+<p>This uploads the contents of my_model to a gzip-compressed tar file to Amazon S3 in the bucket “my-bucket”, with the key “my-path/model.tar.gz”.</p>
+<p>To run this command, you need the AWS CLI tool installed. Please refer to our <a class="reference external" href="using_mxnet.html#FAQ">FAQ</a> for more information on installing this.</p>
+</div>
+</div>
+<div class="section" id="examples">
+<h2><a class="toc-backref" href="using_mxnet.html#id29">Examples</a><a class="headerlink" href="using_mxnet.html#examples" title="Permalink to this headline">¶</a></h2>
+<p>Amazon provides several example Jupyter notebooks that demonstrate end-to-end training on Amazon SageMaker using MXNet. Please refer to:</p>
+<p><a class="reference external" href="https://github.com/awslabs/amazon-sagemaker-examples/tree/master/sagemaker-python-sdk">https://github.com/awslabs/amazon-sagemaker-examples/tree/master/sagemaker-python-sdk</a></p>
+<p>These are also available in Amazon SageMaker Notebook Instance hosted Jupyter notebooks under the “sample notebooks” folder.</p>
+</div>
+<div class="section" id="sagemaker-mxnet-classes">
+<h2><a class="toc-backref" href="using_mxnet.html#id30">SageMaker MXNet Classes</a><a class="headerlink" href="using_mxnet.html#sagemaker-mxnet-classes" title="Permalink to this headline">¶</a></h2>
+<p>For information about the different MXNet-related classes in the SageMaker Python SDK, see <a class="reference external" href="sagemaker.mxnet.html">https://sagemaker.readthedocs.io/en/stable/sagemaker.mxnet.html</a>.</p>
+</div>
+<div class="section" id="sagemaker-mxnet-containers">
+<h2><a class="toc-backref" href="using_mxnet.html#id31">SageMaker MXNet Containers</a><a class="headerlink" href="using_mxnet.html#sagemaker-mxnet-containers" title="Permalink to this headline">¶</a></h2>
+<p>For information about the SageMaker MXNet containers, see:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/aws/sagemaker-mxnet-container">SageMaker MXNet training toolkit</a></p></li>
+<li><p><a class="reference external" href="https://github.com/aws/sagemaker-mxnet-serving-container">SageMaker MXNet serving toolkit</a></p></li>
+<li><p><a class="reference external" href="https://github.com/aws/deep-learning-containers/tree/master/mxnet">Deep Learning Container (DLC) Dockerfiles for MXNet</a></p></li>
+<li><p><a class="reference external" href="https://docs.aws.amazon.com/deep-learning-containers/latest/devguide/deep-learning-containers-images.html">Deep Learning Container (DLC) Images</a> and <a class="reference external" href="https://docs.aws.amazon.com/deep-learning-containers/latest/devguide/dlc-release-notes.html">release notes</a></p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sagemaker.mxnet.html" class="btn btn-neutral float-right" title="MXNet Classes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="frameworks/mxnet/index.html" class="btn btn-neutral float-left" title="Apache MXNet" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2023, Amazon
+      <span class="commit">
+        
+        Revision <code>f2ae8ff8</code>.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: stable
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="index.html">stable</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.182.0/">v2.182.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.181.0/">v2.181.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.180.0/">v2.180.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.179.0/">v2.179.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.178.0/">v2.178.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.177.1/">v2.177.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.177.0/">v2.177.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.176.0/">v2.176.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.175.0/">v2.175.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.174.0/">v2.174.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.173.0/">v2.173.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.172.0/">v2.172.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.171.0/">v2.171.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.170.0/">v2.170.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.169.0/">v2.169.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.168.0/">v2.168.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.167.0/">v2.167.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.166.0/">v2.166.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.165.0/">v2.165.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.164.0/">v2.164.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.163.0/">v2.163.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.162.0/">v2.162.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.161.0/">v2.161.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.160.0/">v2.160.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.159.0/">v2.159.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.158.0/">v2.158.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.157.0/">v2.157.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.156.0/">v2.156.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.155.0/">v2.155.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.154.0/">v2.154.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.153.0/">v2.153.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.152.0/">v2.152.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.151.0/">v2.151.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.150.0/">v2.150.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.149.0/">v2.149.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.148.0/">v2.148.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.147.0/">v2.147.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.146.1/">v2.146.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.146.0/">v2.146.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.145.0/">v2.145.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.144.0/">v2.144.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.143.0/">v2.143.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.142.0/">v2.142.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.141.0/">v2.141.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.140.1/">v2.140.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.140.0/">v2.140.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.139.0/">v2.139.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.138.0/">v2.138.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.137.0/">v2.137.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.136.0/">v2.136.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.135.1.post0/">v2.135.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.135.1/">v2.135.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.135.0/">v2.135.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.134.1/">v2.134.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.134.0/">v2.134.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.133.0/">v2.133.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.132.0/">v2.132.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.131.1/">v2.131.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.131.0/">v2.131.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.130.0/">v2.130.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.129.0/">v2.129.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.128.0/">v2.128.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.127.0/">v2.127.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.126.0/">v2.126.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.125.0/">v2.125.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.124.0/">v2.124.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.123.0/">v2.123.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.122.0/">v2.122.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.121.2/">v2.121.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.121.1/">v2.121.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.121.0/">v2.121.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.120.0/">v2.120.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.119.0/">v2.119.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.118.0/">v2.118.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.117.0/">v2.117.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.116.0/">v2.116.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.115.0/">v2.115.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.114.0/">v2.114.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.113.0/">v2.113.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.112.2/">v2.112.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.112.1/">v2.112.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.112.0/">v2.112.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.111.0/">v2.111.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.110.0/">v2.110.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.109.0/">v2.109.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.108.0/">v2.108.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.107.0/">v2.107.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.106.0/">v2.106.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.105.0/">v2.105.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.104.0/">v2.104.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.103.0/">v2.103.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.102.0/">v2.102.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.101.1/">v2.101.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.101.0/">v2.101.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.100.0/">v2.100.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.99.0/">v2.99.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.98.0/">v2.98.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.97.0/">v2.97.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.96.0/">v2.96.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.95.0/">v2.95.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.94.0/">v2.94.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.93.1/">v2.93.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.93.0/">v2.93.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.92.2/">v2.92.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.92.1/">v2.92.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.92.0/">v2.92.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.91.1/">v2.91.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.91.0/">v2.91.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.90.0/">v2.90.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.89.0/">v2.89.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.3/">v2.88.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.2/">v2.88.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.1/">v2.88.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.0/">v2.88.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.87.0/">v2.87.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.86.2/">v2.86.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.86.1/">v2.86.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.86.0/">v2.86.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.85.0/">v2.85.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.84.0/">v2.84.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.83.0/">v2.83.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.82.2/">v2.82.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.82.1/">v2.82.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.82.0/">v2.82.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.81.1/">v2.81.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.81.0/">v2.81.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.80.0/">v2.80.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.79.0/">v2.79.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.78.0/">v2.78.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.77.1/">v2.77.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.77.0/">v2.77.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.76.0/">v2.76.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.75.1/">v2.75.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.75.0/">v2.75.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.74.0/">v2.74.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.73.0/">v2.73.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.3/">v2.72.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.2/">v2.72.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.1/">v2.72.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.0/">v2.72.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.71.0/">v2.71.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.70.0/">v2.70.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.69.0/">v2.69.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.68.0/">v2.68.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.67.0/">v2.67.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.2.post0/">v2.66.2.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.2/">v2.66.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.1/">v2.66.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.0/">v2.66.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.65.0/">v2.65.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.64.0/">v2.64.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.63.2/">v2.63.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.63.1/">v2.63.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.63.0/">v2.63.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.62.0/">v2.62.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.61.0/">v2.61.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.60.0/">v2.60.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.8/">v2.59.8</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.7/">v2.59.7</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.6/">v2.59.6</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.5/">v2.59.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.4/">v2.59.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.3.post0/">v2.59.3.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.3/">v2.59.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.2/">v2.59.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.1.post0/">v2.59.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.1/">v2.59.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.0/">v2.59.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.58.0/">v2.58.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.57.0/">v2.57.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.56.0/">v2.56.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.55.0/">v2.55.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.54.0/">v2.54.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.53.0/">v2.53.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.2.post0/">v2.52.2.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.2/">v2.52.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.1/">v2.52.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.0/">v2.52.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.51.0/">v2.51.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.50.1/">v2.50.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.50.0/">v2.50.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.49.2/">v2.49.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.49.1/">v2.49.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.49.0/">v2.49.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.48.2/">v2.48.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.48.1/">v2.48.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.48.0/">v2.48.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.2.post0/">v2.47.2.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.2/">v2.47.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.1/">v2.47.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.0/">v2.47.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.46.1/">v2.46.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.46.0/">v2.46.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.45.0/">v2.45.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.44.0/">v2.44.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.43.0/">v2.43.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.42.1/">v2.42.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.42.0/">v2.42.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.41.0/">v2.41.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.40.0/">v2.40.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.39.1/">v2.39.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.39.0.post0/">v2.39.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.39.0/">v2.39.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.38.0/">v2.38.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.37.0/">v2.37.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.36.0/">v2.36.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.35.0/">v2.35.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.34.0/">v2.34.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.33.0/">v2.33.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.32.1/">v2.32.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.32.0/">v2.32.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.31.1/">v2.31.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.31.0/">v2.31.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.30.0/">v2.30.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.29.2/">v2.29.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.29.1/">v2.29.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.29.0/">v2.29.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.28.0/">v2.28.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.27.1/">v2.27.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.27.0/">v2.27.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.26.0/">v2.26.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.25.2/">v2.25.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.25.1/">v2.25.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.25.0/">v2.25.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.5/">v2.24.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.4/">v2.24.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.3/">v2.24.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.2/">v2.24.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.1/">v2.24.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.0/">v2.24.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.6/">v2.23.6</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.5/">v2.23.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.4.post0/">v2.23.4.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.4/">v2.23.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.3/">v2.23.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.2/">v2.23.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.1/">v2.23.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.0/">v2.23.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.22.0/">v2.22.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.21.0/">v2.21.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.20.0/">v2.20.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.19.0/">v2.19.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.18.0/">v2.18.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.17.0/">v2.17.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.4/">v2.16.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.3.post0/">v2.16.3.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.3/">v2.16.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.2/">v2.16.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.1/">v2.16.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.0.post0/">v2.16.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.0/">v2.16.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.4/">v2.15.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.3/">v2.15.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.2/">v2.15.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.1/">v2.15.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.0/">v2.15.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.14.0/">v2.14.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.13.0/">v2.13.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.12.0/">v2.12.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.11.0/">v2.11.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.10.0/">v2.10.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.9.2/">v2.9.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.9.1/">v2.9.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.9.0/">v2.9.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.8.0/">v2.8.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.7.0/">v2.7.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.6.0/">v2.6.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.5/">v2.5.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.4/">v2.5.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.3/">v2.5.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.2/">v2.5.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.1/">v2.5.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.0/">v2.5.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.4.2/">v2.4.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.4.1/">v2.4.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.4.0/">v2.4.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.3.0/">v2.3.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.2.0/">v2.2.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.1.0/">v2.1.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.1/">v2.0.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.0/">v2.0.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.0.rc1/">v2.0.0.rc1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.0.rc0/">v2.0.0.rc0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.72.1/">v1.72.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.72.0/">v1.72.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.71.1/">v1.71.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.71.0/">v1.71.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.70.2/">v1.70.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.70.1/">v1.70.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.70.0/">v1.70.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.69.0/">v1.69.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.68.0/">v1.68.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.67.1.post0/">v1.67.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.67.1/">v1.67.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.67.0/">v1.67.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.66.0/">v1.66.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.1.post1/">v1.65.1.post1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.1.post0/">v1.65.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.1/">v1.65.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.0/">v1.65.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.64.1/">v1.64.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.64.0/">v1.64.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.63.0/">v1.63.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.62.0/">v1.62.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.61.0/">v1.61.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.60.2/">v1.60.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.59.0/">v1.59.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.58.4/">v1.58.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.58.1/">v1.58.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.58.0/">v1.58.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.57.0/">v1.57.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.3/">v1.56.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.2/">v1.56.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.1.post1/">v1.56.1.post1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.1.post0/">v1.56.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.1/">v1.56.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.0/">v1.56.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.4/">v1.55.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.3/">v1.55.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.2/">v1.55.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.1/">v1.55.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.0.post0/">v1.55.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.0/">v1.55.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.54.0/">v1.54.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.53.0/">v1.53.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.52.1/">v1.52.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.52.0.post0/">v1.52.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.52.0/">v1.52.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.4/">v1.51.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.3/">v1.51.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.1/">v1.51.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.0/">v1.51.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.18.post0/">v1.50.18.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.18/">v1.50.18</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.17.post0/">v1.50.17.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.17/">v1.50.17</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.16/">v1.50.16</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.15/">v1.50.15</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.14.post0/">v1.50.14.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.14/">v1.50.14</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.13/">v1.50.13</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.12/">v1.50.12</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.11/">v1.50.11</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.10.post0/">v1.50.10.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.10/">v1.50.10</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.9.post0/">v1.50.9.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.9/">v1.50.9</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.8/">v1.50.8</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.7/">v1.50.7</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.6.post0/">v1.50.6.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.6/">v1.50.6</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.5/">v1.50.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.4/">v1.50.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.3/">v1.50.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.2/">v1.50.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.1/">v1.50.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.0/">v1.50.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.49.0/">v1.49.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.48.1/">v1.48.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.48.0/">v1.48.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.47.1/">v1.47.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.45.0/">v1.45.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.44.4/">v1.44.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.44.3/">v1.44.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.4.post1/">v1.43.4.post1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.4.post0/">v1.43.4.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.4/">v1.43.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.3/">v1.43.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.2/">v1.43.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.1/">v1.43.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.0/">v1.43.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.42.0/">v1.42.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.41.0/">v1.41.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.40.0/">v1.40.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.39.0/">v1.39.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.38.0/">v1.38.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.37.0/">v1.37.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.36.0/">v1.36.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.35.0/">v1.35.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.34.0/">v1.34.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.33.0/">v1.33.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.32.0/">v1.32.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.31.0/">v1.31.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.30.0/">v1.30.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.29.0/">v1.29.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.28.0/">v1.28.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.27.0/">v1.27.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.26.0/">v1.26.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.25.0/">v1.25.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.24.0/">v1.24.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.23.0/">v1.23.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.22.0/">v1.22.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.21.0/">v1.21.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.20.0/">v1.20.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.19.0/">v1.19.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.18.0/">v1.18.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.17.0/">v1.17.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.15.0/">v1.15.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.14.0/">v1.14.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.13.0/">v1.13.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.12.0/">v1.12.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.11.0/">v1.11.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.10.0/">v1.10.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.9.0/">v1.9.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.8.0/">v1.8.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.7.0/">v1.7.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.6.0/">v1.6.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.5.0/">v1.5.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.4.0/">v1.4.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.3.0/">v1.3.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.2.0/">v1.2.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.1.0/">v1.1.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.0.0/">v1.0.0</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+      </dl>
+      <dl>
+        
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="https://readthedocs.org/projects/sagemaker/?fromdocs=sagemaker">Project Home</a>
+          </dd>
+          <dd>
+            <a href="https://readthedocs.org/builds/sagemaker/?fromdocs=sagemaker">Builds</a>
+          </dd>
+      </dl>
+    </div>
+  </div>
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+   
+
+</body>
+</html>

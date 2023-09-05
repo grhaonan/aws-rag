@@ -1,0 +1,2007 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Release Notes &mdash; sagemaker 2.182.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pagination.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/search_accessories.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script src="https://a0.awsstatic.com/s_code/js/3.0/awshome_s_code.js"></script>
+        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+        <script src="../../../_static/js/datatable.js"></script>
+        <script async="async" src="../../../../../_/static/javascript/readthedocs-doc-embed.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Inference APIs" href="../../inference/index.html" />
+    <link rel="prev" title="Run a Distributed Training Job Using the SageMaker Python SDK" href="../smd_model_parallel_general.html" /> 
+
+<!-- RTD Extra Head -->
+
+<link rel="stylesheet" href="../../../../../_/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": true, "api_host": "https://readthedocs.org", "builder": "sphinx", "canonical_url": null, "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": null, "language": "en", "page": "api/training/smd_model_parallel_release_notes/smd_model_parallel_change_log", "programming_language": "py", "project": "sagemaker", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "stable"}</script>
+
+<!--
+Using this variable directly instead of using `JSON.parse` is deprecated.
+The READTHEDOCS_DATA global variable will be removed in the future.
+-->
+<script type="text/javascript">
+READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerHTML);
+</script>
+
+<script type="text/javascript" src="../../../../../_/static/javascript/readthedocs-analytics.js" async="async"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> sagemaker
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                stable
+              </div>
+            
+          
+
+          <div role="search">
+    <form id ="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+        <input type="text" name="q" placeholder="ex. train object detection model, pd.concat" title="Type search term here" />
+        <br />
+        <br />
+        <div style="text-align: left;">
+            <div style="font-size: 0.85rem;">Filters: </div>
+            <div style="display: inline-block;"><label style="color: white;" for="filterExample"><input type="checkbox" id="filterExample" name="filterExample">Example</label></div>
+            <div style="display: inline-block;"><label style="color: white;" for="filterAWSDevGuide"><input type="checkbox" id="filterAWSDevGuide" name="filterAWSDevGuide">Dev Guide</label></div>
+            <div style="display: inline-block;"><label style="color: white;" for="filterSDKGuide"><input type="checkbox" id="filterSDKGuide" name="filterSDKGuide">SDK Guide</label></div>
+        </div>
+        
+    </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Using the SageMaker Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../v2.html">Use Version 2.x of the SageMaker Python SDK</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">APIs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../prep_data/feature_store.html">Feature Store APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../index.html">Training APIs</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../distributed.html">Distributed Training APIs</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../distributed.html#the-sagemaker-distributed-data-parallel-library">The SageMaker Distributed Data Parallel Library</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../distributed.html#the-sagemaker-distributed-model-parallel-library">The SageMaker Distributed Model Parallel Library</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../smd_model_parallel.html">The SageMaker Distributed Model Parallel Library Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../smp_versions/latest.html">Use the Library’s API to Adapt Training Scripts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../smd_model_parallel_general.html">Run a Distributed Training Job Using the SageMaker Python SDK</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="smd_model_parallel_change_log.html#">Release Notes</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-15-0-release-notes">SageMaker Distributed Model Parallel 1.15.0 Release Notes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="smd_model_parallel_change_log.html#release-history">Release History</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-14-0-release-notes">SageMaker Distributed Model Parallel 1.14.0 Release Notes</a></li>
+<li class="toctree-l6"><a class="reference internal" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-13-0-release-notes">SageMaker Distributed Model Parallel 1.13.0 Release Notes</a></li>
+<li class="toctree-l6"><a class="reference internal" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-11-0-release-notes">SageMaker Distributed Model Parallel 1.11.0 Release Notes</a></li>
+<li class="toctree-l6"><a class="reference internal" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-10-1-release-notes">SageMaker Distributed Model Parallel 1.10.1 Release Notes</a></li>
+<li class="toctree-l6"><a class="reference internal" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-10-0-release-notes">SageMaker Distributed Model Parallel 1.10.0 Release Notes</a></li>
+<li class="toctree-l6"><a class="reference internal" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-9-0-release-notes">SageMaker Distributed Model Parallel 1.9.0 Release Notes</a></li>
+<li class="toctree-l6"><a class="reference internal" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-8-1-release-notes">SageMaker Distributed Model Parallel 1.8.1 Release Notes</a></li>
+<li class="toctree-l6"><a class="reference internal" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-8-0-release-notes">SageMaker Distributed Model Parallel 1.8.0 Release Notes</a></li>
+<li class="toctree-l6"><a class="reference internal" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-7-0-release-notes">SageMaker Distributed Model Parallel 1.7.0 Release Notes</a></li>
+<li class="toctree-l6"><a class="reference internal" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-6-0-release-notes">SageMaker Distributed Model Parallel 1.6.0 Release Notes</a></li>
+<li class="toctree-l6"><a class="reference internal" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-5-0-release-notes">SageMaker Distributed Model Parallel 1.5.0 Release Notes</a></li>
+<li class="toctree-l6"><a class="reference internal" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-4-0-release-notes">SageMaker Distributed Model Parallel 1.4.0 Release Notes</a></li>
+<li class="toctree-l6"><a class="reference internal" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-3-1-release-notes">SageMaker Distributed Model Parallel 1.3.1 Release Notes</a></li>
+<li class="toctree-l6"><a class="reference internal" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-3-0-release-notes">SageMaker Distributed Model Parallel 1.3.0 Release Notes</a></li>
+<li class="toctree-l6"><a class="reference internal" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-2-0-release-notes">SageMaker Distributed Model Parallel 1.2.0 Release Notes</a></li>
+<li class="toctree-l6"><a class="reference internal" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-1-0-release-notes">SageMaker Distributed Model Parallel 1.1.0 Release Notes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../inference/index.html">Inference APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../governance/index.html">Governance APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../utility/index.html">Utility APIs</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../frameworks/index.html">Frameworks</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../algorithms/index.html">Built-in Algorithms</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../workflows/index.html">Workflows</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../experiments/index.html">Amazon SageMaker Experiments</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../amazon_sagemaker_debugger.html">Amazon SageMaker Debugger</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../amazon_sagemaker_featurestore.html">Amazon SageMaker Feature Store</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../amazon_sagemaker_model_monitoring.html">Amazon SageMaker Model Monitor</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../amazon_sagemaker_processing.html">Amazon SageMaker Processing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../amazon_sagemaker_model_building_pipeline.html">Amazon SageMaker Model Building Pipeline</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">sagemaker</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">APIs</a> &raquo;</li>
+        
+          <li><a href="../distributed.html">Distributed Training APIs</a> &raquo;</li>
+        
+      <li>Release Notes</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/aws/sagemaker-python-sdk/blob/f2ae8ff8b6ed82eb89110887eb5e74c953e6372a/doc/api/training/smd_model_parallel_release_notes/smd_model_parallel_change_log.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="release-notes">
+<h1>Release Notes<a class="headerlink" href="smd_model_parallel_change_log.html#release-notes" title="Permalink to this headline">¶</a></h1>
+<p>New features, bug fixes, and improvements are regularly made to the SageMaker
+model parallelism library.</p>
+<div class="section" id="sagemaker-distributed-model-parallel-1-15-0-release-notes">
+<h2>SageMaker Distributed Model Parallel 1.15.0 Release Notes<a class="headerlink" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-15-0-release-notes" title="Permalink to this headline">¶</a></h2>
+<p><em>Date: Apr. 27. 2023</em></p>
+<p><strong>Currency Updates</strong></p>
+<ul class="simple">
+<li><p>Added support for PyTorch v2.0.0.
+Note that the library does not support <code class="docutils literal notranslate"><span class="pre">torch.compile</span></code> in this release.</p></li>
+</ul>
+<p><strong>New Features</strong></p>
+<ul class="simple">
+<li><p>Using sharded data parallelism with tensor parallelism together is now
+available for PyTorch 1.13.1. It allows you to train with smaller global batch
+sizes while scaling up to large clusters. For more information, see <a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-parallel-extended-features-pytorch-sharded-data-parallelism.html#model-parallel-extended-features-pytorch-sharded-data-parallelism-with-tensor-parallelism">Sharded
+data parallelism with tensor parallelism</a>
+in the <em>Amazon SageMaker Developer Guide</em>.</p></li>
+<li><p>Added support for saving and loading full model checkpoints when using sharded
+data parallelism. This is enabled by using the standard checkpointing API,
+<code class="docutils literal notranslate"><span class="pre">smp.save_checkpoint</span></code> with <code class="docutils literal notranslate"><span class="pre">partial=False</span></code>.
+Before, full checkpoints needed to be created by merging partial checkpoint
+files after training finishes.</p></li>
+<li><p><a class="reference external" href="../smp_versions/latest/smd_model_parallel_pytorch_tensor_parallel.html#smdistributed.modelparallel.torch.nn.DistributedTransformerLayer">DistributedTransformer</a>
+now supports the ALiBi position embeddings.
+When using DistributedTransformer, you can set the <code class="docutils literal notranslate"><span class="pre">use_alibi</span></code> parameter
+to <code class="docutils literal notranslate"><span class="pre">True</span></code> to use the Triton-based flash attention kernels. This helps
+evaluate sequences longer than those used for training.</p></li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul class="simple">
+<li><p>When using tensor parallelism, parameters were initialized multiple times
+unncessarily. This release fixed the multiple initialization of parameters
+so that each parameter is initialized exactly once.
+It not only saves time, but also ensures that the random generator behavior
+is similar to the non-tensor parallelism case.</p></li>
+</ul>
+<p><strong>Known issues</strong></p>
+<ul class="simple">
+<li><p>Model initialization might take longer with PyTorch 2.0 than that with PyTorch 1.13.</p></li>
+</ul>
+<p><strong>Migration to AWS Deep Learning Containers</strong></p>
+<p>This version passed benchmark testing and is migrated to the following AWS Deep Learning Containers (DLC):</p>
+<ul>
+<li><p>SageMaker training container for PyTorch v2.0.0</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">763104351884.</span><span class="n">dkr</span><span class="o">.</span><span class="n">ecr</span><span class="o">.</span><span class="n">us</span><span class="o">-</span><span class="n">east</span><span class="o">-</span><span class="mf">1.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pytorch</span><span class="o">-</span><span class="n">training</span><span class="p">:</span><span class="mf">2.0.0</span><span class="o">-</span><span class="n">gpu</span><span class="o">-</span><span class="n">py310</span><span class="o">-</span><span class="n">cu118</span><span class="o">-</span><span class="n">ubuntu20</span><span class="mf">.04</span><span class="o">-</span><span class="n">sagemaker</span>
+</pre></div>
+</div>
+</li>
+<li><p>SageMaker training container for PyTorch v1.13.1</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">763104351884.</span><span class="n">dkr</span><span class="o">.</span><span class="n">ecr</span><span class="o">.</span><span class="n">us</span><span class="o">-</span><span class="n">east</span><span class="o">-</span><span class="mf">1.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pytorch</span><span class="o">-</span><span class="n">training</span><span class="p">:</span><span class="mf">1.13.1</span><span class="o">-</span><span class="n">gpu</span><span class="o">-</span><span class="n">py39</span><span class="o">-</span><span class="n">cu117</span><span class="o">-</span><span class="n">ubuntu20</span><span class="mf">.04</span><span class="o">-</span><span class="n">sagemaker</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Binary file of this version of the library for <a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-parallel-sm-sdk.html#model-parallel-bring-your-own-container">custom container</a> users:</p>
+<ul>
+<li><p>For PyTorch v2.0.0</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">sagemaker</span><span class="o">-</span><span class="n">distributed</span><span class="o">-</span><span class="n">model</span><span class="o">-</span><span class="n">parallel</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">us</span><span class="o">-</span><span class="n">west</span><span class="o">-</span><span class="mf">2.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pytorch</span><span class="o">-</span><span class="mf">2.0.0</span><span class="o">/</span><span class="n">build</span><span class="o">-</span><span class="n">artifacts</span><span class="o">/</span><span class="mi">2023</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">14</span><span class="o">-</span><span class="mi">20</span><span class="o">-</span><span class="mi">14</span><span class="o">/</span><span class="n">smdistributed_modelparallel</span><span class="o">-</span><span class="mf">1.15.0</span><span class="o">-</span><span class="n">cp310</span><span class="o">-</span><span class="n">cp310</span><span class="o">-</span><span class="n">linux_x86_64</span><span class="o">.</span><span class="n">whl</span>
+</pre></div>
+</div>
+</li>
+<li><p>For PyTorch v1.13.1</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">sagemaker</span><span class="o">-</span><span class="n">distributed</span><span class="o">-</span><span class="n">model</span><span class="o">-</span><span class="n">parallel</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">us</span><span class="o">-</span><span class="n">west</span><span class="o">-</span><span class="mf">2.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pytorch</span><span class="o">-</span><span class="mf">1.13.1</span><span class="o">/</span><span class="n">build</span><span class="o">-</span><span class="n">artifacts</span><span class="o">/</span><span class="mi">2023</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">17</span><span class="o">-</span><span class="mi">15</span><span class="o">-</span><span class="mi">49</span><span class="o">/</span><span class="n">smdistributed_modelparallel</span><span class="o">-</span><span class="mf">1.15.0</span><span class="o">-</span><span class="n">cp39</span><span class="o">-</span><span class="n">cp39</span><span class="o">-</span><span class="n">linux_x86_64</span><span class="o">.</span><span class="n">whl</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="release-history">
+<h2>Release History<a class="headerlink" href="smd_model_parallel_change_log.html#release-history" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sagemaker-distributed-model-parallel-1-14-0-release-notes">
+<h3>SageMaker Distributed Model Parallel 1.14.0 Release Notes<a class="headerlink" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-14-0-release-notes" title="Permalink to this headline">¶</a></h3>
+<p><em>Date: Jan. 30. 2023</em></p>
+<p><strong>Currency Updates</strong></p>
+<ul class="simple">
+<li><p>Added support for PyTorch v1.13.1</p></li>
+</ul>
+<p><strong>Improvements</strong></p>
+<ul class="simple">
+<li><p>Upgraded the flash-attention (<a class="reference external" href="https://github.com/HazyResearch/flash-attention">https://github.com/HazyResearch/flash-attention</a>) library to  v0.2.6.post1</p></li>
+</ul>
+<p><strong>Migration to AWS Deep Learning Containers</strong></p>
+<p>This version passed benchmark testing and is migrated to the following AWS Deep Learning Containers (DLC):</p>
+<ul>
+<li><p>SageMaker training container for PyTorch v1.13.1</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">763104351884.</span><span class="n">dkr</span><span class="o">.</span><span class="n">ecr</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pytorch</span><span class="o">-</span><span class="n">training</span><span class="p">:</span><span class="mf">1.13.1</span><span class="o">-</span><span class="n">gpu</span><span class="o">-</span><span class="n">py39</span><span class="o">-</span><span class="n">cu117</span><span class="o">-</span><span class="n">ubuntu20</span><span class="mf">.04</span><span class="o">-</span><span class="n">sagemaker</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Binary file of this version of the library for <a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-parallel-sm-sdk.html#model-parallel-bring-your-own-container">custom container</a> users:</p>
+<ul>
+<li><p>For PyTorch 1.13.1</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">sagemaker</span><span class="o">-</span><span class="n">distributed</span><span class="o">-</span><span class="n">model</span><span class="o">-</span><span class="n">parallel</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">us</span><span class="o">-</span><span class="n">west</span><span class="o">-</span><span class="mf">2.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pytorch</span><span class="o">-</span><span class="mf">1.13.1</span><span class="o">/</span><span class="n">build</span><span class="o">-</span><span class="n">artifacts</span><span class="o">/</span><span class="mi">2023</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">19</span><span class="o">-</span><span class="mi">18</span><span class="o">-</span><span class="mi">35</span><span class="o">/</span><span class="n">smdistributed_modelparallel</span><span class="o">-</span><span class="mf">1.14.0</span><span class="o">-</span><span class="n">cp39</span><span class="o">-</span><span class="n">cp39</span><span class="o">-</span><span class="n">linux_x86_64</span><span class="o">.</span><span class="n">whl</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="sagemaker-distributed-model-parallel-1-13-0-release-notes">
+<h3>SageMaker Distributed Model Parallel 1.13.0 Release Notes<a class="headerlink" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-13-0-release-notes" title="Permalink to this headline">¶</a></h3>
+<p><em>Date: Dec. 15. 2022</em></p>
+<p><strong>New Features</strong></p>
+<ul class="simple">
+<li><p>Sharded data parallelism now supports a new backend for collectives called <em>SMDDP Collectives</em>.
+For supported scenarios, SMDDP Collectives are on by default for the AllGather operation.
+For more information, see
+<a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-parallel-extended-features-pytorch-sharded-data-parallelism.html#model-parallel-extended-features-pytorch-sharded-data-parallelism-smddp-collectives">Sharded data parallelism with SMDDP Collectives</a>
+in the <em>Amazon SageMaker Developer Guide</em>.</p></li>
+<li><p>Introduced FlashAttention for DistributedTransformer to improve memory usage and computational
+performance of models such as GPT2, GPTNeo, GPTJ, GPTNeoX, BERT, and RoBERTa.</p></li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul class="simple">
+<li><p>Fixed initialization of <code class="docutils literal notranslate"><span class="pre">lm_head</span></code> in DistributedTransformer to use a provided range
+for initialization, when weights are not tied with the embeddings.</p></li>
+</ul>
+<p><strong>Improvements</strong></p>
+<ul class="simple">
+<li><p>When a module has no parameters, we have introduced an optimization to execute
+such a module on the same rank as its parent during pipeline parallelism.</p></li>
+</ul>
+<p><strong>Migration to AWS Deep Learning Containers</strong></p>
+<p>This version passed benchmark testing and is migrated to the following AWS Deep Learning Containers (DLC):</p>
+<ul>
+<li><p>SageMaker training container for PyTorch v1.12.1</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">763104351884.</span><span class="n">dkr</span><span class="o">.</span><span class="n">ecr</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pytorch</span><span class="o">-</span><span class="n">training</span><span class="p">:</span><span class="mf">1.12.1</span><span class="o">-</span><span class="n">gpu</span><span class="o">-</span><span class="n">py38</span><span class="o">-</span><span class="n">cu113</span><span class="o">-</span><span class="n">ubuntu20</span><span class="mf">.04</span><span class="o">-</span><span class="n">sagemaker</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Binary file of this version of the library for <a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-parallel-sm-sdk.html#model-parallel-bring-your-own-container">custom container</a> users:</p>
+<ul>
+<li><p>For PyTorch 1.12.1</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">sagemaker</span><span class="o">-</span><span class="n">distributed</span><span class="o">-</span><span class="n">model</span><span class="o">-</span><span class="n">parallel</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">us</span><span class="o">-</span><span class="n">west</span><span class="o">-</span><span class="mf">2.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pytorch</span><span class="o">-</span><span class="mf">1.12.1</span><span class="o">/</span><span class="n">build</span><span class="o">-</span><span class="n">artifacts</span><span class="o">/</span><span class="mi">2022</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">21</span><span class="o">-</span><span class="mi">34</span><span class="o">/</span><span class="n">smdistributed_modelparallel</span><span class="o">-</span><span class="mf">1.13.0</span><span class="o">-</span><span class="n">cp38</span><span class="o">-</span><span class="n">cp38</span><span class="o">-</span><span class="n">linux_x86_64</span><span class="o">.</span><span class="n">whl</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="sagemaker-distributed-model-parallel-1-11-0-release-notes">
+<h3>SageMaker Distributed Model Parallel 1.11.0 Release Notes<a class="headerlink" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-11-0-release-notes" title="Permalink to this headline">¶</a></h3>
+<p><em>Date: August. 17. 2022</em></p>
+<p><strong>New Features</strong></p>
+<p>The following new features are added for PyTorch.</p>
+<ul class="simple">
+<li><p>The library implements sharded data parallelism, which is a memory-saving
+distributed training technique that splits the training state of a model
+(model parameters, gradients, and optimizer states) across data parallel groups.
+With sharded data parallelism, you can reduce the per-GPU memory footprint of
+a model by sharding the training state over multiple GPUs. To learn more,
+see <a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-parallel-extended-features-pytorch-sharded-data-parallelism.html">Sharded Data Parallelism</a>
+in the <em>Amazon SageMaker Developer Guide</em>.</p></li>
+</ul>
+<p><strong>Migration to AWS Deep Learning Containers</strong></p>
+<p>This version passed benchmark testing and is migrated to the following AWS Deep Learning Containers (DLC):</p>
+<ul>
+<li><p>DLC for PyTorch 1.12.0</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">763104351884.</span><span class="n">dkr</span><span class="o">.</span><span class="n">ecr</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pytorch</span><span class="o">-</span><span class="n">training</span><span class="p">:</span><span class="mf">1.12.0</span><span class="o">-</span><span class="n">gpu</span><span class="o">-</span><span class="n">py38</span><span class="o">-</span><span class="n">cu113</span><span class="o">-</span><span class="n">ubuntu20</span><span class="mf">.04</span><span class="o">-</span><span class="n">sagemaker</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Binary file of this version of the library for <a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-parallel-sm-sdk.html#model-parallel-bring-your-own-container">custom container</a> users:</p>
+<ul>
+<li><p>For PyTorch 1.12.0</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">sagemaker</span><span class="o">-</span><span class="n">distributed</span><span class="o">-</span><span class="n">model</span><span class="o">-</span><span class="n">parallel</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">us</span><span class="o">-</span><span class="n">west</span><span class="o">-</span><span class="mf">2.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pytorch</span><span class="o">-</span><span class="mf">1.12.0</span><span class="o">/</span><span class="n">build</span><span class="o">-</span><span class="n">artifacts</span><span class="o">/</span><span class="mi">2022</span><span class="o">-</span><span class="mi">08</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">16</span><span class="o">-</span><span class="mi">58</span><span class="o">/</span><span class="n">smdistributed_modelparallel</span><span class="o">-</span><span class="mf">1.11.0</span><span class="o">-</span><span class="n">cp38</span><span class="o">-</span><span class="n">cp38</span><span class="o">-</span><span class="n">linux_x86_64</span><span class="o">.</span><span class="n">whl</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="sagemaker-distributed-model-parallel-1-10-1-release-notes">
+<h3>SageMaker Distributed Model Parallel 1.10.1 Release Notes<a class="headerlink" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-10-1-release-notes" title="Permalink to this headline">¶</a></h3>
+<p><em>Date: August. 8. 2022</em></p>
+<p><strong>Currency Updates</strong></p>
+<ul class="simple">
+<li><p>Added support for Transformers v4.21.</p></li>
+</ul>
+<p><strong>Migration to AWS Deep Learning Containers</strong></p>
+<p>This version passed benchmark testing and is migrated to the following AWS Deep Learning Containers (DLC):</p>
+<ul>
+<li><p>DLC for PyTorch 1.11.0</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">763104351884.</span><span class="n">dkr</span><span class="o">.</span><span class="n">ecr</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pytorch</span><span class="o">-</span><span class="n">training</span><span class="p">:</span><span class="mf">1.11.0</span><span class="o">-</span><span class="n">gpu</span><span class="o">-</span><span class="n">py38</span><span class="o">-</span><span class="n">cu113</span><span class="o">-</span><span class="n">ubuntu20</span><span class="mf">.04</span><span class="o">-</span><span class="n">sagemaker</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Binary file of this version of the library for <a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-parallel-sm-sdk.html#model-parallel-bring-your-own-container">custom container</a> users:</p>
+<ul>
+<li><p>For PyTorch 1.11.0</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">sagemaker</span><span class="o">-</span><span class="n">distributed</span><span class="o">-</span><span class="n">model</span><span class="o">-</span><span class="n">parallel</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">us</span><span class="o">-</span><span class="n">west</span><span class="o">-</span><span class="mf">2.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pytorch</span><span class="o">-</span><span class="mf">1.11.0</span><span class="o">/</span><span class="n">build</span><span class="o">-</span><span class="n">artifacts</span><span class="o">/</span><span class="mi">2022</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">28</span><span class="o">-</span><span class="mi">23</span><span class="o">-</span><span class="mi">07</span><span class="o">/</span><span class="n">smdistributed_modelparallel</span><span class="o">-</span><span class="mf">1.10.1</span><span class="o">-</span><span class="n">cp38</span><span class="o">-</span><span class="n">cp38</span><span class="o">-</span><span class="n">linux_x86_64</span><span class="o">.</span><span class="n">whl</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="sagemaker-distributed-model-parallel-1-10-0-release-notes">
+<h3>SageMaker Distributed Model Parallel 1.10.0 Release Notes<a class="headerlink" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-10-0-release-notes" title="Permalink to this headline">¶</a></h3>
+<p><em>Date: July. 19. 2022</em></p>
+<p><strong>New Features</strong></p>
+<p>The following new features are added for PyTorch.</p>
+<ul class="simple">
+<li><p>Added support for FP16 training by implementing smdistributed.modelparallel
+modification of Apex FP16_Module and FP16_Optimizer. To learn more, see
+<a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-parallel-extended-features-pytorch-fp16.html">FP16 Training with Model Parallelism</a>.</p></li>
+<li><p>New checkpoint APIs for CPU memory usage optimization. To learn more, see
+<a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-parallel-extended-features-pytorch-checkpoint.html">Checkpointing Distributed Models and Optimizer States</a>.</p></li>
+</ul>
+<p><strong>Improvements</strong></p>
+<ul class="simple">
+<li><p>The SageMaker distributed model parallel library manages and optimizes CPU
+memory by garbage-collecting non-local parameters in general and during checkpointing.</p></li>
+<li><p>Changes in the <a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-parallel-extended-features-pytorch-hugging-face.html">GPT-2 translate functions</a>
+(<code class="docutils literal notranslate"><span class="pre">smdistributed.modelparallel.torch.nn.huggingface.gpt2</span></code>)
+to save memory by not maintaining two copies of weights at the same time.</p></li>
+</ul>
+<p><strong>Migration to AWS Deep Learning Containers</strong></p>
+<p>This version passed benchmark testing and is migrated to the following AWS Deep Learning Containers (DLC):</p>
+<ul>
+<li><p>DLC for PyTorch 1.11.0</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">763104351884.</span><span class="n">dkr</span><span class="o">.</span><span class="n">ecr</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pytorch</span><span class="o">-</span><span class="n">training</span><span class="p">:</span><span class="mf">1.11.0</span><span class="o">-</span><span class="n">gpu</span><span class="o">-</span><span class="n">py38</span><span class="o">-</span><span class="n">cu113</span><span class="o">-</span><span class="n">ubuntu20</span><span class="mf">.04</span><span class="o">-</span><span class="n">sagemaker</span>
+</pre></div>
+</div>
+</li>
+<li><p>DLC for PyTorch 1.12.0</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">763104351884.</span><span class="n">dkr</span><span class="o">.</span><span class="n">ecr</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pytorch</span><span class="o">-</span><span class="n">training</span><span class="p">:</span><span class="mf">1.12.0</span><span class="o">-</span><span class="n">gpu</span><span class="o">-</span><span class="n">py38</span><span class="o">-</span><span class="n">cu113</span><span class="o">-</span><span class="n">ubuntu20</span><span class="mf">.04</span><span class="o">-</span><span class="n">sagemaker</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Binary file of this version of the library for <a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-parallel-sm-sdk.html#model-parallel-bring-your-own-container">custom container</a> users:</p>
+<ul>
+<li><p>For PyTorch 1.11.0</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">sagemaker</span><span class="o">-</span><span class="n">distributed</span><span class="o">-</span><span class="n">model</span><span class="o">-</span><span class="n">parallel</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">us</span><span class="o">-</span><span class="n">west</span><span class="o">-</span><span class="mf">2.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pytorch</span><span class="o">-</span><span class="mf">1.11.0</span><span class="o">/</span><span class="n">build</span><span class="o">-</span><span class="n">artifacts</span><span class="o">/</span><span class="mi">2022</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">19</span><span class="o">-</span><span class="mi">23</span><span class="o">/</span><span class="n">smdistributed_modelparallel</span><span class="o">-</span><span class="mf">1.10.0</span><span class="o">-</span><span class="n">cp38</span><span class="o">-</span><span class="n">cp38</span><span class="o">-</span><span class="n">linux_x86_64</span><span class="o">.</span><span class="n">whl</span>
+</pre></div>
+</div>
+</li>
+<li><p>For PyTorch 1.12.0</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">sagemaker</span><span class="o">-</span><span class="n">distributed</span><span class="o">-</span><span class="n">model</span><span class="o">-</span><span class="n">parallel</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">us</span><span class="o">-</span><span class="n">west</span><span class="o">-</span><span class="mf">2.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pytorch</span><span class="o">-</span><span class="mf">1.12.0</span><span class="o">/</span><span class="n">build</span><span class="o">-</span><span class="n">artifacts</span><span class="o">/</span><span class="mi">2022</span><span class="o">-</span><span class="mi">07</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">19</span><span class="o">-</span><span class="mi">23</span><span class="o">/</span><span class="n">smdistributed_modelparallel</span><span class="o">-</span><span class="mf">1.10.0</span><span class="o">-</span><span class="n">cp38</span><span class="o">-</span><span class="n">cp38</span><span class="o">-</span><span class="n">linux_x86_64</span><span class="o">.</span><span class="n">whl</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="sagemaker-distributed-model-parallel-1-9-0-release-notes">
+<h3>SageMaker Distributed Model Parallel 1.9.0 Release Notes<a class="headerlink" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-9-0-release-notes" title="Permalink to this headline">¶</a></h3>
+<p><em>Date: May. 3. 2022</em></p>
+<p><strong>Currency Updates</strong></p>
+<ul class="simple">
+<li><p>Added support for PyTorch 1.11.0</p></li>
+</ul>
+<p><strong>Migration to AWS Deep Learning Containers</strong></p>
+<p>This version passed benchmark testing and is migrated to the following AWS Deep Learning Containers (DLC):</p>
+<ul>
+<li><p>PyTorch 1.11.0 DLC</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">763104351884.</span><span class="n">dkr</span><span class="o">.</span><span class="n">ecr</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pytorch</span><span class="o">-</span><span class="n">training</span><span class="p">:</span><span class="mf">1.11.0</span><span class="o">-</span><span class="n">gpu</span><span class="o">-</span><span class="n">py38</span><span class="o">-</span><span class="n">cu113</span><span class="o">-</span><span class="n">ubuntu20</span><span class="mf">.04</span><span class="o">-</span><span class="n">sagemaker</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Binary file of this version of the library for custom container users:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">sagemaker</span><span class="o">-</span><span class="n">distributed</span><span class="o">-</span><span class="n">model</span><span class="o">-</span><span class="n">parallel</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">us</span><span class="o">-</span><span class="n">west</span><span class="o">-</span><span class="mf">2.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pytorch</span><span class="o">-</span><span class="mf">1.11.0</span><span class="o">/</span><span class="n">build</span><span class="o">-</span><span class="n">artifacts</span><span class="o">/</span><span class="mi">2022</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">20</span><span class="o">-</span><span class="mi">17</span><span class="o">-</span><span class="mi">05</span><span class="o">/</span><span class="n">smdistributed_modelparallel</span><span class="o">-</span><span class="mf">1.9.0</span><span class="o">-</span><span class="n">cp38</span><span class="o">-</span><span class="n">cp38</span><span class="o">-</span><span class="n">linux_x86_64</span><span class="o">.</span><span class="n">whl</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="sagemaker-distributed-model-parallel-1-8-1-release-notes">
+<h3>SageMaker Distributed Model Parallel 1.8.1 Release Notes<a class="headerlink" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-8-1-release-notes" title="Permalink to this headline">¶</a></h3>
+<p><em>Date: April. 23. 2022</em></p>
+<p><strong>New Features</strong></p>
+<ul class="simple">
+<li><p>Added support for more configurations of the Hugging Face Transformers GPT-2 and GPT-J models
+with tensor parallelism: <code class="docutils literal notranslate"><span class="pre">scale_attn_weights</span></code>, <code class="docutils literal notranslate"><span class="pre">scale_attn_by_inverse_layer_idx</span></code>,
+<code class="docutils literal notranslate"><span class="pre">reorder_and_upcast_attn</span></code>. To learn more about these features, please refer to
+the following model configuration classes
+in the <em>Hugging Face Transformers documentation</em>:</p>
+<ul>
+<li><p><a class="reference external" href="https://huggingface.co/docs/transformers/model_doc/gpt2#transformers.GPT2Config">transformers.GPT2Config</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/docs/transformers/model_doc/gptj#transformers.GPTJConfig">transformers.GPTJConfig</a></p></li>
+</ul>
+</li>
+<li><p>Added support for activation checkpointing of modules which pass keyword value arguments
+and arbitrary structures in their forward methods. This helps support
+activation checkpointing with Hugging Face Transformers models even
+when tensor parallelism is not enabled.</p></li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul class="simple">
+<li><p>Fixed a correctness issue with tensor parallelism for GPT-J model
+which was due to improper scaling during gradient reduction
+for some layer normalization modules.</p></li>
+<li><p>Fixed the creation of unnecessary additional processes which take up some
+GPU memory on GPU 0 when the <a class="reference internal" href="../smp_versions/latest/smd_model_parallel_common_api.html#smp.allgather" title="smp.allgather"><code class="xref py py-class docutils literal notranslate"><span class="pre">smp.allgather</span></code></a> collective is called.</p></li>
+</ul>
+<p><strong>Improvements</strong></p>
+<ul class="simple">
+<li><p>Improved activation offloading so that activations are preloaded on a
+per-layer basis as opposed to all activations for a micro batch earlier.
+This not only improves memory efficiency and performance, but also makes
+activation offloading a useful feature for non-pipeline parallelism cases.</p></li>
+</ul>
+<p><strong>Migration to AWS Deep Learning Containers</strong></p>
+<p>This version passed benchmark testing and is migrated to the following AWS Deep Learning Containers:</p>
+<ul>
+<li><p>HuggingFace 4.17.0 DLC with PyTorch 1.10.2</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">763104351884.</span><span class="n">dkr</span><span class="o">.</span><span class="n">ecr</span><span class="o">.</span><span class="n">us</span><span class="o">-</span><span class="n">east</span><span class="o">-</span><span class="mf">1.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">huggingface</span><span class="o">-</span><span class="n">pytorch</span><span class="o">-</span><span class="n">training</span><span class="p">:</span><span class="mf">1.10.2</span><span class="o">-</span><span class="n">transformers4</span><span class="mf">.17.0</span><span class="o">-</span><span class="n">gpu</span><span class="o">-</span><span class="n">py38</span><span class="o">-</span><span class="n">cu113</span><span class="o">-</span><span class="n">ubuntu20</span><span class="mf">.04</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>The binary file of this version of the library for custom container users</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">sagemaker</span><span class="o">-</span><span class="n">distributed</span><span class="o">-</span><span class="n">model</span><span class="o">-</span><span class="n">parallel</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">us</span><span class="o">-</span><span class="n">west</span><span class="o">-</span><span class="mf">2.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pytorch</span><span class="o">-</span><span class="mf">1.10.0</span><span class="o">/</span><span class="n">build</span><span class="o">-</span><span class="n">artifacts</span><span class="o">/</span><span class="mi">2022</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">14</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">58</span><span class="o">/</span><span class="n">smdistributed_modelparallel</span><span class="o">-</span><span class="mf">1.8.1</span><span class="o">-</span><span class="n">cp38</span><span class="o">-</span><span class="n">cp38</span><span class="o">-</span><span class="n">linux_x86_64</span><span class="o">.</span><span class="n">whl</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="sagemaker-distributed-model-parallel-1-8-0-release-notes">
+<h3>SageMaker Distributed Model Parallel 1.8.0 Release Notes<a class="headerlink" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-8-0-release-notes" title="Permalink to this headline">¶</a></h3>
+<p><em>Date: March. 23. 2022</em></p>
+<p><strong>New Features</strong></p>
+<ul class="simple">
+<li><p>Added tensor parallelism support for the <a class="reference external" href="https://huggingface.co/docs/transformers/model_doc/gptj">GPT-J model</a>.
+When using the GPT-J model of Hugging Face Transformers v4.17.0 with
+tensor parallelism, the SageMaker model parallel library automatically
+replaces the model with a tensor parallel distributed GPT-J model.
+For more information, see <a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-parallel-extended-features-pytorch-hugging-face.html">Support for Hugging Face Transformer Models</a>
+in the <em>Amazon SageMaker Model Parallel Training developer guide</em>.</p></li>
+</ul>
+<p><strong>Migration to AWS Deep Learning Containers</strong></p>
+<p>This version passed benchmark testing and is migrated to the following AWS Deep Learning Containers:</p>
+<ul>
+<li><p>HuggingFace 4.17.0 DLC with PyTorch 1.10.2</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">763104351884.</span><span class="n">dkr</span><span class="o">.</span><span class="n">ecr</span><span class="o">.</span><span class="n">us</span><span class="o">-</span><span class="n">west</span><span class="o">-</span><span class="mf">2.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">huggingface</span><span class="o">-</span><span class="n">pytorch</span><span class="o">-</span><span class="n">training</span><span class="p">:</span><span class="mf">1.10.2</span><span class="o">-</span><span class="n">transformers4</span><span class="mf">.17.0</span><span class="o">-</span><span class="n">gpu</span><span class="o">-</span><span class="n">py38</span><span class="o">-</span><span class="n">cu113</span><span class="o">-</span><span class="n">ubuntu20</span><span class="mf">.04</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<p>The binary file of this version of the library for custom container users:</p>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">sagemaker</span><span class="o">-</span><span class="n">distributed</span><span class="o">-</span><span class="n">model</span><span class="o">-</span><span class="n">parallel</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">us</span><span class="o">-</span><span class="n">west</span><span class="o">-</span><span class="mf">2.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pytorch</span><span class="o">-</span><span class="mf">1.10.0</span><span class="o">/</span><span class="n">build</span><span class="o">-</span><span class="n">artifacts</span><span class="o">/</span><span class="mi">2022</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">00</span><span class="o">-</span><span class="mi">33</span><span class="o">/</span><span class="n">smdistributed_modelparallel</span><span class="o">-</span><span class="mf">1.8.0</span><span class="o">-</span><span class="n">cp38</span><span class="o">-</span><span class="n">cp38</span><span class="o">-</span><span class="n">linux_x86_64</span><span class="o">.</span><span class="n">whl</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="sagemaker-distributed-model-parallel-1-7-0-release-notes">
+<h3>SageMaker Distributed Model Parallel 1.7.0 Release Notes<a class="headerlink" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-7-0-release-notes" title="Permalink to this headline">¶</a></h3>
+<p><em>Date: March. 07. 2022</em></p>
+<p><strong>Currency Updates</strong></p>
+<ul class="simple">
+<li><p>Support for PyTorch 1.10.2</p></li>
+<li><p>Support for Hugging Face Transformers 4.16.2</p></li>
+</ul>
+<p><strong>Improvements</strong></p>
+<ul>
+<li><p>Additional support for the <a class="reference internal" href="../smp_versions/latest/smd_model_parallel_pytorch_tensor_parallel.html#smdmp-pytorch-tensor-parallel"><span class="std std-ref">PyTorch API for Tensor Parallelism</span></a>.</p>
+<ul>
+<li><p>Added support for FP32 residual addition to avoid overflow (NaN loss values)
+for large models with more than 100 billion parameters when using FP16.
+This is integrated to the following module:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">smp.nn.DistributedTransformerOutputLayer</span></code></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Added support for the following two <a class="reference external" href="https://github.com/NVIDIA/Megatron-LM/tree/main/megatron/fused_kernels">NVIDIA Megatron fused kernels</a>:</p>
+<ul class="simple">
+<li><p>Fusion of attention masking and softmax (<code class="docutils literal notranslate"><span class="pre">fused_softmax</span></code>)</p></li>
+<li><p>Fusion of bias addition and Gelu activation (<code class="docutils literal notranslate"><span class="pre">fused_bias_gelu</span></code>)</p></li>
+</ul>
+<p>To learn more about these options and how to use them,
+see the <code class="xref py py-class docutils literal notranslate"><span class="pre">smp.tensor_parallelism</span></code> context manager.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Migration to AWS Deep Learning Containers</strong></p>
+<p>This version passed benchmark testing and is migrated to the following AWS Deep Learning Containers:</p>
+<ul>
+<li><p>PyTorch 1.10.2</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">763104351884.</span><span class="n">dkr</span><span class="o">.</span><span class="n">ecr</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pytorch</span><span class="o">-</span><span class="n">training</span><span class="p">:</span><span class="mf">1.10.2</span><span class="o">-</span><span class="n">gpu</span><span class="o">-</span><span class="n">py38</span><span class="o">-</span><span class="n">cu113</span><span class="o">-</span><span class="n">ubuntu20</span><span class="mf">.04</span><span class="o">-</span><span class="n">sagemaker</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="sagemaker-distributed-model-parallel-1-6-0-release-notes">
+<h3>SageMaker Distributed Model Parallel 1.6.0 Release Notes<a class="headerlink" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-6-0-release-notes" title="Permalink to this headline">¶</a></h3>
+<p><em>Date: December. 20. 2021</em></p>
+<p><strong>New Features</strong></p>
+<ul>
+<li><p><strong>PyTorch</strong></p>
+<ul>
+<li><p>Added extended memory-saving features for PyTorch 1.8.1:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-parallel-extended-features-pytorch-tensor-parallelism.html">Tensor parallelism</a></p></li>
+<li><p><a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-parallel-extended-features-pytorch-optimizer-state-sharding.html">Optimizer state sharding</a></p></li>
+<li><p><a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-parallel-extended-features-pytorch-activation-checkpointing.html">Activation checkpointing</a></p></li>
+<li><p><a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-parallel-extended-features-pytorch-activation-offloading.html">Activation offloading</a></p></li>
+</ul>
+<p>For more information, see the following documentation:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-parallel-extended-features-pytorch.html">SageMaker distributed model parallel developer guide</a></p></li>
+<li><p><a class="reference external" href="../smp_versions/latest.html">SageMaker distributed model parallel API documentation for v1.6.0</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Migration to AWS Deep Learning Containers</strong></p>
+<p>This version passed benchmark testing and is migrated to the following
+AWS Deep Learning Container(s):</p>
+<ul>
+<li><p>Deep Learning Container for PyTorch 1.8.1:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">763104351884.</span><span class="n">dkr</span><span class="o">.</span><span class="n">ecr</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pytorch</span><span class="o">-</span><span class="n">training</span><span class="p">:</span><span class="mf">1.8.1</span><span class="o">-</span><span class="n">gpu</span><span class="o">-</span><span class="n">py36</span><span class="o">-</span><span class="n">cu111</span><span class="o">-</span><span class="n">ubuntu18</span><span class="mf">.04</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="sagemaker-distributed-model-parallel-1-5-0-release-notes">
+<h3>SageMaker Distributed Model Parallel 1.5.0 Release Notes<a class="headerlink" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-5-0-release-notes" title="Permalink to this headline">¶</a></h3>
+<p><em>Date: November. 03. 2021</em></p>
+<p><strong>New Features</strong></p>
+<ul class="simple">
+<li><p><strong>PyTorch</strong></p>
+<ul>
+<li><p>Currency update for PyTorch 1.10.0</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Migration to AWS Deep Learning Containers</strong></p>
+<p>This version passed benchmark testing and is migrated to the following
+AWS Deep Learning Containers:</p>
+<ul>
+<li><p>Deep Learning Container for PyTorch 1.10.0:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">763104351884.</span><span class="n">dkr</span><span class="o">.</span><span class="n">ecr</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pytorch</span><span class="o">-</span><span class="n">training</span><span class="p">:</span><span class="mf">1.10.0</span><span class="o">-</span><span class="n">gpu</span><span class="o">-</span><span class="n">py38</span><span class="o">-</span><span class="n">cu113</span><span class="o">-</span><span class="n">ubuntu20</span><span class="mf">.04</span><span class="o">-</span><span class="n">sagemaker</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="sagemaker-distributed-model-parallel-1-4-0-release-notes">
+<h3>SageMaker Distributed Model Parallel 1.4.0 Release Notes<a class="headerlink" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-4-0-release-notes" title="Permalink to this headline">¶</a></h3>
+<p><em>Date: June. 29. 2021</em></p>
+<p><strong>New Features</strong></p>
+<ul class="simple">
+<li><p><strong>TensorFlow</strong></p>
+<ul>
+<li><p>Added support for TensorFlow v2.5.0.</p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">keras.model.fit()</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Migration to AWS Deep Learning Containers</strong></p>
+<p>This version passed benchmark testing and is migrated to the following
+AWS Deep Learning Containers:</p>
+<ul>
+<li><p>Deep Learning Container for TensorFlow 2.5.0:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">763104351884.</span><span class="n">dkr</span><span class="o">.</span><span class="n">ecr</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">-</span><span class="n">training</span><span class="p">:</span><span class="mf">2.5.0</span><span class="o">-</span><span class="n">gpu</span><span class="o">-</span><span class="n">py37</span><span class="o">-</span><span class="n">cu112</span><span class="o">-</span><span class="n">ubuntu18</span><span class="mf">.04</span><span class="o">-</span><span class="n">v1</span><span class="mf">.0</span>
+</pre></div>
+</div>
+</li>
+<li><p>Deep Learning Container for PyTorch 1.9.1:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">763104351884.</span><span class="n">dkr</span><span class="o">.</span><span class="n">ecr</span><span class="o">.&lt;</span><span class="n">region</span><span class="o">&gt;.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pytorch</span><span class="o">-</span><span class="n">training</span><span class="p">:</span><span class="mf">1.9.1</span><span class="o">-</span><span class="n">gpu</span><span class="o">-</span><span class="n">py38</span><span class="o">-</span><span class="n">cu111</span><span class="o">-</span><span class="n">ubuntu20</span><span class="mf">.04</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="sagemaker-distributed-model-parallel-1-3-1-release-notes">
+<h3>SageMaker Distributed Model Parallel 1.3.1 Release Notes<a class="headerlink" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-3-1-release-notes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>New Features</p></li>
+<li><p>Bug Fixes</p></li>
+<li><p>Known Issues</p></li>
+</ul>
+<p><strong>New Features</strong></p>
+<ul class="simple">
+<li><p><strong>TensorFlow</strong></p>
+<ul>
+<li><p>Exposes a new decorator <code class="docutils literal notranslate"><span class="pre">register_post_partition_hook</span></code>. This allows
+invoking the decorated methods just after model partition but before
+executing the first step. For example loading a checkpoint. Refer to
+the <a class="reference external" href="../smp_versions/latest/smd_model_parallel_tensorflow.html">SageMaker distributed model parallel API
+documentation</a>
+for more information.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul class="simple">
+<li><p><strong>PyTorch</strong></p>
+<ul>
+<li><p>Improved memory efficiency when using active microbatches by clearing
+activations at end of each microbatch.</p></li>
+</ul>
+</li>
+<li><p><strong>TensorFlow</strong></p>
+<ul>
+<li><p>Fixed issue that caused hangs when training some models with XLA
+enabled.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Known Issues</strong></p>
+<ul class="simple">
+<li><p><strong>PyTorch</strong></p>
+<ul>
+<li><p>A crash was observed when <code class="docutils literal notranslate"><span class="pre">optimizer.step()</span></code> was called for certain
+optimizers such as AdaDelta, when the partition on which this method
+was called has no local parameters assigned to it after partitioning.
+This is due to a bug in PyTorch which <a class="reference external" href="https://github.com/pytorch/pytorch/pull/52944">has since been
+fixed</a>. Till that
+makes its way to the next release of PyTorch, only call
+<code class="docutils literal notranslate"><span class="pre">optimizer.step()</span></code> on processes which have at least one local
+parameter. This can be checked like this
+<code class="docutils literal notranslate"><span class="pre">len(list(model.local_parameters()))</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>.</p></li>
+<li><p>A performance regression still exists when training on SMP with
+PyTorch 1.7.1 compared to 1.6. The rootcause was found to be the
+slowdown in performance of <code class="docutils literal notranslate"><span class="pre">.grad</span></code> method calls in PyTorch 1.7.1
+compared to 1.6. See the related discussion:
+<a class="reference external" href="https://github.com/pytorch/pytorch/issues/50636">https://github.com/pytorch/pytorch/issues/50636</a>. This issue does not
+exist with PyTorch 1.8.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="sagemaker-distributed-model-parallel-1-3-0-release-notes">
+<h3>SageMaker Distributed Model Parallel 1.3.0 Release Notes<a class="headerlink" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-3-0-release-notes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>New Features</p></li>
+<li><p>Bug Fixes</p></li>
+<li><p>Known Issues</p></li>
+</ul>
+<p id="new-features-1"><strong>New Features</strong></p>
+<ul id="pytorch-2">
+<li><p><strong>PyTorch</strong></p>
+<p>Add support for PyTorch 1.8</p>
+<ul class="simple">
+<li><p>Adds a new method to DistributedModel <code class="docutils literal notranslate"><span class="pre">register_comm_hook</span></code> (for
+PyTorch 1.8 and newer only). This method behaves the same as the
+corresponding method with the same name in
+<code class="docutils literal notranslate"><span class="pre">torch.DistributedDataParallel</span></code> API. Refer to the <a class="reference external" href="https://sagemaker.readthedocs.io/en/stable/api/training/smd_model_parallel_pytorch.html#smp.DistributedModel">SageMaker
+distributed model parallel API
+documentation</a>
+for more information.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Improvements</strong></p>
+<ul class="simple">
+<li><p>Adds a configuration <code class="docutils literal notranslate"><span class="pre">active_microbatches</span></code> to the SageMaker SDK API
+for launching jobs, to control the number of active microbatches
+during training. This helps limit memory usage in cases where the
+number of microbatches is high. Refer to the <a class="reference external" href="../smd_model_parallel_general.html">SageMaker Python SDK
+parameters API
+documentation</a>
+for more information.</p></li>
+<li><p>Adds a configuration <code class="docutils literal notranslate"><span class="pre">deterministic_server</span></code> to the SageMaker SDK
+API for launching jobs, which ensures that the execution server for
+pipeline parallelism processes requests in a deterministic order
+across data parallel ranks. Refer to the <a class="reference external" href="../smd_model_parallel_general.html">SageMaker Python SDK
+parameters API
+documentation</a>
+for more information.</p></li>
+<li><p>Parameter passing is now supported in <code class="docutils literal notranslate"><span class="pre">module.forward</span></code> methods for
+DistributedModel and its submodules. This removes the restriction of
+having to pass <code class="docutils literal notranslate"><span class="pre">nn.Parameter</span></code> to the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> call and making
+it a member of the module to use it. ## Bug Fixes</p></li>
+</ul>
+<ul class="simple" id="pytorch-3">
+<li><p><strong>PyTorch</strong></p>
+<ul>
+<li><p>Fixed a case where training hangs due to a module having computation
+which requires grads that is not used by the final output of the
+module. Now such a situtation raises an error with suggestions on
+making such computation compatible.</p></li>
+<li><p>Fixed an issue with buffers which caused the buffers to not be on the
+correct device after a model is partitioned, and not be synchronized
+across steps (when <code class="docutils literal notranslate"><span class="pre">broadcast_buffers</span></code> is True). This could have
+caused correctness issues in models with buffers.</p></li>
+</ul>
+</li>
+</ul>
+<p id="known-issues-1"><strong>Known Issues</strong></p>
+<ul class="simple" id="pytorch-4">
+<li><p><strong>PyTorch</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">mp_barrier</span></code> and <code class="docutils literal notranslate"><span class="pre">get_mp_process_group</span></code> are wrongly marked as
+deprecated methods. Ignore the deprecation warning.</p></li>
+<li><p>A crash was observed when <code class="docutils literal notranslate"><span class="pre">optimizer.step()</span></code> was called for certain
+optimizers such as AdaDelta, when the partition on which this method
+was called has no local parameters assigned to it after partitioning.
+This is due to a bug in PyTorch which <a class="reference external" href="https://github.com/pytorch/pytorch/pull/52944">has since been
+fixed</a>. Till that
+makes its way to the next release of PyTorch, only call
+<code class="docutils literal notranslate"><span class="pre">optimizer.step()</span></code> on processes which have at least one local
+parameter. This can be checked like this
+<code class="docutils literal notranslate"><span class="pre">len(list(model.local_parameters()))</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>.</p></li>
+<li><p>A performance regression still exists when training on SMP with
+PyTorch 1.7.1 compared to 1.6. The rootcause was found to be the
+slowdown in performance of <code class="docutils literal notranslate"><span class="pre">.grad</span></code> method calls in PyTorch 1.7.1
+compared to 1.6. See the related discussion:
+<a class="reference external" href="https://github.com/pytorch/pytorch/issues/50636">https://github.com/pytorch/pytorch/issues/50636</a>. This issue does not
+exist with PyTorch 1.8.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="sagemaker-distributed-model-parallel-1-2-0-release-notes">
+<h3>SageMaker Distributed Model Parallel 1.2.0 Release Notes<a class="headerlink" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-2-0-release-notes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>New Features</p></li>
+<li><p>Bug Fixes</p></li>
+<li><p>Known Issues</p></li>
+</ul>
+<p id="new-features-2"><strong>New Features</strong></p>
+<ul id="pytorch-5">
+<li><p><strong>PyTorch</strong></p>
+<p>Add support for PyTorch 1.7.1</p>
+<ul class="simple">
+<li><p>Adds support for <code class="docutils literal notranslate"><span class="pre">gradient_as_bucket_view</span></code> (PyTorch 1.7.1 only),
+<code class="docutils literal notranslate"><span class="pre">find_unused_parameters</span></code> (PyTorch 1.7.1 only) and
+<code class="docutils literal notranslate"><span class="pre">broadcast_buffers</span></code> options to <code class="docutils literal notranslate"><span class="pre">smp.DistributedModel</span></code>. These
+options behave the same as the corresponding options (with the same
+names) in <code class="docutils literal notranslate"><span class="pre">torch.DistributedDataParallel</span></code> API. Refer to the
+<a class="reference external" href="https://sagemaker.readthedocs.io/en/stable/api/training/smd_model_parallel_pytorch.html#smp.DistributedModel">SageMaker distributed model parallel API
+documentation</a>
+for more information.</p></li>
+<li><p>Adds support for <code class="docutils literal notranslate"><span class="pre">join</span></code> (PyTorch 1.7.1 only) context manager, which
+is to be used in conjunction with an instance of
+<code class="docutils literal notranslate"><span class="pre">smp.DistributedModel</span></code> to be able to train with uneven inputs
+across participating processes.</p></li>
+<li><p>Adds support for <code class="docutils literal notranslate"><span class="pre">_register_comm_hook</span></code> (PyTorch 1.7.1 only) which
+will register the callable as a communication hook for DDP. NOTE:
+Like in DDP, this is an experimental API and subject to change.</p></li>
+</ul>
+</li>
+</ul>
+<ul class="simple" id="tensorflow-2">
+<li><p><strong>Tensorflow</strong></p>
+<ul>
+<li><p>Adds support for Tensorflow 2.4.1</p></li>
+</ul>
+</li>
+</ul>
+<p id="bug-fixes-1"><strong>Bug Fixes</strong></p>
+<ul class="simple" id="pytorch-6">
+<li><p><strong>PyTorch</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">Serialization</span></code>: Fix a bug with serialization/flattening where
+instances of subclasses of dict/OrderedDicts were
+serialized/deserialized or internally flattened/unflattened as
+regular dicts.</p></li>
+</ul>
+</li>
+</ul>
+<ul class="simple" id="tensorflow-3">
+<li><p><strong>Tensorflow</strong></p>
+<ul>
+<li><p>Fix a bug that may cause a hang during evaluation when there is no
+model input for one partition.</p></li>
+</ul>
+</li>
+</ul>
+<p id="known-issues-2"><strong>Known Issues</strong></p>
+<ul class="simple" id="pytorch-7">
+<li><p><strong>PyTorch</strong></p>
+<ul>
+<li><p>A performance regression was observed when training on SMP with
+PyTorch 1.7.1 compared to 1.6.0. The rootcause was found to be the
+slowdown in performance of <code class="docutils literal notranslate"><span class="pre">.grad</span></code> method calls in PyTorch 1.7.1
+compared to 1.6.0. See the related discussion:
+<a class="reference external" href="https://github.com/pytorch/pytorch/issues/50636">https://github.com/pytorch/pytorch/issues/50636</a>.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr class="docutils" />
+<div class="section" id="sagemaker-distributed-model-parallel-1-1-0-release-notes">
+<h3>SageMaker Distributed Model Parallel 1.1.0 Release Notes<a class="headerlink" href="smd_model_parallel_change_log.html#sagemaker-distributed-model-parallel-1-1-0-release-notes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>New Features</p></li>
+<li><p>Bug Fixes</p></li>
+<li><p>Improvements</p></li>
+<li><p>Performance</p></li>
+<li><p>Known Issues</p></li>
+</ul>
+<p id="new-features-3"><strong>New Features</strong></p>
+<p>The following sections describe new feature releases that are common
+across frameworks and that are framework specific.</p>
+<p><strong>Common across frameworks*</strong></p>
+<ul>
+<li><p>Custom slicing support (<code class="docutils literal notranslate"><span class="pre">smp_slice</span></code> method) for objects passed to <code class="docutils literal notranslate"><span class="pre">smp.step</span></code> decorated functions</p>
+<p>To pass an object to <code class="docutils literal notranslate"><span class="pre">smp.step</span></code> that contains tensors that needs to be
+split across microbatches and is not an instance of list, dict, tuple or
+set, you should implement <code class="docutils literal notranslate"><span class="pre">smp_slice</span></code> method for the object.</p>
+<p>Below is an example of how to use this with PyTorch:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">CustomType</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tensor</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">tensor</span>
+
+    <span class="c1"># SMP will call this to invoke slicing on the object passing in total microbatches (num_mb)</span>
+    <span class="c1"># and the current microbatch index (mb).</span>
+    <span class="k">def</span> <span class="nf">smp_slice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_mb</span><span class="p">,</span> <span class="n">mb</span><span class="p">,</span> <span class="n">axis</span><span class="p">):</span>
+        <span class="n">dim_size</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">size</span><span class="p">())[</span><span class="n">axis</span><span class="p">]</span>
+
+        <span class="n">split_size</span> <span class="o">=</span> <span class="n">dim_size</span> <span class="o">//</span> <span class="n">num_mb</span>
+        <span class="n">sliced_tensor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">narrow</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">mb</span> <span class="o">*</span> <span class="n">split_size</span><span class="p">,</span> <span class="n">split_size</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">CustomType</span><span class="p">(</span><span class="n">sliced_tensor</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">other</span><span class="p">)</span>
+
+<span class="n">custom_obj</span> <span class="o">=</span> <span class="n">CustomType</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">4</span><span class="p">,))</span>
+
+<span class="nd">@smp</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="n">custom_obj</span><span class="p">):</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">custom_obj</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">loss</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<ul id="pytorch-8">
+<li><p><strong>PyTorch</strong></p>
+<ul>
+<li><p>Add support for smp.DistributedModel.cpu()</p>
+<p><code class="docutils literal notranslate"><span class="pre">smp.DistributedModel.cpu()</span></code>
+<a class="reference external" href="https://sagemaker.readthedocs.io/en/stable/api/training/smd_model_parallel_common_api.html#smp.allgather">allgather</a>s
+parameters and buffers across all <code class="docutils literal notranslate"><span class="pre">mp_ranks</span></code> and moves them to the
+CPU.</p>
+</li>
+<li><p>Add <code class="docutils literal notranslate"><span class="pre">trace_memory_usage</span></code> option to <code class="docutils literal notranslate"><span class="pre">smp.DistributedModel</span></code> to measure memory usage per module</p>
+<p>Adds <code class="docutils literal notranslate"><span class="pre">trace_memory_usage</span></code> option to <code class="docutils literal notranslate"><span class="pre">smp.DistributedModel</span></code>. This
+attempts to measure memory usage per module during tracing. If this is
+disabled, memory usage is estimated through the sizes of tensors
+returned from the module. This option is disabled by default.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p id="bug-fixes-2"><strong>Bug Fixes</strong></p>
+<ul class="simple" id="pytorch-9">
+<li><p><strong>PyTorch</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">torch.nn.Sequential</span></code>: Fix a bug with <code class="docutils literal notranslate"><span class="pre">torch.nn.Sequential</span></code> which
+causes a failure with the error message :
+<code class="docutils literal notranslate"><span class="pre">shouldnt</span> <span class="pre">go</span> <span class="pre">less</span> <span class="pre">than</span> <span class="pre">0,</span> <span class="pre">there</span> <span class="pre">is</span> <span class="pre">a</span> <span class="pre">bug</span></code> when the inputs to the
+first module don’t require grads.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">smp.DistributedModel</span></code>: Fix a bug with <code class="docutils literal notranslate"><span class="pre">DistributedModel</span></code>
+execution when a module has multiple parents. The bug surfaces with
+the error message:
+<code class="docutils literal notranslate"><span class="pre">actual_parent</span> <span class="pre">should</span> <span class="pre">be</span> <span class="pre">different</span> <span class="pre">than</span> <span class="pre">module_execution_stack</span> <span class="pre">parent</span> <span class="pre">only</span> <span class="pre">for</span> <span class="pre">torch.nn.ModuleList</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">apex.optimizers.FusedNovoGrad</span></code>: Fix a bug with
+<code class="docutils literal notranslate"><span class="pre">apex.optimizers.FusedNovoGrad</span></code> which surfaces with the error
+message: <code class="docutils literal notranslate"><span class="pre">KeyError:</span> <span class="pre">'exp_avg_sq'</span></code></p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Improvements</strong></p>
+<p><em>Usability</em></p>
+<ul class="simple" id="pytorch-10">
+<li><p><strong>PyTorch</strong></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">smp.DistributedModel</span></code>: Improve the error message when the forward
+pass on <code class="docutils literal notranslate"><span class="pre">smp.DistributedModel</span></code> is called outside the <code class="docutils literal notranslate"><span class="pre">smp.step</span></code>
+decorated function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">smp.load</span></code>: Add user friendly error messages when loading
+checkpoints with <code class="docutils literal notranslate"><span class="pre">smp.load</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+<p><em>Partitioning Algorithm</em></p>
+<ul class="simple" id="pytorch-11">
+<li><p><strong>PyTorch</strong></p>
+<ul>
+<li><p>Better memory balancing by taking into account the existing modules
+already assigned to the parent, while partitioning the children of a
+given module.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Performance</strong></p>
+<ul class="simple" id="tensorflow-4">
+<li><p><strong>Tensorflow</strong></p>
+<ul>
+<li><p>Addresses long pre-processing times introduced by SMP XLA optimizer
+when dealing with large graphs and large number of microbatches. BERT
+(large) preprocessing time goes down from 40 minutes to 6 minutes on
+p3.16xlarge.</p></li>
+</ul>
+</li>
+</ul>
+<p id="known-issues-3"><strong>Known Issues</strong></p>
+<ul class="simple" id="pytorch-12">
+<li><p><strong>PyTorch</strong></p>
+<ul>
+<li><p>Serialization for Torch in SMP overwrites instances of dict subclass
+to be dict itself, instead of the instances of subclass. One of the
+use cases which fails because of this issue is when a user implements
+a subclass of OrderedDict with the <code class="docutils literal notranslate"><span class="pre">__getitem__</span></code> method. After
+serialization/deserialization in SMP, indexing on the object will
+lead to errors. A workaround is to use the dict keys to access the
+underlying item.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../inference/index.html" class="btn btn-neutral float-right" title="Inference APIs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../smd_model_parallel_general.html" class="btn btn-neutral float-left" title="Run a Distributed Training Job Using the SageMaker Python SDK" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2023, Amazon
+      <span class="commit">
+        
+        Revision <code>f2ae8ff8</code>.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: stable
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="../../../index.html">stable</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.182.0/">v2.182.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.181.0/">v2.181.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.180.0/">v2.180.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.179.0/">v2.179.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.178.0/">v2.178.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.177.1/">v2.177.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.177.0/">v2.177.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.176.0/">v2.176.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.175.0/">v2.175.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.174.0/">v2.174.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.173.0/">v2.173.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.172.0/">v2.172.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.171.0/">v2.171.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.170.0/">v2.170.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.169.0/">v2.169.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.168.0/">v2.168.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.167.0/">v2.167.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.166.0/">v2.166.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.165.0/">v2.165.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.164.0/">v2.164.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.163.0/">v2.163.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.162.0/">v2.162.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.161.0/">v2.161.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.160.0/">v2.160.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.159.0/">v2.159.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.158.0/">v2.158.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.157.0/">v2.157.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.156.0/">v2.156.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.155.0/">v2.155.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.154.0/">v2.154.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.153.0/">v2.153.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.152.0/">v2.152.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.151.0/">v2.151.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.150.0/">v2.150.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.149.0/">v2.149.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.148.0/">v2.148.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.147.0/">v2.147.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.146.1/">v2.146.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.146.0/">v2.146.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.145.0/">v2.145.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.144.0/">v2.144.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.143.0/">v2.143.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.142.0/">v2.142.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.141.0/">v2.141.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.140.1/">v2.140.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.140.0/">v2.140.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.139.0/">v2.139.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.138.0/">v2.138.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.137.0/">v2.137.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.136.0/">v2.136.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.135.1.post0/">v2.135.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.135.1/">v2.135.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.135.0/">v2.135.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.134.1/">v2.134.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.134.0/">v2.134.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.133.0/">v2.133.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.132.0/">v2.132.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.131.1/">v2.131.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.131.0/">v2.131.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.130.0/">v2.130.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.129.0/">v2.129.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.128.0/">v2.128.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.127.0/">v2.127.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.126.0/">v2.126.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.125.0/">v2.125.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.124.0/">v2.124.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.123.0/">v2.123.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.122.0/">v2.122.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.121.2/">v2.121.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.121.1/">v2.121.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.121.0/">v2.121.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.120.0/">v2.120.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.119.0/">v2.119.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.118.0/">v2.118.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.117.0/">v2.117.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.116.0/">v2.116.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.115.0/">v2.115.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.114.0/">v2.114.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.113.0/">v2.113.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.112.2/">v2.112.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.112.1/">v2.112.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.112.0/">v2.112.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.111.0/">v2.111.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.110.0/">v2.110.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.109.0/">v2.109.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.108.0/">v2.108.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.107.0/">v2.107.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.106.0/">v2.106.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.105.0/">v2.105.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.104.0/">v2.104.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.103.0/">v2.103.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.102.0/">v2.102.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.101.1/">v2.101.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.101.0/">v2.101.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.100.0/">v2.100.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.99.0/">v2.99.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.98.0/">v2.98.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.97.0/">v2.97.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.96.0/">v2.96.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.95.0/">v2.95.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.94.0/">v2.94.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.93.1/">v2.93.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.93.0/">v2.93.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.92.2/">v2.92.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.92.1/">v2.92.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.92.0/">v2.92.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.91.1/">v2.91.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.91.0/">v2.91.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.90.0/">v2.90.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.89.0/">v2.89.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.3/">v2.88.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.2/">v2.88.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.1/">v2.88.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.0/">v2.88.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.87.0/">v2.87.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.86.2/">v2.86.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.86.1/">v2.86.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.86.0/">v2.86.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.85.0/">v2.85.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.84.0/">v2.84.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.83.0/">v2.83.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.82.2/">v2.82.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.82.1/">v2.82.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.82.0/">v2.82.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.81.1/">v2.81.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.81.0/">v2.81.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.80.0/">v2.80.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.79.0/">v2.79.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.78.0/">v2.78.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.77.1/">v2.77.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.77.0/">v2.77.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.76.0/">v2.76.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.75.1/">v2.75.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.75.0/">v2.75.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.74.0/">v2.74.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.73.0/">v2.73.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.3/">v2.72.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.2/">v2.72.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.1/">v2.72.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.0/">v2.72.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.71.0/">v2.71.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.70.0/">v2.70.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.69.0/">v2.69.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.68.0/">v2.68.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.67.0/">v2.67.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.2.post0/">v2.66.2.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.2/">v2.66.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.1/">v2.66.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.0/">v2.66.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.65.0/">v2.65.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.64.0/">v2.64.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.63.2/">v2.63.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.63.1/">v2.63.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.63.0/">v2.63.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.62.0/">v2.62.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.61.0/">v2.61.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.60.0/">v2.60.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.8/">v2.59.8</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.7/">v2.59.7</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.6/">v2.59.6</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.5/">v2.59.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.4/">v2.59.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.3.post0/">v2.59.3.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.3/">v2.59.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.2/">v2.59.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.1.post0/">v2.59.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.1/">v2.59.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.0/">v2.59.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.58.0/">v2.58.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.57.0/">v2.57.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.56.0/">v2.56.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.55.0/">v2.55.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.54.0/">v2.54.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.53.0/">v2.53.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.2.post0/">v2.52.2.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.2/">v2.52.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.1/">v2.52.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.0/">v2.52.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.51.0/">v2.51.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.50.1/">v2.50.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.50.0/">v2.50.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.49.2/">v2.49.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.49.1/">v2.49.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.49.0/">v2.49.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.48.2/">v2.48.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.48.1/">v2.48.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.48.0/">v2.48.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.2.post0/">v2.47.2.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.2/">v2.47.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.1/">v2.47.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.0/">v2.47.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.46.1/">v2.46.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.46.0/">v2.46.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.45.0/">v2.45.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.44.0/">v2.44.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.43.0/">v2.43.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.42.1/">v2.42.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.42.0/">v2.42.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.41.0/">v2.41.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.40.0/">v2.40.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.39.1/">v2.39.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.39.0.post0/">v2.39.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.39.0/">v2.39.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.38.0/">v2.38.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.37.0/">v2.37.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.36.0/">v2.36.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.35.0/">v2.35.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.34.0/">v2.34.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.33.0/">v2.33.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.32.1/">v2.32.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.32.0/">v2.32.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.31.1/">v2.31.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.31.0/">v2.31.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.30.0/">v2.30.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.29.2/">v2.29.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.29.1/">v2.29.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.29.0/">v2.29.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.28.0/">v2.28.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.27.1/">v2.27.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.27.0/">v2.27.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.26.0/">v2.26.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.25.2/">v2.25.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.25.1/">v2.25.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.25.0/">v2.25.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.5/">v2.24.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.4/">v2.24.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.3/">v2.24.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.2/">v2.24.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.1/">v2.24.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.0/">v2.24.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.6/">v2.23.6</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.5/">v2.23.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.4.post0/">v2.23.4.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.4/">v2.23.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.3/">v2.23.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.2/">v2.23.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.1/">v2.23.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.0/">v2.23.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.22.0/">v2.22.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.21.0/">v2.21.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.20.0/">v2.20.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.19.0/">v2.19.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.18.0/">v2.18.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.17.0/">v2.17.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.4/">v2.16.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.3.post0/">v2.16.3.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.3/">v2.16.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.2/">v2.16.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.1/">v2.16.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.0.post0/">v2.16.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.0/">v2.16.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.4/">v2.15.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.3/">v2.15.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.2/">v2.15.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.1/">v2.15.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.0/">v2.15.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.14.0/">v2.14.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.13.0/">v2.13.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.12.0/">v2.12.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.11.0/">v2.11.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.10.0/">v2.10.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.9.2/">v2.9.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.9.1/">v2.9.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.9.0/">v2.9.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.8.0/">v2.8.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.7.0/">v2.7.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.6.0/">v2.6.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.5/">v2.5.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.4/">v2.5.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.3/">v2.5.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.2/">v2.5.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.1/">v2.5.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.0/">v2.5.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.4.2/">v2.4.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.4.1/">v2.4.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.4.0/">v2.4.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.3.0/">v2.3.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.2.0/">v2.2.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.1.0/">v2.1.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.1/">v2.0.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.0/">v2.0.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.0.rc1/">v2.0.0.rc1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.0.rc0/">v2.0.0.rc0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.72.1/">v1.72.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.72.0/">v1.72.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.71.1/">v1.71.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.71.0/">v1.71.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.70.2/">v1.70.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.70.1/">v1.70.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.70.0/">v1.70.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.69.0/">v1.69.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.68.0/">v1.68.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.67.1.post0/">v1.67.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.67.1/">v1.67.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.67.0/">v1.67.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.66.0/">v1.66.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.1.post1/">v1.65.1.post1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.1.post0/">v1.65.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.1/">v1.65.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.0/">v1.65.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.64.1/">v1.64.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.64.0/">v1.64.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.63.0/">v1.63.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.62.0/">v1.62.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.61.0/">v1.61.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.60.2/">v1.60.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.59.0/">v1.59.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.58.4/">v1.58.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.58.1/">v1.58.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.58.0/">v1.58.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.57.0/">v1.57.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.3/">v1.56.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.2/">v1.56.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.1.post1/">v1.56.1.post1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.1.post0/">v1.56.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.1/">v1.56.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.0/">v1.56.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.4/">v1.55.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.3/">v1.55.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.2/">v1.55.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.1/">v1.55.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.0.post0/">v1.55.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.0/">v1.55.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.54.0/">v1.54.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.53.0/">v1.53.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.52.1/">v1.52.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.52.0.post0/">v1.52.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.52.0/">v1.52.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.4/">v1.51.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.3/">v1.51.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.1/">v1.51.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.0/">v1.51.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.18.post0/">v1.50.18.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.18/">v1.50.18</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.17.post0/">v1.50.17.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.17/">v1.50.17</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.16/">v1.50.16</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.15/">v1.50.15</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.14.post0/">v1.50.14.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.14/">v1.50.14</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.13/">v1.50.13</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.12/">v1.50.12</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.11/">v1.50.11</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.10.post0/">v1.50.10.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.10/">v1.50.10</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.9.post0/">v1.50.9.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.9/">v1.50.9</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.8/">v1.50.8</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.7/">v1.50.7</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.6.post0/">v1.50.6.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.6/">v1.50.6</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.5/">v1.50.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.4/">v1.50.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.3/">v1.50.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.2/">v1.50.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.1/">v1.50.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.0/">v1.50.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.49.0/">v1.49.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.48.1/">v1.48.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.48.0/">v1.48.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.47.1/">v1.47.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.45.0/">v1.45.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.44.4/">v1.44.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.44.3/">v1.44.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.4.post1/">v1.43.4.post1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.4.post0/">v1.43.4.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.4/">v1.43.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.3/">v1.43.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.2/">v1.43.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.1/">v1.43.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.0/">v1.43.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.42.0/">v1.42.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.41.0/">v1.41.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.40.0/">v1.40.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.39.0/">v1.39.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.38.0/">v1.38.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.37.0/">v1.37.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.36.0/">v1.36.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.35.0/">v1.35.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.34.0/">v1.34.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.33.0/">v1.33.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.32.0/">v1.32.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.31.0/">v1.31.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.30.0/">v1.30.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.29.0/">v1.29.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.28.0/">v1.28.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.27.0/">v1.27.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.26.0/">v1.26.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.25.0/">v1.25.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.24.0/">v1.24.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.23.0/">v1.23.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.22.0/">v1.22.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.21.0/">v1.21.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.20.0/">v1.20.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.19.0/">v1.19.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.18.0/">v1.18.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.17.0/">v1.17.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.15.0/">v1.15.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.14.0/">v1.14.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.13.0/">v1.13.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.12.0/">v1.12.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.11.0/">v1.11.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.10.0/">v1.10.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.9.0/">v1.9.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.8.0/">v1.8.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.7.0/">v1.7.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.6.0/">v1.6.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.5.0/">v1.5.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.4.0/">v1.4.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.3.0/">v1.3.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.2.0/">v1.2.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.1.0/">v1.1.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.0.0/">v1.0.0</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+      </dl>
+      <dl>
+        
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="https://readthedocs.org/projects/sagemaker/?fromdocs=sagemaker">Project Home</a>
+          </dd>
+          <dd>
+            <a href="https://readthedocs.org/builds/sagemaker/?fromdocs=sagemaker">Builds</a>
+          </dd>
+      </dl>
+    </div>
+  </div>
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+   
+
+</body>
+</html>

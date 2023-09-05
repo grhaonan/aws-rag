@@ -1,0 +1,1794 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>DJL Classes &mdash; sagemaker 2.182.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pagination.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/search_accessories.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+        <script src="https://a0.awsstatic.com/s_code/js/3.0/awshome_s_code.js"></script>
+        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+        <script src="../../_static/js/datatable.js"></script>
+        <script async="async" src="../../../../_/static/javascript/readthedocs-doc-embed.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Built-in Algorithms" href="../../algorithms/index.html" />
+    <link rel="prev" title="Use DJL with the SageMaker Python SDK" href="using_djl.html" /> 
+
+<!-- RTD Extra Head -->
+
+<link rel="stylesheet" href="../../../../_/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": true, "api_host": "https://readthedocs.org", "builder": "sphinx", "canonical_url": null, "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": null, "language": "en", "page": "frameworks/djl/sagemaker.djl_inference", "programming_language": "py", "project": "sagemaker", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "stable"}</script>
+
+<!--
+Using this variable directly instead of using `JSON.parse` is deprecated.
+The READTHEDOCS_DATA global variable will be removed in the future.
+-->
+<script type="text/javascript">
+READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerHTML);
+</script>
+
+<script type="text/javascript" src="../../../../_/static/javascript/readthedocs-analytics.js" async="async"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> sagemaker
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                stable
+              </div>
+            
+          
+
+          <div role="search">
+    <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+        <input type="text" name="q" placeholder="ex. train object detection model, pd.concat" title="Type search term here" />
+        <br />
+        <br />
+        <div style="text-align: left;">
+            <div style="font-size: 0.85rem;">Filters: </div>
+            <div style="display: inline-block;"><label style="color: white;" for="filterExample"><input type="checkbox" id="filterExample" name="filterExample">Example</label></div>
+            <div style="display: inline-block;"><label style="color: white;" for="filterAWSDevGuide"><input type="checkbox" id="filterAWSDevGuide" name="filterAWSDevGuide">Dev Guide</label></div>
+            <div style="display: inline-block;"><label style="color: white;" for="filterSDKGuide"><input type="checkbox" id="filterSDKGuide" name="filterSDKGuide">SDK Guide</label></div>
+        </div>
+        
+    </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Using the SageMaker Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../v2.html">Use Version 2.x of the SageMaker Python SDK</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/index.html">APIs</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Frameworks</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../mxnet/index.html">Apache MXNet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../chainer/index.html">Chainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../huggingface/index.html">Hugging Face</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pytorch/index.html">PyTorch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../rl/index.html">Reinforcement Learning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sklearn/index.html">Scikit-Learn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../sparkml/index.html">SparkML Serving</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tensorflow/index.html">TensorFlow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../xgboost/index.html">XGBoost</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Deep Java Library (DJL)</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="using_djl.html">Use DJL with the SageMaker Python SDK</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="sagemaker.djl_inference.html#">DJL Classes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="sagemaker.djl_inference.html#djlmodel">DJLModel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sagemaker.djl_inference.html#deepspeedmodel">DeepSpeedModel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sagemaker.djl_inference.html#huggingfaceacceleratemodel">HuggingFaceAccelerateModel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sagemaker.djl_inference.html#fastertransformermodel">FasterTransformerModel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sagemaker.djl_inference.html#djlpredictor">DJLPredictor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../algorithms/index.html">Built-in Algorithms</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../workflows/index.html">Workflows</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../experiments/index.html">Amazon SageMaker Experiments</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../amazon_sagemaker_debugger.html">Amazon SageMaker Debugger</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../amazon_sagemaker_featurestore.html">Amazon SageMaker Feature Store</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../amazon_sagemaker_model_monitoring.html">Amazon SageMaker Model Monitor</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../amazon_sagemaker_processing.html">Amazon SageMaker Processing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../amazon_sagemaker_model_building_pipeline.html">Amazon SageMaker Model Building Pipeline</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">sagemaker</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Frameworks</a> &raquo;</li>
+        
+          <li><a href="index.html">Deep Java Library (DJL)</a> &raquo;</li>
+        
+      <li>DJL Classes</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/aws/sagemaker-python-sdk/blob/f2ae8ff8b6ed82eb89110887eb5e74c953e6372a/doc/frameworks/djl/sagemaker.djl_inference.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="djl-classes">
+<h1>DJL Classes<a class="headerlink" href="sagemaker.djl_inference.html#djl-classes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="djlmodel">
+<h2>DJLModel<a class="headerlink" href="sagemaker.djl_inference.html#djlmodel" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="sagemaker.djl_inference.model.DJLModel">
+<em class="property">class </em><code class="sig-prename descclassname">sagemaker.djl_inference.model.</code><code class="sig-name descname">DJLModel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_id</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="sagemaker.djl_inference.html#sagemaker.djl_inference.model.DJLModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../../api/inference/model.html#sagemaker.model.FrameworkModel" title="sagemaker.model.FrameworkModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">sagemaker.model.FrameworkModel</span></code></a></p>
+<p>A DJL SageMaker <code class="docutils literal notranslate"><span class="pre">Model</span></code> that can be deployed to a SageMaker <code class="docutils literal notranslate"><span class="pre">Endpoint</span></code>.</p>
+<p>Initialize a DJLModel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – This is either the HuggingFace Hub model_id, or the Amazon S3 location
+containing the uncompressed model artifacts (i.e. not a tar.gz file).
+The model artifacts are expected to be in HuggingFace pre-trained model
+format (i.e. model should be loadable from the huggingface transformers
+from_pretrained api, and should also include tokenizer configs if applicable).</p></li>
+<li><p><strong>role</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – An AWS IAM role specified with either the name or full ARN. The Amazon
+SageMaker training jobs and APIs that create Amazon SageMaker
+endpoints use this role to access model artifacts. After the endpoint is created,
+the inference code might use the IAM role, if it needs to access an AWS resource.</p></li>
+<li><p><strong>djl_version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – DJL Serving version you want to use for serving your model for
+inference. Defaults to None. If not provided, the latest available version of DJL
+Serving is used. This is not used if <code class="docutils literal notranslate"><span class="pre">image_uri</span></code> is provided.</p></li>
+<li><p><strong>task</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The HuggingFace/NLP task you want to launch this model for. Defaults to
+None.
+If not provided, the task will be inferred from the model architecture by DJL.</p></li>
+<li><p><strong>dtype</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The data type to use for loading your model. Accepted values are
+“fp32”, “fp16”, “bf16”, “int8”. Defaults to “fp32”.</p></li>
+<li><p><strong>number_of_partitions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The number of GPUs to partition the model across. The
+partitioning strategy is determined by the selected backend. If DeepSpeed is
+selected, this is tensor parallelism.
+If HuggingFace Accelerate is selected, this is a naive sharding strategy
+that splits the model layers across the available resources. Defaults to None. If
+not provided, no model partitioning is done.</p></li>
+<li><p><strong>min_workers</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The minimum number of worker processes. Defaults to None. If not
+provided, dJL Serving will automatically detect the minimum workers.</p></li>
+<li><p><strong>max_workers</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The maximum number of worker processes. Defaults to None. If not
+provided, DJL Serving will automatically detect the maximum workers.</p></li>
+<li><p><strong>job_queue_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The request job queue size. Defaults to None. If not specified,
+defaults to 1000.</p></li>
+<li><p><strong>parallel_loading</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to load model workers in parallel. Defaults to False,
+in which case DJL Serving will load the model workers sequentially to reduce the
+risk of running out of memory. Set to True if you want to reduce model loading
+time and know that peak memory usage will not cause out of memory issues.</p></li>
+<li><p><strong>model_loading_timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The worker model loading timeout in seconds. Defaults to
+None. If not provided, the default is 240 seconds.</p></li>
+<li><p><strong>prediction_timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The worker predict call (handler) timeout in seconds.
+Defaults to None. If not provided, the default is 120 seconds.</p></li>
+<li><p><strong>entry_point</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – This can either be the absolute or relative path to the Python source
+file that should be executed as the entry point to model
+hosting, or a python module that is installed in the container. If <code class="docutils literal notranslate"><span class="pre">source_dir</span></code>
+is specified, then <code class="docutils literal notranslate"><span class="pre">entry_point</span></code>
+must point to a file located at the root of <code class="docutils literal notranslate"><span class="pre">source_dir</span></code>. Defaults to None.</p></li>
+<li><p><strong>image_uri</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – A docker image URI. Defaults to None. If not specified, a default
+image for DJL Serving will be used based on <code class="docutils literal notranslate"><span class="pre">djl_version</span></code>. If <code class="docutils literal notranslate"><span class="pre">djl_version</span></code>
+is not specified, the latest available container version will be used.</p></li>
+<li><p><strong>predictor_cls</strong> (<em>callable</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><a class="reference internal" href="../../api/utility/session.html#sagemaker.session.Session" title="sagemaker.session.Session"><em>sagemaker.session.Session</em></a><em>]</em>) – A function to call to create a
+predictor with an endpoint name and SageMaker <code class="docutils literal notranslate"><span class="pre">Session</span></code>. If specified,
+<code class="docutils literal notranslate"><span class="pre">deploy()</span></code> returns
+the result of invoking this function on the created endpoint name.</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments passed to the superclass
+<a class="reference internal" href="../../api/inference/model.html#sagemaker.model.FrameworkModel" title="sagemaker.model.FrameworkModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">FrameworkModel</span></code></a> and, subsequently, its
+superclass <a class="reference internal" href="../../api/inference/model.html#sagemaker.model.Model" title="sagemaker.model.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Instantiating a DJLModel will return an instance of either
+<code class="xref py py-class docutils literal notranslate"><span class="pre">DeepSpeedModel</span></code> or
+<code class="xref py py-class docutils literal notranslate"><span class="pre">HuggingFaceAccelerateModel</span></code> based on our framework
+recommendation for the model type.</p>
+<p>If you want to use a specific framework to deploy your model with, we recommend
+instantiating that specific
+model class directly. The available framework specific classes are
+<code class="xref py py-class docutils literal notranslate"><span class="pre">DeepSpeedModel</span></code> or
+<code class="xref py py-class docutils literal notranslate"><span class="pre">HuggingFaceAccelerateModel</span></code></p>
+</div>
+<dl class="py method">
+<dt id="sagemaker.djl_inference.model.DJLModel.package_for_edge">
+<code class="sig-name descname">package_for_edge</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="headerlink" href="sagemaker.djl_inference.html#sagemaker.djl_inference.model.DJLModel.package_for_edge" title="Permalink to this definition">¶</a></dt>
+<dd><p>Not implemented.</p>
+<p>DJLModels do not support SageMaker edge.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.11)"><strong>NotImplementedError</strong></a> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="sagemaker.djl_inference.model.DJLModel.compile">
+<code class="sig-name descname">compile</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="headerlink" href="sagemaker.djl_inference.html#sagemaker.djl_inference.model.DJLModel.compile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Not implemented.</p>
+<p>DJLModels do not support SageMaker Neo compilation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.11)"><strong>NotImplementedError</strong></a> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="sagemaker.djl_inference.model.DJLModel.transformer">
+<code class="sig-name descname">transformer</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="headerlink" href="sagemaker.djl_inference.html#sagemaker.djl_inference.model.DJLModel.transformer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Not implemented.</p>
+<p>DJLModels do not support SageMaker Batch Transform.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.11)"><strong>NotImplementedError</strong></a> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="sagemaker.djl_inference.model.DJLModel.right_size">
+<code class="sig-name descname">right_size</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="headerlink" href="sagemaker.djl_inference.html#sagemaker.djl_inference.model.DJLModel.right_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Not implemented.</p>
+<p>DJLModels do not support SageMaker Inference Recommendation Jobs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.11)"><strong>NotImplementedError</strong></a> – </p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="sagemaker.djl_inference.model.DJLModel.partition">
+<code class="sig-name descname">partition</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">instance_type</span></em>, <em class="sig-param"><span class="n">s3_output_uri</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">s3_output_prefix</span><span class="o">=</span><span class="default_value">'aot-partitioned-checkpoints'</span></em>, <em class="sig-param"><span class="n">job_name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">volume_size</span><span class="o">=</span><span class="default_value">30</span></em>, <em class="sig-param"><span class="n">volume_kms_key</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">output_kms_key</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">use_spot_instances</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">max_wait</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">enable_network_isolation</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="sagemaker.djl_inference.html#sagemaker.djl_inference.model.DJLModel.partition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Partitions the model using SageMaker Training Job. This is a synchronous API call.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The EC2 instance type to partition this Model.
+For example, ‘ml.p4d.24xlarge’.</p></li>
+<li><p><strong>s3_output_uri</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – S3 location for saving the training result (model
+artifacts and output files). If not specified, results are
+stored to a default bucket. If the bucket with the specific name
+does not exist, it will be created.</p></li>
+<li><p><strong>s3_output_prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the prefix where all the partitioned
+checkpoints to be uploaded. If not provided, the default value is
+aot-partitioned-checkpoints.</p></li>
+<li><p><strong>job_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Training job name. If not specified, a unique training job
+name will be created.</p></li>
+<li><p><strong>volume_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Size in GB of the storage volume to use for
+storing input and output data during training (default: 30).</p></li>
+<li><p><strong>volume_kms_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Optional. KMS key ID for encrypting EBS
+volume attached to the training instance (default: None).</p></li>
+<li><p><strong>output_kms_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Optional. KMS key ID for encrypting the
+training output (default: None).</p></li>
+<li><p><strong>use_spot_instances</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – <p>Specifies whether to use SageMaker
+Managed Spot instances for training. If enabled then the
+<code class="docutils literal notranslate"><span class="pre">max_wait</span></code> arg should also be set.</p>
+<p>More information:
+<a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-managed-spot-training.html">https://docs.aws.amazon.com/sagemaker/latest/dg/model-managed-spot-training.html</a>
+(default: <code class="docutils literal notranslate"><span class="pre">False</span></code>).</p>
+</p></li>
+<li><p><strong>max_wait</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Timeout in seconds waiting for spot training
+job (default: None). After this amount of time Amazon
+SageMaker will stop waiting for managed spot training job to
+complete (default: None).</p></li>
+<li><p><strong>enable_network_isolation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Specifies whether container will
+run in network isolation mode (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>). Network
+isolation mode restricts the container access to outside networks
+(such as the Internet). The container does not make any inbound or
+outbound network calls. Also known as Internet-free mode.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="sagemaker.djl_inference.model.DJLModel.deploy">
+<code class="sig-name descname">deploy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">instance_type</span></em>, <em class="sig-param"><span class="n">initial_instance_count</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">serializer</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">deserializer</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">endpoint_name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tags</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">kms_key</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">wait</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">data_capture_config</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">volume_size</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">model_data_download_timeout</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">container_startup_health_check_timeout</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="sagemaker.djl_inference.html#sagemaker.djl_inference.model.DJLModel.deploy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deploy this <code class="docutils literal notranslate"><span class="pre">Model</span></code> to an <code class="docutils literal notranslate"><span class="pre">Endpoint</span></code> and optionally return a <code class="docutils literal notranslate"><span class="pre">Predictor</span></code>.</p>
+<p>Create a SageMaker <code class="docutils literal notranslate"><span class="pre">Model</span></code> and <code class="docutils literal notranslate"><span class="pre">EndpointConfig</span></code>, and deploy an
+<code class="docutils literal notranslate"><span class="pre">Endpoint</span></code> from this <code class="docutils literal notranslate"><span class="pre">Model</span></code>. If <code class="docutils literal notranslate"><span class="pre">self.predictor_cls</span></code> is not None,
+this method returns the result of invoking <code class="docutils literal notranslate"><span class="pre">self.predictor_cls</span></code> on
+the created endpoint name.</p>
+<p>The name of the created model is accessible in the <code class="docutils literal notranslate"><span class="pre">name</span></code> field of
+this <code class="docutils literal notranslate"><span class="pre">Model</span></code> after deploy returns</p>
+<p>The name of the created endpoint is accessible in the
+<code class="docutils literal notranslate"><span class="pre">endpoint_name</span></code> field of this <code class="docutils literal notranslate"><span class="pre">Model</span></code> after deploy returns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The EC2 instance type to deploy this Model to.
+For example, ‘ml.p4d.24xlarge’.</p></li>
+<li><p><strong>initial_instance_count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The initial number of instances to run
+in the <code class="docutils literal notranslate"><span class="pre">Endpoint</span></code> created from this <code class="docutils literal notranslate"><span class="pre">Model</span></code>. It needs to be at least 1 (
+default: 1)</p></li>
+<li><p><strong>serializer</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BaseSerializer</span></code>) – A
+serializer object, used to encode data for an inference endpoint
+(default: None). If <code class="docutils literal notranslate"><span class="pre">serializer</span></code> is not None, then
+<code class="docutils literal notranslate"><span class="pre">serializer</span></code> will override the default serializer. The
+default serializer is set by the <code class="docutils literal notranslate"><span class="pre">predictor_cls</span></code>.</p></li>
+<li><p><strong>deserializer</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDeserializer</span></code>) – A
+deserializer object, used to decode data from an inference
+endpoint (default: None). If <code class="docutils literal notranslate"><span class="pre">deserializer</span></code> is not None, then
+<code class="docutils literal notranslate"><span class="pre">deserializer</span></code> will override the default deserializer. The
+default deserializer is set by the <code class="docutils literal notranslate"><span class="pre">predictor_cls</span></code>.</p></li>
+<li><p><strong>endpoint_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the endpoint to create (default:
+None). If not specified, a unique endpoint name will be created.</p></li>
+<li><p><strong>tags</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em>]</em><em>]</em>) – The list of tags to attach to this
+specific endpoint.</p></li>
+<li><p><strong>kms_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The ARN of the KMS key that is used to encrypt the
+data on the storage volume attached to the instance hosting the
+endpoint.</p></li>
+<li><p><strong>wait</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether the call should wait until the deployment of
+this model completes (default: True).</p></li>
+<li><p><strong>data_capture_config</strong> (<em>sagemaker.model_monitor.DataCaptureConfig</em>) – Specifies
+configuration related to Endpoint data capture for use with
+Amazon SageMaker Model Monitoring. Default: None.</p></li>
+<li><p><strong>volume_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The size, in GB, of the ML storage volume attached to individual
+inference instance associated with the production variant. Currenly only Amazon EBS
+gp2 storage volumes are supported.</p></li>
+<li><p><strong>model_data_download_timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The timeout value, in seconds, to download and
+extract model data from Amazon S3 to the individual inference instance associated
+with this production variant.</p></li>
+<li><p><strong>container_startup_health_check_timeout</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The timeout value, in seconds, for your
+inference container to pass health check by SageMaker Hosting. For more information
+about health check see:
+<a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/your-algorithms-inference-code">https://docs.aws.amazon.com/sagemaker/latest/dg/your-algorithms-inference-code</a>
+.html#your-algorithms-inference-algo-ping-requests</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Invocation of</dt><dd><p><code class="docutils literal notranslate"><span class="pre">self.predictor_cls</span></code> on the created endpoint name, if <code class="docutils literal notranslate"><span class="pre">self.predictor_cls</span></code>
+is not None. Otherwise, return None.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>callable[string, <a class="reference internal" href="../../api/utility/session.html#sagemaker.session.Session" title="sagemaker.session.Session">sagemaker.session.Session</a>] or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.11)">None</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="sagemaker.djl_inference.model.DJLModel.prepare_container_def">
+<code class="sig-name descname">prepare_container_def</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">instance_type</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">accelerator_type</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">serverless_inference_config</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="sagemaker.djl_inference.html#sagemaker.djl_inference.model.DJLModel.prepare_container_def" title="Permalink to this definition">¶</a></dt>
+<dd><p>A container definition with framework configuration set in model environment variables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A container definition object usable with the
+CreateModel API.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="sagemaker.djl_inference.model.DJLModel.generate_serving_properties">
+<code class="sig-name descname">generate_serving_properties</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">serving_properties</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="sagemaker.djl_inference.html#sagemaker.djl_inference.model.DJLModel.generate_serving_properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the DJL Serving configuration to use for the model.</p>
+<p>The configuration is generated using the arguments passed to the Model during
+initialization. If a serving.properties file is found in <code class="docutils literal notranslate"><span class="pre">self.source_dir</span></code>,
+those configuration as merged with the Model parameters, with Model parameters taking
+priority.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>serving_properties</strong> – Dictionary containing existing model server configuration</p></li>
+<li><p><strong>from self.source_dir. Defaults to None.</strong> (<em>obtained</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The model server configuration to use when deploying this model to SageMaker.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="sagemaker.djl_inference.model.DJLModel.serving_image_uri">
+<code class="sig-name descname">serving_image_uri</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">region_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="sagemaker.djl_inference.html#sagemaker.djl_inference.model.DJLModel.serving_image_uri" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a URI for the serving image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>region_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – AWS region where the image is uploaded.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The appropriate image URI based on the given parameters.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="deepspeedmodel">
+<h2>DeepSpeedModel<a class="headerlink" href="sagemaker.djl_inference.html#deepspeedmodel" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="sagemaker.djl_inference.model.DeepSpeedModel">
+<em class="property">class </em><code class="sig-prename descclassname">sagemaker.djl_inference.model.</code><code class="sig-name descname">DeepSpeedModel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_id</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="sagemaker.djl_inference.html#sagemaker.djl_inference.model.DeepSpeedModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sagemaker.djl_inference.html#sagemaker.djl_inference.model.DJLModel" title="sagemaker.djl_inference.model.DJLModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">sagemaker.djl_inference.model.DJLModel</span></code></a></p>
+<p>A DJL DeepSpeed SageMaker <code class="docutils literal notranslate"><span class="pre">Model</span></code> that can be deployed to a SageMaker <code class="docutils literal notranslate"><span class="pre">Endpoint</span></code></p>
+<p>Initialize a DeepSpeedModel</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – This is either the HuggingFace Hub model_id, or the Amazon S3 location
+containing the uncompressed model artifacts (i.e. not a tar.gz file).
+The model artifacts are expected to be in HuggingFace pre-trained model
+format (i.e. model should be loadable from the huggingface transformers
+from_pretrained api, and should also include tokenizer configs if applicable).</p></li>
+<li><p><strong>role</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – An AWS IAM role specified with either the name or full ARN. The Amazon
+SageMaker training jobs and APIs that create Amazon SageMaker
+endpoints use this role to access model artifacts. After the endpoint is created,
+the inference code
+might use the IAM role, if it needs to access an AWS resource.</p></li>
+<li><p><strong>tensor_parallel_degree</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The number of gpus to shard a single instance of the
+model across via tensor_parallelism. This should be set to greater than 1 if the
+size of the model is larger than the memory available on a single GPU on the
+instance. Defaults to None. If not set, no tensor parallel sharding is done.</p></li>
+<li><p><strong>max_tokens</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The maximum number of tokens (input + output tokens) the DeepSpeed
+engine is configured for. Defaults to None. If not set, the DeepSpeed default of
+1024 is used.</p></li>
+<li><p><strong>low_cpu_mem_usage</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to limit CPU memory usage to 1x model size during
+model loading. This is an experimental feature in HuggingFace. This is useful when
+loading multiple instances of your model in parallel. Defaults to False.</p></li>
+<li><p><strong>enable_cuda_graph</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to enable CUDA graph replay to accelerate inference
+passes. This cannot be used with tensor parallelism greater than 1.
+Defaults to False.</p></li>
+<li><p><strong>triangular_masking</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to use triangular attention mask. This is
+application specific. Defaults to True.</p></li>
+<li><p><strong>return_tuple</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether the transformer layers need to return a tuple or a
+Tensor. Defaults to True.</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments passed to the superclasses
+<code class="xref py py-class docutils literal notranslate"><span class="pre">DJLModel</span></code>,
+<a class="reference internal" href="../../api/inference/model.html#sagemaker.model.FrameworkModel" title="sagemaker.model.FrameworkModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">FrameworkModel</span></code></a>, and
+<a class="reference internal" href="../../api/inference/model.html#sagemaker.model.Model" title="sagemaker.model.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can find additional parameters for initializing this class at
+<code class="xref py py-class docutils literal notranslate"><span class="pre">DJLModel</span></code>,
+<a class="reference internal" href="../../api/inference/model.html#sagemaker.model.FrameworkModel" title="sagemaker.model.FrameworkModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">FrameworkModel</span></code></a>, and
+<a class="reference internal" href="../../api/inference/model.html#sagemaker.model.Model" title="sagemaker.model.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a>.</p>
+</div>
+<dl class="py method">
+<dt id="sagemaker.djl_inference.model.DeepSpeedModel.generate_serving_properties">
+<code class="sig-name descname">generate_serving_properties</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">serving_properties</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="sagemaker.djl_inference.html#sagemaker.djl_inference.model.DeepSpeedModel.generate_serving_properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the DJL Serving configuration to use for the model.</p>
+<p>The configuration is generated using the arguments passed to the Model during
+initialization. If a serving.properties file is found in <code class="docutils literal notranslate"><span class="pre">self.source_dir</span></code>,
+those configuration as merged with the Model parameters, with Model parameters taking
+priority.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>serving_properties</strong> – Dictionary containing existing model server configuration</p></li>
+<li><p><strong>from self.source_dir. Defaults to None.</strong> (<em>obtained</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The model server configuration to use when deploying this model to SageMaker.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="sagemaker.djl_inference.model.DeepSpeedModel.partition">
+<code class="sig-name descname">partition</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">instance_type</span></em>, <em class="sig-param"><span class="n">s3_output_uri</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">s3_output_prefix</span><span class="o">=</span><span class="default_value">'aot-partitioned-checkpoints'</span></em>, <em class="sig-param"><span class="n">job_name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">volume_size</span><span class="o">=</span><span class="default_value">30</span></em>, <em class="sig-param"><span class="n">volume_kms_key</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">output_kms_key</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">use_spot_instances</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">max_wait</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">enable_network_isolation</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="sagemaker.djl_inference.html#sagemaker.djl_inference.model.DeepSpeedModel.partition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Partitions the model using SageMaker Training Job. This is a synchronous API call.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The EC2 instance type to partition this Model.
+For example, ‘ml.p4d.24xlarge’.</p></li>
+<li><p><strong>s3_output_uri</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – S3 location for saving the training result (model
+artifacts and output files). If not specified, results are
+stored to a default bucket. If the bucket with the specific name
+does not exist, it will be created.</p></li>
+<li><p><strong>s3_output_prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the prefix where all the partitioned
+checkpoints to be uploaded. If not provided, the default value is
+aot-partitioned-checkpoints.</p></li>
+<li><p><strong>job_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Training job name. If not specified, a unique training job
+name will be created.</p></li>
+<li><p><strong>volume_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Size in GB of the storage volume to use for
+storing input and output data during training (default: 30).</p></li>
+<li><p><strong>volume_kms_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Optional. KMS key ID for encrypting EBS
+volume attached to the training instance (default: None).</p></li>
+<li><p><strong>output_kms_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Optional. KMS key ID for encrypting the
+training output (default: None).</p></li>
+<li><p><strong>use_spot_instances</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – <p>Specifies whether to use SageMaker
+Managed Spot instances for training. If enabled then the
+<code class="docutils literal notranslate"><span class="pre">max_wait</span></code> arg should also be set.</p>
+<p>More information:
+<a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-managed-spot-training.html">https://docs.aws.amazon.com/sagemaker/latest/dg/model-managed-spot-training.html</a>
+(default: <code class="docutils literal notranslate"><span class="pre">False</span></code>).</p>
+</p></li>
+<li><p><strong>max_wait</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Timeout in seconds waiting for spot training
+job (default: None). After this amount of time Amazon
+SageMaker will stop waiting for managed spot training job to
+complete (default: None).</p></li>
+<li><p><strong>enable_network_isolation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Specifies whether container will
+run in network isolation mode (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>). Network
+isolation mode restricts the container access to outside networks
+(such as the Internet). The container does not make any inbound or
+outbound network calls. Also known as Internet-free mode.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="huggingfaceacceleratemodel">
+<h2>HuggingFaceAccelerateModel<a class="headerlink" href="sagemaker.djl_inference.html#huggingfaceacceleratemodel" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="sagemaker.djl_inference.model.HuggingFaceAccelerateModel">
+<em class="property">class </em><code class="sig-prename descclassname">sagemaker.djl_inference.model.</code><code class="sig-name descname">HuggingFaceAccelerateModel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_id</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="sagemaker.djl_inference.html#sagemaker.djl_inference.model.HuggingFaceAccelerateModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sagemaker.djl_inference.html#sagemaker.djl_inference.model.DJLModel" title="sagemaker.djl_inference.model.DJLModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">sagemaker.djl_inference.model.DJLModel</span></code></a></p>
+<p>A DJL Hugging Face SageMaker <code class="docutils literal notranslate"><span class="pre">Model</span></code> that can be deployed to a SageMaker <code class="docutils literal notranslate"><span class="pre">Endpoint</span></code>.</p>
+<p>Initialize a HuggingFaceAccelerateModel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – This is either the HuggingFace Hub model_id, or the Amazon S3 location
+containing the uncompressed model artifacts (i.e. not a tar.gz file).
+The model artifacts are expected to be in HuggingFace pre-trained model
+format (i.e. model should be loadable from the huggingface transformers
+from_pretrained api, and should also include tokenizer configs if applicable).</p></li>
+<li><p><strong>role</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – An AWS IAM role specified with either the name or full ARN. The Amazon
+SageMaker training jobs and APIs that create Amazon SageMaker
+endpoints use this role to access model artifacts. After the endpoint is created,
+the inference code
+might use the IAM role, if it needs to access an AWS resource.</p></li>
+<li><p><strong>number_of_partitions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The number of GPUs to partition the model across. The
+partitioning strategy is determined by the device_map setting. If device_map is
+not specified, the default HuggingFace strategy will be used.</p></li>
+<li><p><strong>device_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The device_id to use for instantiating the model. If provided,
+the model will only be instantiated once on the indicated device. Do not set this
+if you have also specified data_parallel_degree. Defaults to None.</p></li>
+<li><p><strong>device_map</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)"><em>dict</em></a>) – The HuggingFace accelerate device_map to use. Defaults to
+None.</p></li>
+<li><p><strong>load_in_8bit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to load the model in int8 precision using bits and bytes
+quantization. This is only supported for select model architectures.
+Defaults to False. If <code class="docutils literal notranslate"><span class="pre">dtype</span></code> is int8, then this is set to True.</p></li>
+<li><p><strong>low_cpu_mem_usage</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Whether to limit CPU memory usage to 1x model size during
+model loading. This is an experimental feature in HuggingFace. This is useful when
+loading multiple instances of your model in parallel. Defaults to False.</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments passed to the superclasses
+<code class="xref py py-class docutils literal notranslate"><span class="pre">DJLModel</span></code>,
+<a class="reference internal" href="../../api/inference/model.html#sagemaker.model.FrameworkModel" title="sagemaker.model.FrameworkModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">FrameworkModel</span></code></a>, and
+<a class="reference internal" href="../../api/inference/model.html#sagemaker.model.Model" title="sagemaker.model.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can find additional parameters for initializing this class at
+<code class="xref py py-class docutils literal notranslate"><span class="pre">DJLModel</span></code>,
+<a class="reference internal" href="../../api/inference/model.html#sagemaker.model.FrameworkModel" title="sagemaker.model.FrameworkModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">FrameworkModel</span></code></a>, and
+<a class="reference internal" href="../../api/inference/model.html#sagemaker.model.Model" title="sagemaker.model.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a>.</p>
+</div>
+<dl class="py method">
+<dt id="sagemaker.djl_inference.model.HuggingFaceAccelerateModel.generate_serving_properties">
+<code class="sig-name descname">generate_serving_properties</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">serving_properties</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="sagemaker.djl_inference.html#sagemaker.djl_inference.model.HuggingFaceAccelerateModel.generate_serving_properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates the DJL Serving configuration to use for the model.</p>
+<p>The configuration is generated using the arguments passed to the Model during
+initialization. If a serving.properties file is found in <code class="docutils literal notranslate"><span class="pre">self.source_dir</span></code>,
+those configuration as merged with the Model parameters, with Model parameters taking
+priority.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>serving_properties</strong> – Dictionary containing existing model server configuration</p></li>
+<li><p><strong>from self.source_dir. Defaults to None.</strong> (<em>obtained</em>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The model server configuration to use when deploying this model to SageMaker.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.11)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="sagemaker.djl_inference.model.HuggingFaceAccelerateModel.partition">
+<code class="sig-name descname">partition</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">instance_type</span></em>, <em class="sig-param"><span class="n">s3_output_uri</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">s3_output_prefix</span><span class="o">=</span><span class="default_value">'aot-partitioned-checkpoints'</span></em>, <em class="sig-param"><span class="n">job_name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">volume_size</span><span class="o">=</span><span class="default_value">30</span></em>, <em class="sig-param"><span class="n">volume_kms_key</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">output_kms_key</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">use_spot_instances</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">max_wait</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">enable_network_isolation</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="sagemaker.djl_inference.html#sagemaker.djl_inference.model.HuggingFaceAccelerateModel.partition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Partitions the model using SageMaker Training Job. This is a synchronous API call.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instance_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The EC2 instance type to partition this Model.
+For example, ‘ml.p4d.24xlarge’.</p></li>
+<li><p><strong>s3_output_uri</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – S3 location for saving the training result (model
+artifacts and output files). If not specified, results are
+stored to a default bucket. If the bucket with the specific name
+does not exist, it will be created.</p></li>
+<li><p><strong>s3_output_prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Name of the prefix where all the partitioned
+checkpoints to be uploaded. If not provided, the default value is
+aot-partitioned-checkpoints.</p></li>
+<li><p><strong>job_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Training job name. If not specified, a unique training job
+name will be created.</p></li>
+<li><p><strong>volume_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Size in GB of the storage volume to use for
+storing input and output data during training (default: 30).</p></li>
+<li><p><strong>volume_kms_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Optional. KMS key ID for encrypting EBS
+volume attached to the training instance (default: None).</p></li>
+<li><p><strong>output_kms_key</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – Optional. KMS key ID for encrypting the
+training output (default: None).</p></li>
+<li><p><strong>use_spot_instances</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – <p>Specifies whether to use SageMaker
+Managed Spot instances for training. If enabled then the
+<code class="docutils literal notranslate"><span class="pre">max_wait</span></code> arg should also be set.</p>
+<p>More information:
+<a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-managed-spot-training.html">https://docs.aws.amazon.com/sagemaker/latest/dg/model-managed-spot-training.html</a>
+(default: <code class="docutils literal notranslate"><span class="pre">False</span></code>).</p>
+</p></li>
+<li><p><strong>max_wait</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – Timeout in seconds waiting for spot training
+job (default: None). After this amount of time Amazon
+SageMaker will stop waiting for managed spot training job to
+complete (default: None).</p></li>
+<li><p><strong>enable_network_isolation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.11)"><em>bool</em></a>) – Specifies whether container will
+run in network isolation mode (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>). Network
+isolation mode restricts the container access to outside networks
+(such as the Internet). The container does not make any inbound or
+outbound network calls. Also known as Internet-free mode.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="fastertransformermodel">
+<h2>FasterTransformerModel<a class="headerlink" href="sagemaker.djl_inference.html#fastertransformermodel" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="sagemaker.djl_inference.model.FasterTransformerModel">
+<em class="property">class </em><code class="sig-prename descclassname">sagemaker.djl_inference.model.</code><code class="sig-name descname">FasterTransformerModel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_id</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="sagemaker.djl_inference.html#sagemaker.djl_inference.model.FasterTransformerModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="sagemaker.djl_inference.html#sagemaker.djl_inference.model.DJLModel" title="sagemaker.djl_inference.model.DJLModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">sagemaker.djl_inference.model.DJLModel</span></code></a></p>
+<p>A DJL FasterTransformer SageMaker <code class="docutils literal notranslate"><span class="pre">Model</span></code></p>
+<p>This can be deployed to a SageMaker <code class="docutils literal notranslate"><span class="pre">Endpoint</span></code>.</p>
+<p>Initialize a FasterTransformerModel.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – This is either the HuggingFace Hub model_id, or the Amazon S3 location
+containing the uncompressed model artifacts (i.e. not a tar.gz file).
+The model artifacts are expected to be in HuggingFace pre-trained model
+format (i.e. model should be loadable from the huggingface transformers
+from_pretrained api, and should also include tokenizer configs if applicable).</p></li>
+<li><p><strong>role</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – An AWS IAM role specified with either the name or full ARN. The Amazon
+SageMaker training jobs and APIs that create Amazon SageMaker
+endpoints use this role to access model artifacts. After the endpoint is created,
+the inference code
+might use the IAM role, if it needs to access an AWS resource.</p></li>
+<li><p><strong>tensor_parllel_degree</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a>) – The number of gpus to shard a single instance of the
+model across via tensor_parallelism. This should be set to greater than 1 if the
+size of the model is larger than the memory available on a single GPU on the
+instance. Defaults to None. If not set, no tensor parallel sharding is done.</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments passed to the superclasses
+<code class="xref py py-class docutils literal notranslate"><span class="pre">DJLModel</span></code>,
+<a class="reference internal" href="../../api/inference/model.html#sagemaker.model.FrameworkModel" title="sagemaker.model.FrameworkModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">FrameworkModel</span></code></a>, and
+<a class="reference internal" href="../../api/inference/model.html#sagemaker.model.Model" title="sagemaker.model.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a></p></li>
+<li><p><strong>tensor_parallel_degree</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.11)"><em>int</em></a><em>]</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can find additional parameters for initializing this class at
+<code class="xref py py-class docutils literal notranslate"><span class="pre">DJLModel</span></code>,
+<a class="reference internal" href="../../api/inference/model.html#sagemaker.model.FrameworkModel" title="sagemaker.model.FrameworkModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">FrameworkModel</span></code></a>, and
+<a class="reference internal" href="../../api/inference/model.html#sagemaker.model.Model" title="sagemaker.model.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a>.</p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="djlpredictor">
+<h2>DJLPredictor<a class="headerlink" href="sagemaker.djl_inference.html#djlpredictor" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="sagemaker.djl_inference.model.DJLPredictor">
+<em class="property">class </em><code class="sig-prename descclassname">sagemaker.djl_inference.model.</code><code class="sig-name descname">DJLPredictor</code><span class="sig-paren">(</span><em class="sig-param">endpoint_name</em>, <em class="sig-param">sagemaker_session=None</em>, <em class="sig-param">serializer=&lt;sagemaker.base_serializers.JSONSerializer object&gt;</em>, <em class="sig-param">deserializer=&lt;sagemaker.base_deserializers.JSONDeserializer object&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="sagemaker.djl_inference.html#sagemaker.djl_inference.model.DJLPredictor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">sagemaker.base_predictor.Predictor</span></code></p>
+<p>A Predictor for inference against DJL Model Endpoints.</p>
+<p>This is able to serialize Python lists, dictionaries, and numpy arrays to
+multidimensional tensors for DJL inference.</p>
+<p>Initialize a <code class="docutils literal notranslate"><span class="pre">DJLPredictor</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>endpoint_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.11)"><em>str</em></a>) – The name of the endpoint to perform inference
+on.</p></li>
+<li><p><strong>sagemaker_session</strong> (<a class="reference internal" href="../../api/utility/session.html#sagemaker.session.Session" title="sagemaker.session.Session"><em>sagemaker.session.Session</em></a>) – Session object that
+manages interactions with Amazon SageMaker APIs and any other
+AWS services needed. If not specified, the estimator creates one
+using the default AWS configuration chain.</p></li>
+<li><p><strong>serializer</strong> (<em>sagemaker.serializers.BaseSerializer</em>) – Optional. Default
+serializes input data to json format.</p></li>
+<li><p><strong>deserializer</strong> (<em>sagemaker.deserializers.BaseDeserializer</em>) – Optional.
+Default parses the response from json format to dictionary.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../algorithms/index.html" class="btn btn-neutral float-right" title="Built-in Algorithms" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="using_djl.html" class="btn btn-neutral float-left" title="Use DJL with the SageMaker Python SDK" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2023, Amazon
+      <span class="commit">
+        
+        Revision <code>f2ae8ff8</code>.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: stable
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="../../index.html">stable</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.182.0/">v2.182.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.181.0/">v2.181.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.180.0/">v2.180.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.179.0/">v2.179.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.178.0/">v2.178.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.177.1/">v2.177.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.177.0/">v2.177.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.176.0/">v2.176.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.175.0/">v2.175.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.174.0/">v2.174.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.173.0/">v2.173.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.172.0/">v2.172.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.171.0/">v2.171.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.170.0/">v2.170.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.169.0/">v2.169.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.168.0/">v2.168.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.167.0/">v2.167.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.166.0/">v2.166.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.165.0/">v2.165.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.164.0/">v2.164.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.163.0/">v2.163.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.162.0/">v2.162.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.161.0/">v2.161.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.160.0/">v2.160.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.159.0/">v2.159.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.158.0/">v2.158.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.157.0/">v2.157.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.156.0/">v2.156.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.155.0/">v2.155.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.154.0/">v2.154.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.153.0/">v2.153.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.152.0/">v2.152.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.151.0/">v2.151.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.150.0/">v2.150.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.149.0/">v2.149.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.148.0/">v2.148.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.147.0/">v2.147.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.146.1/">v2.146.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.146.0/">v2.146.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.145.0/">v2.145.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.144.0/">v2.144.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.143.0/">v2.143.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.142.0/">v2.142.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.141.0/">v2.141.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.140.1/">v2.140.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.140.0/">v2.140.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.139.0/">v2.139.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.138.0/">v2.138.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.137.0/">v2.137.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.136.0/">v2.136.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.135.1.post0/">v2.135.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.135.1/">v2.135.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.135.0/">v2.135.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.134.1/">v2.134.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.134.0/">v2.134.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.133.0/">v2.133.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.132.0/">v2.132.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.131.1/">v2.131.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.131.0/">v2.131.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.130.0/">v2.130.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.129.0/">v2.129.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.128.0/">v2.128.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.127.0/">v2.127.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.126.0/">v2.126.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.125.0/">v2.125.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.124.0/">v2.124.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.123.0/">v2.123.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.122.0/">v2.122.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.121.2/">v2.121.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.121.1/">v2.121.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.121.0/">v2.121.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.120.0/">v2.120.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.119.0/">v2.119.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.118.0/">v2.118.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.117.0/">v2.117.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.116.0/">v2.116.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.115.0/">v2.115.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.114.0/">v2.114.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.113.0/">v2.113.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.112.2/">v2.112.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.112.1/">v2.112.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.112.0/">v2.112.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.111.0/">v2.111.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.110.0/">v2.110.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.109.0/">v2.109.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.108.0/">v2.108.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.107.0/">v2.107.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.106.0/">v2.106.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.105.0/">v2.105.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.104.0/">v2.104.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.103.0/">v2.103.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.102.0/">v2.102.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.101.1/">v2.101.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.101.0/">v2.101.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.100.0/">v2.100.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.99.0/">v2.99.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.98.0/">v2.98.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.97.0/">v2.97.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.96.0/">v2.96.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.95.0/">v2.95.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.94.0/">v2.94.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.93.1/">v2.93.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.93.0/">v2.93.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.92.2/">v2.92.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.92.1/">v2.92.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.92.0/">v2.92.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.91.1/">v2.91.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.91.0/">v2.91.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.90.0/">v2.90.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.89.0/">v2.89.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.3/">v2.88.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.2/">v2.88.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.1/">v2.88.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.0/">v2.88.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.87.0/">v2.87.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.86.2/">v2.86.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.86.1/">v2.86.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.86.0/">v2.86.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.85.0/">v2.85.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.84.0/">v2.84.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.83.0/">v2.83.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.82.2/">v2.82.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.82.1/">v2.82.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.82.0/">v2.82.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.81.1/">v2.81.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.81.0/">v2.81.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.80.0/">v2.80.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.79.0/">v2.79.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.78.0/">v2.78.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.77.1/">v2.77.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.77.0/">v2.77.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.76.0/">v2.76.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.75.1/">v2.75.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.75.0/">v2.75.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.74.0/">v2.74.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.73.0/">v2.73.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.3/">v2.72.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.2/">v2.72.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.1/">v2.72.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.0/">v2.72.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.71.0/">v2.71.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.70.0/">v2.70.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.69.0/">v2.69.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.68.0/">v2.68.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.67.0/">v2.67.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.2.post0/">v2.66.2.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.2/">v2.66.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.1/">v2.66.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.0/">v2.66.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.65.0/">v2.65.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.64.0/">v2.64.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.63.2/">v2.63.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.63.1/">v2.63.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.63.0/">v2.63.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.62.0/">v2.62.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.61.0/">v2.61.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.60.0/">v2.60.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.8/">v2.59.8</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.7/">v2.59.7</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.6/">v2.59.6</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.5/">v2.59.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.4/">v2.59.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.3.post0/">v2.59.3.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.3/">v2.59.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.2/">v2.59.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.1.post0/">v2.59.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.1/">v2.59.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.0/">v2.59.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.58.0/">v2.58.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.57.0/">v2.57.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.56.0/">v2.56.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.55.0/">v2.55.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.54.0/">v2.54.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.53.0/">v2.53.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.2.post0/">v2.52.2.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.2/">v2.52.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.1/">v2.52.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.0/">v2.52.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.51.0/">v2.51.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.50.1/">v2.50.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.50.0/">v2.50.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.49.2/">v2.49.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.49.1/">v2.49.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.49.0/">v2.49.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.48.2/">v2.48.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.48.1/">v2.48.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.48.0/">v2.48.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.2.post0/">v2.47.2.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.2/">v2.47.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.1/">v2.47.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.0/">v2.47.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.46.1/">v2.46.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.46.0/">v2.46.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.45.0/">v2.45.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.44.0/">v2.44.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.43.0/">v2.43.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.42.1/">v2.42.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.42.0/">v2.42.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.41.0/">v2.41.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.40.0/">v2.40.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.39.1/">v2.39.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.39.0.post0/">v2.39.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.39.0/">v2.39.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.38.0/">v2.38.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.37.0/">v2.37.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.36.0/">v2.36.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.35.0/">v2.35.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.34.0/">v2.34.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.33.0/">v2.33.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.32.1/">v2.32.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.32.0/">v2.32.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.31.1/">v2.31.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.31.0/">v2.31.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.30.0/">v2.30.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.29.2/">v2.29.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.29.1/">v2.29.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.29.0/">v2.29.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.28.0/">v2.28.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.27.1/">v2.27.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.27.0/">v2.27.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.26.0/">v2.26.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.25.2/">v2.25.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.25.1/">v2.25.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.25.0/">v2.25.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.5/">v2.24.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.4/">v2.24.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.3/">v2.24.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.2/">v2.24.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.1/">v2.24.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.0/">v2.24.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.6/">v2.23.6</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.5/">v2.23.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.4.post0/">v2.23.4.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.4/">v2.23.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.3/">v2.23.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.2/">v2.23.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.1/">v2.23.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.0/">v2.23.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.22.0/">v2.22.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.21.0/">v2.21.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.20.0/">v2.20.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.19.0/">v2.19.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.18.0/">v2.18.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.17.0/">v2.17.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.4/">v2.16.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.3.post0/">v2.16.3.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.3/">v2.16.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.2/">v2.16.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.1/">v2.16.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.0.post0/">v2.16.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.0/">v2.16.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.4/">v2.15.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.3/">v2.15.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.2/">v2.15.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.1/">v2.15.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.0/">v2.15.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.14.0/">v2.14.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.13.0/">v2.13.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.12.0/">v2.12.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.11.0/">v2.11.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.10.0/">v2.10.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.9.2/">v2.9.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.9.1/">v2.9.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.9.0/">v2.9.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.8.0/">v2.8.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.7.0/">v2.7.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.6.0/">v2.6.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.5/">v2.5.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.4/">v2.5.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.3/">v2.5.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.2/">v2.5.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.1/">v2.5.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.0/">v2.5.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.4.2/">v2.4.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.4.1/">v2.4.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.4.0/">v2.4.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.3.0/">v2.3.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.2.0/">v2.2.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.1.0/">v2.1.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.1/">v2.0.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.0/">v2.0.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.0.rc1/">v2.0.0.rc1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.0.rc0/">v2.0.0.rc0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.72.1/">v1.72.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.72.0/">v1.72.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.71.1/">v1.71.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.71.0/">v1.71.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.70.2/">v1.70.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.70.1/">v1.70.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.70.0/">v1.70.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.69.0/">v1.69.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.68.0/">v1.68.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.67.1.post0/">v1.67.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.67.1/">v1.67.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.67.0/">v1.67.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.66.0/">v1.66.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.1.post1/">v1.65.1.post1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.1.post0/">v1.65.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.1/">v1.65.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.0/">v1.65.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.64.1/">v1.64.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.64.0/">v1.64.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.63.0/">v1.63.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.62.0/">v1.62.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.61.0/">v1.61.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.60.2/">v1.60.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.59.0/">v1.59.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.58.4/">v1.58.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.58.1/">v1.58.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.58.0/">v1.58.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.57.0/">v1.57.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.3/">v1.56.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.2/">v1.56.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.1.post1/">v1.56.1.post1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.1.post0/">v1.56.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.1/">v1.56.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.0/">v1.56.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.4/">v1.55.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.3/">v1.55.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.2/">v1.55.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.1/">v1.55.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.0.post0/">v1.55.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.0/">v1.55.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.54.0/">v1.54.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.53.0/">v1.53.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.52.1/">v1.52.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.52.0.post0/">v1.52.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.52.0/">v1.52.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.4/">v1.51.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.3/">v1.51.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.1/">v1.51.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.0/">v1.51.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.18.post0/">v1.50.18.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.18/">v1.50.18</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.17.post0/">v1.50.17.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.17/">v1.50.17</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.16/">v1.50.16</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.15/">v1.50.15</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.14.post0/">v1.50.14.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.14/">v1.50.14</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.13/">v1.50.13</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.12/">v1.50.12</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.11/">v1.50.11</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.10.post0/">v1.50.10.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.10/">v1.50.10</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.9.post0/">v1.50.9.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.9/">v1.50.9</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.8/">v1.50.8</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.7/">v1.50.7</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.6.post0/">v1.50.6.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.6/">v1.50.6</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.5/">v1.50.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.4/">v1.50.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.3/">v1.50.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.2/">v1.50.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.1/">v1.50.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.0/">v1.50.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.49.0/">v1.49.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.48.1/">v1.48.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.48.0/">v1.48.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.47.1/">v1.47.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.45.0/">v1.45.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.44.4/">v1.44.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.44.3/">v1.44.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.4.post1/">v1.43.4.post1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.4.post0/">v1.43.4.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.4/">v1.43.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.3/">v1.43.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.2/">v1.43.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.1/">v1.43.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.0/">v1.43.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.42.0/">v1.42.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.41.0/">v1.41.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.40.0/">v1.40.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.39.0/">v1.39.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.38.0/">v1.38.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.37.0/">v1.37.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.36.0/">v1.36.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.35.0/">v1.35.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.34.0/">v1.34.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.33.0/">v1.33.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.32.0/">v1.32.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.31.0/">v1.31.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.30.0/">v1.30.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.29.0/">v1.29.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.28.0/">v1.28.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.27.0/">v1.27.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.26.0/">v1.26.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.25.0/">v1.25.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.24.0/">v1.24.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.23.0/">v1.23.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.22.0/">v1.22.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.21.0/">v1.21.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.20.0/">v1.20.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.19.0/">v1.19.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.18.0/">v1.18.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.17.0/">v1.17.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.15.0/">v1.15.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.14.0/">v1.14.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.13.0/">v1.13.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.12.0/">v1.12.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.11.0/">v1.11.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.10.0/">v1.10.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.9.0/">v1.9.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.8.0/">v1.8.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.7.0/">v1.7.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.6.0/">v1.6.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.5.0/">v1.5.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.4.0/">v1.4.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.3.0/">v1.3.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.2.0/">v1.2.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.1.0/">v1.1.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.0.0/">v1.0.0</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+      </dl>
+      <dl>
+        
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="https://readthedocs.org/projects/sagemaker/?fromdocs=sagemaker">Project Home</a>
+          </dd>
+          <dd>
+            <a href="https://readthedocs.org/builds/sagemaker/?fromdocs=sagemaker">Builds</a>
+          </dd>
+      </dl>
+    </div>
+  </div>
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+   
+
+</body>
+</html>

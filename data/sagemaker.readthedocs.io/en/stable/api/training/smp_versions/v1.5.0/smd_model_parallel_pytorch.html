@@ -1,0 +1,1725 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>PyTorch API &mdash; sagemaker 2.182.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/theme_overrides.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pagination.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/search_accessories.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/language_data.js"></script>
+        <script src="https://a0.awsstatic.com/s_code/js/3.0/awshome_s_code.js"></script>
+        <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+        <script src="../../../../_static/js/datatable.js"></script>
+        <script async="async" src="../../../../../../_/static/javascript/readthedocs-doc-embed.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="TensorFlow API" href="smd_model_parallel_tensorflow.html" />
+    <link rel="prev" title="Common API" href="smd_model_parallel_common_api.html" /> 
+
+<!-- RTD Extra Head -->
+
+<link rel="stylesheet" href="../../../../../../_/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": true, "api_host": "https://readthedocs.org", "builder": "sphinx", "canonical_url": null, "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": null, "language": "en", "page": "api/training/smp_versions/v1.5.0/smd_model_parallel_pytorch", "programming_language": "py", "project": "sagemaker", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "stable"}</script>
+
+<!--
+Using this variable directly instead of using `JSON.parse` is deprecated.
+The READTHEDOCS_DATA global variable will be removed in the future.
+-->
+<script type="text/javascript">
+READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerHTML);
+</script>
+
+<script type="text/javascript" src="../../../../../../_/static/javascript/readthedocs-analytics.js" async="async"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> sagemaker
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                stable
+              </div>
+            
+          
+
+          <div role="search">
+    <form id ="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+        <input type="text" name="q" placeholder="ex. train object detection model, pd.concat" title="Type search term here" />
+        <br />
+        <br />
+        <div style="text-align: left;">
+            <div style="font-size: 0.85rem;">Filters: </div>
+            <div style="display: inline-block;"><label style="color: white;" for="filterExample"><input type="checkbox" id="filterExample" name="filterExample">Example</label></div>
+            <div style="display: inline-block;"><label style="color: white;" for="filterAWSDevGuide"><input type="checkbox" id="filterAWSDevGuide" name="filterAWSDevGuide">Dev Guide</label></div>
+            <div style="display: inline-block;"><label style="color: white;" for="filterSDKGuide"><input type="checkbox" id="filterSDKGuide" name="filterSDKGuide">SDK Guide</label></div>
+        </div>
+        
+    </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../overview.html">Using the SageMaker Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../v2.html">Use Version 2.x of the SageMaker Python SDK</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">APIs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../../prep_data/feature_store.html">Feature Store APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../index.html">Training APIs</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../../distributed.html">Distributed Training APIs</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../distributed.html#the-sagemaker-distributed-data-parallel-library">The SageMaker Distributed Data Parallel Library</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../../distributed.html#the-sagemaker-distributed-model-parallel-library">The SageMaker Distributed Model Parallel Library</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../../smd_model_parallel.html">The SageMaker Distributed Model Parallel Library Overview</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="../latest.html">Use the Library’s API to Adapt Training Scripts</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="../latest.html#version-1-11-0-1-13-0-1-14-0-1-15-0-latest">Version 1.11.0, 1.13.0, 1.14.0, 1.15.0 (Latest)</a></li>
+<li class="toctree-l5 current"><a class="reference internal" href="../latest.html#documentation-archive">Documentation Archive</a><ul class="current">
+<li class="toctree-l6"><a class="reference internal" href="../v1_10_0.html">Version 1.10.0</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../v1_9_0.html">Version 1.7.0, 1.8.0, 1.8.1, 1.9.0</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../v1_6_0.html">Version 1.6.0</a></li>
+<li class="toctree-l6 current"><a class="reference internal" href="../v1_5_0.html">Version 1.5.x</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../v1_4_0.html">Version 1.4.x</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../v1_3_0.html">Version 1.3.x</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../v1_2_0.html">Version 1.2.0</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../v1_1_0.html">Version 1.1.0</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../smd_model_parallel_general.html">Run a Distributed Training Job Using the SageMaker Python SDK</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../smd_model_parallel_release_notes/smd_model_parallel_change_log.html">Release Notes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../inference/index.html">Inference APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../governance/index.html">Governance APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../utility/index.html">Utility APIs</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../frameworks/index.html">Frameworks</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../algorithms/index.html">Built-in Algorithms</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../workflows/index.html">Workflows</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../experiments/index.html">Amazon SageMaker Experiments</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../amazon_sagemaker_debugger.html">Amazon SageMaker Debugger</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../amazon_sagemaker_featurestore.html">Amazon SageMaker Feature Store</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../amazon_sagemaker_model_monitoring.html">Amazon SageMaker Model Monitor</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../amazon_sagemaker_processing.html">Amazon SageMaker Processing</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../amazon_sagemaker_model_building_pipeline.html">Amazon SageMaker Model Building Pipeline</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">sagemaker</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">APIs</a> &raquo;</li>
+        
+          <li><a href="../../distributed.html">Distributed Training APIs</a> &raquo;</li>
+        
+          <li><a href="../latest.html">Use the Library’s API to Adapt Training Scripts</a> &raquo;</li>
+        
+          <li><a href="../archives.html">&lt;no title&gt;</a> &raquo;</li>
+        
+          <li><a href="../v1_5_0.html">Version 1.5.x</a> &raquo;</li>
+        
+      <li>PyTorch API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/aws/sagemaker-python-sdk/blob/f2ae8ff8b6ed82eb89110887eb5e74c953e6372a/doc/api/training/smp_versions/v1.5.0/smd_model_parallel_pytorch.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="admonition-contents admonition">
+<p class="admonition-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../latest/smd_model_parallel_pytorch.html#pytorch-saving-loading"><span class="std std-ref">smdistributed.modelparallel.torch APIs for Saving and Loading</span></a></p></li>
+<li><p><a class="reference internal" href="../latest/smd_model_parallel_pytorch.html#pytorch-saving-loading-instructions"><span class="std std-ref">General instruction on saving and loading</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="pytorch-api">
+<h1>PyTorch API<a class="headerlink" href="smd_model_parallel_pytorch.html#pytorch-api" title="Permalink to this headline">¶</a></h1>
+<p><strong>Supported versions: 1.7.1, 1.8.1</strong></p>
+<p>This API document assumes you use the following import statements in your training scripts.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">smdistributed.modelparallel.torch</span> <span class="k">as</span> <span class="nn">smp</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Refer to
+<a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/model-parallel-customize-training-script.html#model-parallel-customize-training-script-pt">Modify a PyTorch Training Script</a>
+to learn how to use the following API in your PyTorch training script.</p>
+</div>
+<dl class="py class">
+<dt>
+<em class="property">class </em><code class="sig-prename descclassname">smp.</code><code class="sig-name descname">DistributedModel</code></dt>
+<dd><p>A sub-class of <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code> which specifies the model to be
+partitioned. Accepts a <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code> object <code class="docutils literal notranslate"><span class="pre">module</span></code> which is
+the model to be partitioned. The returned <code class="docutils literal notranslate"><span class="pre">DistributedModel</span></code> object
+internally manages model parallelism and data parallelism. Only one
+model in the training script can be wrapped with
+<code class="docutils literal notranslate"><span class="pre">smp.DistributedModel</span></code>.</p>
+<p><strong>Example:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">smp</span><span class="o">.</span><span class="n">DistributedModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Important</strong>: The <code class="docutils literal notranslate"><span class="pre">__call__</span></code> and  <code class="docutils literal notranslate"><span class="pre">backward</span></code> method calls on the
+<code class="docutils literal notranslate"><span class="pre">smp.DistributedModel</span></code> object (in the following example, the object
+is <code class="docutils literal notranslate"><span class="pre">model</span></code>) can only be made inside a <code class="docutils literal notranslate"><span class="pre">smp.step</span></code>-decorated
+function.</p>
+<p>Since <code class="docutils literal notranslate"><span class="pre">DistributedModel</span></code>  is a <code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code>, a forward pass can
+be performed by calling the <code class="docutils literal notranslate"><span class="pre">DistributedModel</span></code> object on the input
+tensors.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>   <span class="c1"># model is a smp.DistributedModel object</span>
+</pre></div>
+</div>
+<p>For a backward pass, one needs to call the backward function on
+the <code class="docutils literal notranslate"><span class="pre">DistributedModel</span></code> object, with tensors and gradients as
+arguments, replacing the PyTorch operations <code class="docutils literal notranslate"><span class="pre">torch.Tensor.backward</span></code>
+or <code class="docutils literal notranslate"><span class="pre">torch.autograd.backward</span></code>.</p>
+<p>The API for <code class="docutils literal notranslate"><span class="pre">model.backward</span></code> is very similar to
+<code class="docutils literal notranslate"><span class="pre">torch.autograd.backward</span></code>. For example, the following
+<code class="docutils literal notranslate"><span class="pre">backward</span></code> calls:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">autograd</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span> <span class="ow">or</span> <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>should be replaced with:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span> <span class="c1"># loss is a tensor with only one element as its data</span>
+</pre></div>
+</div>
+<p>Similarly, for non-scalar tensors, replace the following
+<code class="docutils literal notranslate"><span class="pre">backward</span></code> call containing incoming gradient arguments:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">autograd</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">out_grads</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>with the following line:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">out_grads</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In these examples, all <code class="docutils literal notranslate"><span class="pre">__call__</span></code>  and <code class="docutils literal notranslate"><span class="pre">backward</span></code> method calls on
+the model objects (<code class="docutils literal notranslate"><span class="pre">model(inputs)</span></code> and <code class="docutils literal notranslate"><span class="pre">model.backward(loss)</span></code>) must be made inside
+a <code class="docutils literal notranslate"><span class="pre">smp.step</span></code>-decorated function.</p>
+<p><strong>Using DDP</strong></p>
+<p>If DDP is enabled, do not not place a PyTorch
+<code class="docutils literal notranslate"><span class="pre">DistributedDataParallel</span></code> wrapper around the <code class="docutils literal notranslate"><span class="pre">DistributedModel</span></code> because
+the <code class="docutils literal notranslate"><span class="pre">DistributedModel</span></code> wrapper will also handle data parallelism.</p>
+<p>Unlike the original DDP wrapper, when you use <code class="docutils literal notranslate"><span class="pre">DistributedModel</span></code>,
+model parameters and buffers are not immediately broadcast across
+processes when the wrapper is called. Instead, the broadcast is deferred to the first call of the
+<code class="docutils literal notranslate"><span class="pre">smp.step</span></code>-decorated function when the partition is done.</p>
+<p><strong>Parameters</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">module</span></code> (<code class="docutils literal notranslate"><span class="pre">torch.nn.Module</span></code>): Module to be distributed (data parallelism and model parallelism).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">trace_device</span></code> (<code class="docutils literal notranslate"><span class="pre">&quot;cpu&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;gpu&quot;</span></code>) (default: <code class="docutils literal notranslate"><span class="pre">&quot;gpu&quot;</span></code>)
+Whether to perform the tracing step on the GPU or CPU. The tracing step gathers
+information on the order of execution of modules, the shapes of
+intermediate outputs, and execution times, to be used by the
+partitioning algorithm. If <code class="docutils literal notranslate"><span class="pre">trace_device</span></code> is set to GPU, accurate
+module execution times can be gathered during tracing for potentially
+improved partitioning decision. However, if the model is too large to
+fit in a single GPU, then <code class="docutils literal notranslate"><span class="pre">trace_device</span></code> should be set to CPU.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">trace_execution_times</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) (default: <code class="docutils literal notranslate"><span class="pre">False</span></code>): If <code class="docutils literal notranslate"><span class="pre">True</span></code>,
+the library profiles the execution time of each module during tracing, and uses
+it in the partitioning decision. This improves the partitioning
+decision, but it might make the tracing slower. It may also introduce
+some degree of non-determinism in partitioning results, because of the
+inherent randomness in module execution times. Must be <code class="docutils literal notranslate"><span class="pre">False</span></code> if
+<code class="docutils literal notranslate"><span class="pre">trace_device</span></code> is <code class="docutils literal notranslate"><span class="pre">&quot;cpu&quot;</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">overlapping_allreduce</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) (default: <code class="docutils literal notranslate"><span class="pre">True</span></code>): This is only
+applicable for hybrid data parallelism/model parallelism use cases (when
+<code class="docutils literal notranslate"><span class="pre">ddp</span></code> is set to <code class="docutils literal notranslate"><span class="pre">True</span></code> while launching training). The library uses this flag
+to decide whether to do overlapping allreduce whenever a parameter
+gradients are ready. This leads to overlapping of communication and
+computation and can improve performance. If this is set to <code class="docutils literal notranslate"><span class="pre">False</span></code> ,
+allreduce is performed at the end of the step.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">backward_passes_per_step</span></code> (<code class="docutils literal notranslate"><span class="pre">int</span></code>) (default: 1): This is only
+applicable for hybrid data parallelism/model parallelism use cases (when
+<code class="docutils literal notranslate"><span class="pre">ddp</span></code> is set to <code class="docutils literal notranslate"><span class="pre">True</span></code> in config). This parameter indicates the
+number of backward passes to perform before calling allreduce on DDP.
+This allows accumulating updates over multiple mini-batches before
+reducing and applying them.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">average_grads_across_microbatches</span></code> (<code class="docutils literal notranslate"><span class="pre">bool</span></code>) (default: <code class="docutils literal notranslate"><span class="pre">True</span></code>):
+Whether or not the computed gradients should be averaged across
+microbatches. If <code class="docutils literal notranslate"><span class="pre">False</span></code>, the computed gradients will be summed across
+microbatches, but not divided by the number of microbatches. In typical
+use case where the computed loss is averaged over the mini-batch, this
+should be left as <code class="docutils literal notranslate"><span class="pre">True</span></code>. If you use a loss function that only sums
+the per-sample loss across the batch (and not divide by the batch size),
+then this must be set to <code class="docutils literal notranslate"><span class="pre">False</span></code> for correctness.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bucket_cap_mb</span></code> (default: 25): <code class="docutils literal notranslate"><span class="pre">DistributedDataParallel</span></code> buckets
+parameters into multiple buckets so that gradient reduction of each
+bucket can potentially overlap with backward
+computation. <code class="docutils literal notranslate"><span class="pre">bucket_cap_mb</span></code>controls the bucket size in MegaBytes
+(MB).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">trace_memory_usage</span></code> (default: False): When set to True, the library attempts
+to measure memory usage per module during tracing. If this is disabled,
+memory usage will be estimated through the sizes of tensors returned from
+the module.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">broadcast_buffers</span></code> (default: True): Flag to be used with <code class="docutils literal notranslate"><span class="pre">ddp=True</span></code>.
+This parameter is forwarded to the underlying <code class="docutils literal notranslate"><span class="pre">DistributedDataParallel</span></code> wrapper.
+Please see: <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html#torch.nn.parallel.DistributedDataParallel">broadcast_buffer</a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gradient_as_bucket_view</span></code> (default: False): To be
+used with <code class="docutils literal notranslate"><span class="pre">ddp=True</span></code>. This parameter is forwarded to the underlying
+<code class="docutils literal notranslate"><span class="pre">DistributedDataParallel</span></code> wrapper. Please see <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html#torch.nn.parallel.DistributedDataParallel">gradient_as_bucket_view</a>.</p></li>
+</ul>
+<p><strong>Properties</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">partitioned</span></code>: Is <code class="docutils literal notranslate"><span class="pre">True</span></code> if the model is partitioned, <code class="docutils literal notranslate"><span class="pre">False</span></code>
+otherwise. Initialized to <code class="docutils literal notranslate"><span class="pre">False</span></code> when <code class="docutils literal notranslate"><span class="pre">DistributedModel</span></code> is first
+created. It becomes be <code class="docutils literal notranslate"><span class="pre">True</span></code> during the first call
+to <code class="docutils literal notranslate"><span class="pre">smp.step</span></code>-decorated function. Once the model is partitioned, the
+local parameters or local <code class="docutils literal notranslate"><span class="pre">state_dict</span></code> can be fetched using the
+following methods.</p></li>
+</ul>
+<p><strong>Methods</strong></p>
+<dl class="py function">
+<dt>
+<code class="sig-name descname">backward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tensors</span></em>, <em class="sig-param"><span class="n">grad_tensors</span></em><span class="sig-paren">)</span></dt>
+<dd><p>Triggers a distributed backward
+pass across model partitions. Example usage provided in the previous
+section. The API is very similar
+to <a class="reference external" href="https://pytorch.org/docs/stable/autograd.html#torch.autograd.backward">https://pytorch.org/docs/stable/autograd.html#torch.autograd.backward</a>.
+<code class="docutils literal notranslate"><span class="pre">retain_grad</span></code> and <code class="docutils literal notranslate"><span class="pre">create_graph</span></code>  flags are not supported.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-name descname">local_buffers</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns an iterator over buffers for the modules in
+the partitioned model that have been assigned to the current process.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-name descname">local_named_buffers</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns an iterator over buffers for the
+modules in the partitioned model that have been assigned to the current
+process. This yields both the name of the buffer as well as the buffer
+itself.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-name descname">local_parameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns an iterator over parameters for the
+modules in the partitioned model that have been assigned to the current
+process.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-name descname">local_named_parameters</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns an iterator over parameters for
+the modules in the partitioned model that have been assigned to the
+current process. This yields both the name of the parameter as well as
+the parameter itself.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-name descname">local_modules</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns an iterator over the modules in the
+partitioned model that have been assigned to the current process.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-name descname">local_named_modules</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns an iterator over the modules in the
+partitioned model that have been assigned to the current process. This
+yields both the name of the module as well as the module itself.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-name descname">local_state_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns the <code class="docutils literal notranslate"><span class="pre">state_dict</span></code> that contains local
+parameters that belong to the current <code class="docutils literal notranslate"><span class="pre">mp_rank</span></code>. This <code class="docutils literal notranslate"><span class="pre">state_dict</span></code>
+contains a key <code class="docutils literal notranslate"><span class="pre">_smp_is_partial</span></code> to indicate this is a
+partial <code class="docutils literal notranslate"><span class="pre">state_dict</span></code>, which indicates whether the
+<code class="docutils literal notranslate"><span class="pre">state_dict</span></code> contains elements corresponding to only the current
+partition, or to the entire model.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-name descname">state_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns the <code class="docutils literal notranslate"><span class="pre">state_dict</span></code> that contains parameters
+for the entire model. It first collects the <code class="docutils literal notranslate"><span class="pre">local_state_dict</span></code>  and
+gathers and merges the <code class="docutils literal notranslate"><span class="pre">local_state_dict</span></code> from all <code class="docutils literal notranslate"><span class="pre">mp_rank</span></code>s to
+create a full <code class="docutils literal notranslate"><span class="pre">state_dict</span></code>. Please note that this needs to be called on all ranks with
+<code class="docutils literal notranslate"><span class="pre">dp_rank()==0</span></code> to ensure the gather happens properly.
+If it is only called on all such ranks, it can hang.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-name descname">load_state_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Same as the <code class="docutils literal notranslate"><span class="pre">torch.module.load_state_dict()</span></code> ,
+except: It first gathers and merges the <code class="docutils literal notranslate"><span class="pre">state_dict</span></code>s across
+<code class="docutils literal notranslate"><span class="pre">mp_rank</span></code>s, if they are partial. The actual loading happens after the
+model partition so that each rank knows its local parameters.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-name descname">register_post_partition_hook</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">hook</span></em><span class="sig-paren">)</span></dt>
+<dd><p>Registers a callable <code class="docutils literal notranslate"><span class="pre">hook</span></code> to
+be executed after the model is partitioned. This is useful in situations
+where an operation needs to be executed after the model partition during
+the first call to <code class="docutils literal notranslate"><span class="pre">smp.step</span></code>, but before the actual execution of the
+first forward pass. Returns a <code class="docutils literal notranslate"><span class="pre">RemovableHandle</span></code> object <code class="docutils literal notranslate"><span class="pre">handle</span></code>,
+which can be used to remove the hook by calling <code class="docutils literal notranslate"><span class="pre">handle.remove()</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-name descname">cpu</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Allgathers parameters and buffers across all <code class="docutils literal notranslate"><span class="pre">mp_rank</span></code>s and moves them
+to the CPU.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-name descname">join</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>A context manager to be used in conjunction with an instance of
+<code class="docutils literal notranslate"><span class="pre">smp.DistributedModel</span></code> to be able to train with uneven inputs across
+participating processes. This is only supported when <code class="docutils literal notranslate"><span class="pre">ddp=True</span></code>. This will use the join with the wrapped
+<code class="docutils literal notranslate"><span class="pre">DistributedDataParallel</span></code> instance. For more information, see:
+<a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html#torch.nn.parallel.DistributedDataParallel.join">join</a>
+in the PyTorch documentation.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-name descname">register_comm_hook</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">state</span></em>, <em class="sig-param"><span class="n">callable</span></em><span class="sig-paren">)</span></dt>
+<dd><p><strong>Available for PyTorch 1.8.1 only</strong>
+Registers a communication hook which is an enhancement that provides
+a flexible hook <code class="docutils literal notranslate"><span class="pre">callable</span></code> to users where they can specify how
+gradients are aggregated across multiple workers. This method will be called on the wrapped <code class="docutils literal notranslate"><span class="pre">DistributedDataParallel</span></code> instance.</p>
+<p>Please note that when you register a comm hook you have full control of how the gradients are processed.
+When using only data parallelism with Torch DDP you are expected to average grads across data parallel replicas within the hook.
+Similarly, when using DistributedModel you have to averaging grads across data parallel replicas within the hook.
+In addition to that, you also have to average grads across microbatches within the hook unless you explicitly desire to not average based on your loss function.
+See <code class="docutils literal notranslate"><span class="pre">average_grads_across_microbatches</span></code> for more information about averaging grads across microbatches.</p>
+<p>This is only supported when <code class="docutils literal notranslate"><span class="pre">ddp=True</span></code> and <code class="docutils literal notranslate"><span class="pre">overlapping_allreduce=True</span></code> (default).
+For more information, see:
+<a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html#torch.nn.parallel.DistributedDataParallel.register_comm_hook">register_comm_hook</a>
+in the PyTorch documentation.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt>
+<em class="property">class </em><code class="sig-prename descclassname">smp.</code><code class="sig-name descname">DistributedOptimizer</code></dt>
+<dd><p><strong>Parameters</strong>
+- <code class="docutils literal notranslate"><span class="pre">optimizer</span></code></p>
+<p>An optimizer wrapper for saving/loading optimizer states. This wrapper
+returns <code class="docutils literal notranslate"><span class="pre">optimizer</span></code> with the following methods overridden:</p>
+<dl class="py function">
+<dt>
+<code class="sig-name descname">state_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns the <code class="docutils literal notranslate"><span class="pre">state_dict</span></code> that contains optimizer state for the entire model.
+It first collects the <code class="docutils literal notranslate"><span class="pre">local_state_dict</span></code> and gathers and merges
+the <code class="docutils literal notranslate"><span class="pre">local_state_dict</span></code> from all <code class="docutils literal notranslate"><span class="pre">mp_rank``s</span> <span class="pre">to</span> <span class="pre">create</span> <span class="pre">a</span> <span class="pre">full</span>
+<span class="pre">``state_dict</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-name descname">load_state_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Same as the <code class="docutils literal notranslate"><span class="pre">torch.optimizer.load_state_dict()</span></code> , except:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>It first gathers and merges the local <code class="docutils literal notranslate"><span class="pre">state_dict</span></code>s if they are
+partial.</p></li>
+<li><p>The actual loading happens after the model partition so that each
+rank knows its local parameters.</p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-name descname">local_state_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns the <code class="docutils literal notranslate"><span class="pre">state_dict</span></code> that contains the
+local optimizer state that belongs to the current <code class="docutils literal notranslate"><span class="pre">mp_rank</span></code>. This
+<code class="docutils literal notranslate"><span class="pre">state_dict</span></code> contains a key <code class="docutils literal notranslate"><span class="pre">_smp_is_partial</span></code> to indicate this is
+a partial <code class="docutils literal notranslate"><span class="pre">state_dict</span></code>, which indicates whether the
+<code class="docutils literal notranslate"><span class="pre">state_dict</span></code> contains elements corresponding to only the current
+partition, or to the entire model.</p>
+</dd></dl>
+
+<p>​</p>
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-prename descclassname">smp.</code><code class="sig-name descname">partition</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">index</span></em><span class="sig-paren">)</span></dt>
+<dd><p><strong>Inputs</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">index</span></code> (int) - The index of the partition.</p></li>
+</ul>
+<p>A context manager which places all modules defined inside into the
+partition with ID <code class="docutils literal notranslate"><span class="pre">index</span></code>.  The <code class="docutils literal notranslate"><span class="pre">index</span></code> argument must be less than
+the number of partitions.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">smp.partition</span></code> to implement manual partitioning.
+If <code class="docutils literal notranslate"><span class="pre">&quot;auto_partition&quot;</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>, then the
+<code class="docutils literal notranslate"><span class="pre">smp.partition</span></code> contexts are ignored. Any module that is not placed in
+any <code class="docutils literal notranslate"><span class="pre">smp.partition</span></code> context is placed in the
+<code class="docutils literal notranslate"><span class="pre">default_partition</span></code> defined through the SageMaker Python SDK.</p>
+<p>When <code class="docutils literal notranslate"><span class="pre">smp.partition</span></code> contexts are nested, the innermost context
+overrides the rest (see the following example). In PyTorch, manual
+partitioning should be done inside the module <code class="docutils literal notranslate"><span class="pre">__init__</span></code>, and the
+partition assignment applies to the modules that are <em>created</em> inside
+the <code class="docutils literal notranslate"><span class="pre">smp.partition</span></code> context.</p>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">smp</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">child0</span> <span class="o">=</span> <span class="n">Child0</span><span class="p">()</span>            <span class="c1"># child0 on partition 1</span>
+            <span class="k">with</span> <span class="n">smp</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">child1</span> <span class="o">=</span> <span class="n">Child1</span><span class="p">()</span>        <span class="c1"># child1 on partition 2</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">child2</span> <span class="o">=</span> <span class="n">Child2</span><span class="p">()</span>            <span class="c1"># child2 on partition 1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">child3</span> <span class="o">=</span> <span class="n">Child3</span><span class="p">()</span>                <span class="c1"># child3 on default_partition</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-prename descclassname">smp.</code><code class="sig-name descname">get_world_process_group</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns a <code class="docutils literal notranslate"><span class="pre">torch.distributed</span></code> <code class="docutils literal notranslate"><span class="pre">ProcessGroup</span></code> that consists of all
+processes, which can be used with the <code class="docutils literal notranslate"><span class="pre">torch.distributed</span></code> API.
+Requires <code class="docutils literal notranslate"><span class="pre">&quot;ddp&quot;:</span> <span class="pre">True</span></code> in SageMaker Python SDK parameters.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-prename descclassname">smp.</code><code class="sig-name descname">get_mp_process_group</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns a <code class="docutils literal notranslate"><span class="pre">torch.distributed</span></code> <code class="docutils literal notranslate"><span class="pre">ProcessGroup</span></code> that consists of the
+processes in the <code class="docutils literal notranslate"><span class="pre">MP_GROUP</span></code> which contains the current process, which
+can be used with the <code class="docutils literal notranslate"><span class="pre">torch.distributed</span></code> API. Requires
+<code class="docutils literal notranslate"><span class="pre">&quot;ddp&quot;:</span> <span class="pre">True</span></code> in SageMaker Python SDK parameters.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-prename descclassname">smp.</code><code class="sig-name descname">get_dp_process_group</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns a <code class="docutils literal notranslate"><span class="pre">torch.distributed</span></code> <code class="docutils literal notranslate"><span class="pre">ProcessGroup</span></code> that consists of the
+processes in the <code class="docutils literal notranslate"><span class="pre">DP_GROUP</span></code> which contains the current process, which
+can be used with the <code class="docutils literal notranslate"><span class="pre">torch.distributed</span></code> API. Requires
+<code class="docutils literal notranslate"><span class="pre">&quot;ddp&quot;:</span> <span class="pre">True</span></code> in SageMaker Python SDK parameters.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-prename descclassname">smp.</code><code class="sig-name descname">is_initialized</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if <code class="docutils literal notranslate"><span class="pre">smp.init</span></code> has already been called for the
+process, and <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt>
+<code class="sig-prename descclassname">smp.nn.</code><code class="sig-name descname">FusedLayerNorm</code></dt>
+<dd><p><a class="reference external" href="https://nvidia.github.io/apex/layernorm.html">Apex Fused Layer Norm</a> is currently not
+supported by the library. <code class="docutils literal notranslate"><span class="pre">smp.nn.FusedLayerNorm</span></code> replaces <code class="docutils literal notranslate"><span class="pre">apex</span></code>
+<code class="docutils literal notranslate"><span class="pre">FusedLayerNorm</span></code> and provides the same functionality. This requires
+<code class="docutils literal notranslate"><span class="pre">apex</span></code> to be installed on the system.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt>
+<code class="sig-prename descclassname">smp.optimizers.</code><code class="sig-name descname">FusedNovoGrad</code></dt>
+<dd><p><a class="reference external" href="https://nvidia.github.io/apex/optimizers.html#apex.optimizers.FusedNovoGrad">Fused Novo Grad optimizer</a> is
+currently not supported by the library. <code class="docutils literal notranslate"><span class="pre">smp.optimizers.FusedNovoGrad</span></code> replaces <code class="docutils literal notranslate"><span class="pre">apex</span></code> <code class="docutils literal notranslate"><span class="pre">FusedNovoGrad</span></code>
+optimizer and provides the same functionality. This requires <code class="docutils literal notranslate"><span class="pre">apex</span></code> to
+be installed on the system.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt>
+<code class="sig-prename descclassname">smp.optimizers.</code><code class="sig-name descname">FusedLamb</code></dt>
+<dd><p><a class="reference external" href="https://nvidia.github.io/apex/optimizers.html#apex.optimizers.FusedLAMB">FusedLamb optimizer</a>
+currently doesn’t work with the library. <code class="docutils literal notranslate"><span class="pre">smp.optimizers.FusedLamb</span></code> replaces
+<code class="docutils literal notranslate"><span class="pre">apex</span></code> <code class="docutils literal notranslate"><span class="pre">FusedLamb</span></code> optimizer and provides the same functionality.
+This requires <code class="docutils literal notranslate"><span class="pre">apex</span></code> to be installed on the system.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt>
+<code class="sig-prename descclassname">smp.amp.</code><code class="sig-name descname">GradScaler</code></dt>
+<dd><p><a class="reference external" href="https://pytorch.org/docs/stable/amp.html#torch.cuda.amp.GradScaler">Torch AMP Gradscaler</a>
+currently doesn’t work with the library. <code class="docutils literal notranslate"><span class="pre">smp.amp.GradScaler</span></code> replaces
+<code class="docutils literal notranslate"><span class="pre">torch.amp.GradScaler</span></code> and provides the same functionality.</p>
+</dd></dl>
+
+<div class="section" id="apis-for-saving-and-loading">
+<h2>APIs for Saving and Loading<a class="headerlink" href="smd_model_parallel_pytorch.html#apis-for-saving-and-loading" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt>
+<code class="sig-prename descclassname">smp.</code><code class="sig-name descname">save</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Saves an object. This operation is similar to <code class="docutils literal notranslate"><span class="pre">torch.save()</span></code>, except
+it has an additional keyword argument, <code class="docutils literal notranslate"><span class="pre">partial</span></code>, and accepts only
+string type for the argument <code class="docutils literal notranslate"><span class="pre">f</span></code> (file). If <code class="docutils literal notranslate"><span class="pre">partial=True</span></code>, each
+<code class="docutils literal notranslate"><span class="pre">mp_rank</span></code> saves a separate checkpoint file and the library adds an <code class="docutils literal notranslate"><span class="pre">mp_rank</span></code>
+index to your saved file.</p>
+<p><strong>Parameters</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">obj</span></code> (dict): A saved object.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">f</span></code> (str): A string containing a file name.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">partial</span></code> (bool, default= <code class="docutils literal notranslate"><span class="pre">True</span></code>):  When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, each
+<code class="docutils literal notranslate"><span class="pre">mp_rank</span></code> saves a separate checkpoint file and the library adds an
+<code class="docutils literal notranslate"><span class="pre">mp_rank</span></code> index to the saved file. If you want to be able to load
+and further train a model that you save with <code class="docutils literal notranslate"><span class="pre">smp.save()</span></code>, you must
+set <code class="docutils literal notranslate"><span class="pre">partial=True</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pickle_module</span></code> (picklemodule, default = module <code class="docutils literal notranslate"><span class="pre">&quot;pickle&quot;</span></code> from <code class="docutils literal notranslate"><span class="pre">&quot;/opt/conda/lib/python3.6/pickle.py&quot;</span></code>):
+A module used for pickling metadata and objects.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pickle_protocol</span></code>  (int, default=2): Can be specified to
+override the defaultprotocol.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt>
+<code class="sig-prename descclassname">smp.</code><code class="sig-name descname">load</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Loads an object saved with <code class="docutils literal notranslate"><span class="pre">smp.save()</span></code> from a file.</p>
+<p>Similar to, <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.load.html">torch.load()</a>,
+except it has an additional keyword argument, <code class="docutils literal notranslate"><span class="pre">partial</span></code>, and accepts
+only string type for the argument <code class="docutils literal notranslate"><span class="pre">f</span></code> (file). If <code class="docutils literal notranslate"><span class="pre">partial=True</span></code>,
+then each <code class="docutils literal notranslate"><span class="pre">mp_rank</span></code> loads a separate checkpoint file.</p>
+<p><strong>Parameters</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">f</span></code> (string): A string containing a file name.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">map_location</span></code> (function): A function
+<a class="reference external" href="https://pytorch.org/docs/stable/tensor_attributes.html#torch.torch.device">torch.device</a>,
+a string, or a dict specifying how to remap storage locations.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pickle_module</span></code> (pickle module): A module used for unpickling
+metadata and objects (has to match the <code class="docutils literal notranslate"><span class="pre">pickle_module</span></code>used to
+serialize file).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pickle_load_args</span></code> (Python 3 only): Optional keyword arguments
+passed to <code class="docutils literal notranslate"><span class="pre">pickle_module.load()</span></code> and <code class="docutils literal notranslate"><span class="pre">pickle_module.Unpickler()</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">partial</span></code> (bool, default= <code class="docutils literal notranslate"><span class="pre">True</span></code>): When set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, each
+<code class="docutils literal notranslate"><span class="pre">mp_rank</span></code> loads the checkpoint corresponding to the <code class="docutils literal notranslate"><span class="pre">mp_rank</span></code>.
+Should be used when loading a model trained with the library.</p></li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="general-instruction-for-saving-and-loading">
+<h2>General Instruction For Saving and Loading<a class="headerlink" href="smd_model_parallel_pytorch.html#general-instruction-for-saving-and-loading" title="Permalink to this headline">¶</a></h2>
+<p>The library can save partial or full checkpoints.</p>
+<ul class="simple">
+<li><p>For partial checkpoints, each <code class="docutils literal notranslate"><span class="pre">mp_rank</span></code> saves its own checkpoint
+file with only the parameters that belong to that rank.</p></li>
+<li><p>For full checkpoints, the library saves a single checkpoint that contains
+entire model parameters.</p></li>
+</ul>
+<p>When <strong>saving</strong> using <code class="docutils literal notranslate"><span class="pre">smp.save()</span></code>, each rank only holds its own
+parameters. If you want to save the full model, there will be some
+communication between the ranks to create the full model. If you save
+checkpoints often, you should save partial checkpoints for best
+performance.</p>
+<p>When <strong>loading</strong> using <code class="docutils literal notranslate"><span class="pre">smp.load()</span></code>, the library can load either partial or |
+full checkpoints or full checkpoints saved by a non-model-parallel model. If you
+want to resume training with a non-model-parallel model or do inference, you need
+a full checkpoint.</p>
+<p>The following is an example of how you can save and load a checkpoint:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Original model and optimizer</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">MyModel</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">MyOpt</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+
+<span class="c1"># model parallel wrapper</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">smp</span><span class="o">.</span><span class="n">DistributedModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">smp</span><span class="o">.</span><span class="n">DistributedOptimizer</span><span class="p">(</span><span class="n">optimizer</span><span class="p">)</span>
+
+<span class="c1"># To save, always save on dp_rank 0 to avoid data racing</span>
+<span class="k">if</span> <span class="n">partial</span><span class="p">:</span>
+    <span class="c1"># To save the partial model on each mp rank</span>
+    <span class="c1"># the library will create `checkpoint.pt_{mprank}` for each mp rank</span>
+    <span class="k">if</span> <span class="n">save_partial_model</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">smp</span><span class="o">.</span><span class="n">dp_rank</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">model_dict</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">local_state_dict</span><span class="p">()</span> <span class="c1"># save the partial model</span>
+            <span class="n">opt_dict</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">local_state_dict</span><span class="p">()</span> <span class="c1"># save the partial optimizer state</span>
+            <span class="n">smp</span><span class="o">.</span><span class="n">save</span><span class="p">(</span>
+                <span class="p">{</span><span class="s2">&quot;model_state_dict&quot;</span><span class="p">:</span> <span class="n">model_dict</span><span class="p">,</span> <span class="s2">&quot;optimizer_state_dict&quot;</span><span class="p">:</span> <span class="n">opt_dict</span><span class="p">},</span>
+                <span class="sa">f</span><span class="s2">&quot;/checkpoint.pt&quot;</span><span class="p">,</span>
+                <span class="n">partial</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+
+    <span class="c1"># To save the full model</span>
+    <span class="k">if</span> <span class="n">save_full_model</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">smp</span><span class="o">.</span><span class="n">dp_rank</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">model_dict</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">()</span> <span class="c1"># save the full model</span>
+            <span class="n">opt_dict</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">state_dict</span><span class="p">()</span> <span class="c1"># save the full optimizer state</span>
+            <span class="n">smp</span><span class="o">.</span><span class="n">save</span><span class="p">(</span>
+                <span class="p">{</span><span class="s2">&quot;model_state_dict&quot;</span><span class="p">:</span> <span class="n">model_dict</span><span class="p">,</span> <span class="s2">&quot;optimizer_state_dict&quot;</span><span class="p">:</span> <span class="n">opt_dict</span><span class="p">},</span>
+                <span class="s2">&quot;/checkpoint.pt&quot;</span><span class="p">,</span>
+                <span class="n">partial</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="p">)</span>
+
+<span class="c1"># To load, load on all ranks.</span>
+<span class="c1"># The only difference for partial/full loading is the partial flag in smp.load</span>
+<span class="c1"># Load partial checkpoint</span>
+<span class="k">if</span> <span class="n">partial_checkpoint</span><span class="p">:</span>
+    <span class="n">checkpoint</span> <span class="o">=</span> <span class="n">smp</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;/checkpoint.pt&quot;</span><span class="p">,</span> <span class="n">partial</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">[</span><span class="s2">&quot;model_state_dict&quot;</span><span class="p">])</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">[</span><span class="s2">&quot;optimizer_state_dict&quot;</span><span class="p">])</span>
+<span class="c1"># Load full checkpoint</span>
+<span class="k">if</span> <span class="n">full_checkpoint</span><span class="p">:</span>
+    <span class="n">checkpoint</span> <span class="o">=</span> <span class="n">smp</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;/checkpoint.pt&quot;</span><span class="p">,</span> <span class="n">partial</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">[</span><span class="s2">&quot;model_state_dict&quot;</span><span class="p">])</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">[</span><span class="s2">&quot;optimizer_state_dict&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="smd_model_parallel_tensorflow.html" class="btn btn-neutral float-right" title="TensorFlow API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="smd_model_parallel_common_api.html" class="btn btn-neutral float-left" title="Common API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2023, Amazon
+      <span class="commit">
+        
+        Revision <code>f2ae8ff8</code>.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: stable
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="../../../../index.html">stable</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.182.0/">v2.182.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.181.0/">v2.181.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.180.0/">v2.180.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.179.0/">v2.179.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.178.0/">v2.178.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.177.1/">v2.177.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.177.0/">v2.177.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.176.0/">v2.176.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.175.0/">v2.175.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.174.0/">v2.174.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.173.0/">v2.173.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.172.0/">v2.172.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.171.0/">v2.171.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.170.0/">v2.170.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.169.0/">v2.169.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.168.0/">v2.168.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.167.0/">v2.167.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.166.0/">v2.166.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.165.0/">v2.165.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.164.0/">v2.164.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.163.0/">v2.163.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.162.0/">v2.162.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.161.0/">v2.161.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.160.0/">v2.160.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.159.0/">v2.159.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.158.0/">v2.158.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.157.0/">v2.157.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.156.0/">v2.156.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.155.0/">v2.155.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.154.0/">v2.154.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.153.0/">v2.153.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.152.0/">v2.152.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.151.0/">v2.151.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.150.0/">v2.150.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.149.0/">v2.149.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.148.0/">v2.148.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.147.0/">v2.147.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.146.1/">v2.146.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.146.0/">v2.146.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.145.0/">v2.145.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.144.0/">v2.144.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.143.0/">v2.143.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.142.0/">v2.142.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.141.0/">v2.141.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.140.1/">v2.140.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.140.0/">v2.140.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.139.0/">v2.139.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.138.0/">v2.138.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.137.0/">v2.137.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.136.0/">v2.136.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.135.1.post0/">v2.135.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.135.1/">v2.135.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.135.0/">v2.135.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.134.1/">v2.134.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.134.0/">v2.134.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.133.0/">v2.133.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.132.0/">v2.132.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.131.1/">v2.131.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.131.0/">v2.131.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.130.0/">v2.130.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.129.0/">v2.129.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.128.0/">v2.128.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.127.0/">v2.127.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.126.0/">v2.126.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.125.0/">v2.125.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.124.0/">v2.124.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.123.0/">v2.123.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.122.0/">v2.122.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.121.2/">v2.121.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.121.1/">v2.121.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.121.0/">v2.121.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.120.0/">v2.120.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.119.0/">v2.119.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.118.0/">v2.118.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.117.0/">v2.117.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.116.0/">v2.116.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.115.0/">v2.115.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.114.0/">v2.114.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.113.0/">v2.113.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.112.2/">v2.112.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.112.1/">v2.112.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.112.0/">v2.112.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.111.0/">v2.111.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.110.0/">v2.110.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.109.0/">v2.109.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.108.0/">v2.108.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.107.0/">v2.107.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.106.0/">v2.106.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.105.0/">v2.105.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.104.0/">v2.104.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.103.0/">v2.103.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.102.0/">v2.102.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.101.1/">v2.101.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.101.0/">v2.101.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.100.0/">v2.100.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.99.0/">v2.99.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.98.0/">v2.98.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.97.0/">v2.97.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.96.0/">v2.96.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.95.0/">v2.95.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.94.0/">v2.94.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.93.1/">v2.93.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.93.0/">v2.93.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.92.2/">v2.92.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.92.1/">v2.92.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.92.0/">v2.92.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.91.1/">v2.91.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.91.0/">v2.91.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.90.0/">v2.90.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.89.0/">v2.89.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.3/">v2.88.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.2/">v2.88.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.1/">v2.88.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.88.0/">v2.88.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.87.0/">v2.87.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.86.2/">v2.86.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.86.1/">v2.86.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.86.0/">v2.86.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.85.0/">v2.85.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.84.0/">v2.84.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.83.0/">v2.83.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.82.2/">v2.82.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.82.1/">v2.82.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.82.0/">v2.82.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.81.1/">v2.81.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.81.0/">v2.81.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.80.0/">v2.80.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.79.0/">v2.79.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.78.0/">v2.78.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.77.1/">v2.77.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.77.0/">v2.77.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.76.0/">v2.76.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.75.1/">v2.75.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.75.0/">v2.75.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.74.0/">v2.74.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.73.0/">v2.73.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.3/">v2.72.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.2/">v2.72.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.1/">v2.72.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.72.0/">v2.72.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.71.0/">v2.71.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.70.0/">v2.70.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.69.0/">v2.69.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.68.0/">v2.68.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.67.0/">v2.67.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.2.post0/">v2.66.2.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.2/">v2.66.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.1/">v2.66.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.66.0/">v2.66.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.65.0/">v2.65.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.64.0/">v2.64.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.63.2/">v2.63.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.63.1/">v2.63.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.63.0/">v2.63.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.62.0/">v2.62.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.61.0/">v2.61.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.60.0/">v2.60.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.8/">v2.59.8</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.7/">v2.59.7</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.6/">v2.59.6</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.5/">v2.59.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.4/">v2.59.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.3.post0/">v2.59.3.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.3/">v2.59.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.2/">v2.59.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.1.post0/">v2.59.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.1/">v2.59.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.59.0/">v2.59.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.58.0/">v2.58.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.57.0/">v2.57.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.56.0/">v2.56.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.55.0/">v2.55.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.54.0/">v2.54.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.53.0/">v2.53.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.2.post0/">v2.52.2.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.2/">v2.52.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.1/">v2.52.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.52.0/">v2.52.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.51.0/">v2.51.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.50.1/">v2.50.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.50.0/">v2.50.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.49.2/">v2.49.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.49.1/">v2.49.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.49.0/">v2.49.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.48.2/">v2.48.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.48.1/">v2.48.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.48.0/">v2.48.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.2.post0/">v2.47.2.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.2/">v2.47.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.1/">v2.47.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.47.0/">v2.47.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.46.1/">v2.46.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.46.0/">v2.46.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.45.0/">v2.45.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.44.0/">v2.44.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.43.0/">v2.43.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.42.1/">v2.42.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.42.0/">v2.42.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.41.0/">v2.41.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.40.0/">v2.40.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.39.1/">v2.39.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.39.0.post0/">v2.39.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.39.0/">v2.39.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.38.0/">v2.38.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.37.0/">v2.37.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.36.0/">v2.36.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.35.0/">v2.35.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.34.0/">v2.34.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.33.0/">v2.33.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.32.1/">v2.32.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.32.0/">v2.32.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.31.1/">v2.31.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.31.0/">v2.31.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.30.0/">v2.30.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.29.2/">v2.29.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.29.1/">v2.29.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.29.0/">v2.29.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.28.0/">v2.28.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.27.1/">v2.27.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.27.0/">v2.27.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.26.0/">v2.26.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.25.2/">v2.25.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.25.1/">v2.25.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.25.0/">v2.25.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.5/">v2.24.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.4/">v2.24.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.3/">v2.24.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.2/">v2.24.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.1/">v2.24.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.24.0/">v2.24.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.6/">v2.23.6</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.5/">v2.23.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.4.post0/">v2.23.4.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.4/">v2.23.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.3/">v2.23.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.2/">v2.23.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.1/">v2.23.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.23.0/">v2.23.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.22.0/">v2.22.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.21.0/">v2.21.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.20.0/">v2.20.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.19.0/">v2.19.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.18.0/">v2.18.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.17.0/">v2.17.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.4/">v2.16.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.3.post0/">v2.16.3.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.3/">v2.16.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.2/">v2.16.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.1/">v2.16.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.0.post0/">v2.16.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.16.0/">v2.16.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.4/">v2.15.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.3/">v2.15.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.2/">v2.15.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.1/">v2.15.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.15.0/">v2.15.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.14.0/">v2.14.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.13.0/">v2.13.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.12.0/">v2.12.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.11.0/">v2.11.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.10.0/">v2.10.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.9.2/">v2.9.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.9.1/">v2.9.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.9.0/">v2.9.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.8.0/">v2.8.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.7.0/">v2.7.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.6.0/">v2.6.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.5/">v2.5.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.4/">v2.5.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.3/">v2.5.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.2/">v2.5.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.1/">v2.5.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.5.0/">v2.5.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.4.2/">v2.4.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.4.1/">v2.4.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.4.0/">v2.4.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.3.0/">v2.3.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.2.0/">v2.2.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.1.0/">v2.1.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.1/">v2.0.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.0/">v2.0.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.0.rc1/">v2.0.0.rc1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v2.0.0.rc0/">v2.0.0.rc0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.72.1/">v1.72.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.72.0/">v1.72.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.71.1/">v1.71.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.71.0/">v1.71.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.70.2/">v1.70.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.70.1/">v1.70.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.70.0/">v1.70.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.69.0/">v1.69.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.68.0/">v1.68.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.67.1.post0/">v1.67.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.67.1/">v1.67.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.67.0/">v1.67.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.66.0/">v1.66.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.1.post1/">v1.65.1.post1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.1.post0/">v1.65.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.1/">v1.65.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.65.0/">v1.65.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.64.1/">v1.64.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.64.0/">v1.64.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.63.0/">v1.63.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.62.0/">v1.62.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.61.0/">v1.61.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.60.2/">v1.60.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.59.0/">v1.59.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.58.4/">v1.58.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.58.1/">v1.58.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.58.0/">v1.58.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.57.0/">v1.57.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.3/">v1.56.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.2/">v1.56.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.1.post1/">v1.56.1.post1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.1.post0/">v1.56.1.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.1/">v1.56.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.56.0/">v1.56.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.4/">v1.55.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.3/">v1.55.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.2/">v1.55.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.1/">v1.55.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.0.post0/">v1.55.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.55.0/">v1.55.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.54.0/">v1.54.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.53.0/">v1.53.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.52.1/">v1.52.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.52.0.post0/">v1.52.0.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.52.0/">v1.52.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.4/">v1.51.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.3/">v1.51.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.1/">v1.51.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.51.0/">v1.51.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.18.post0/">v1.50.18.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.18/">v1.50.18</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.17.post0/">v1.50.17.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.17/">v1.50.17</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.16/">v1.50.16</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.15/">v1.50.15</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.14.post0/">v1.50.14.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.14/">v1.50.14</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.13/">v1.50.13</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.12/">v1.50.12</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.11/">v1.50.11</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.10.post0/">v1.50.10.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.10/">v1.50.10</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.9.post0/">v1.50.9.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.9/">v1.50.9</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.8/">v1.50.8</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.7/">v1.50.7</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.6.post0/">v1.50.6.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.6/">v1.50.6</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.5/">v1.50.5</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.4/">v1.50.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.3/">v1.50.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.2/">v1.50.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.1/">v1.50.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.50.0/">v1.50.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.49.0/">v1.49.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.48.1/">v1.48.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.48.0/">v1.48.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.47.1/">v1.47.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.45.0/">v1.45.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.44.4/">v1.44.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.44.3/">v1.44.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.4.post1/">v1.43.4.post1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.4.post0/">v1.43.4.post0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.4/">v1.43.4</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.3/">v1.43.3</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.2/">v1.43.2</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.1/">v1.43.1</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.43.0/">v1.43.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.42.0/">v1.42.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.41.0/">v1.41.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.40.0/">v1.40.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.39.0/">v1.39.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.38.0/">v1.38.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.37.0/">v1.37.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.36.0/">v1.36.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.35.0/">v1.35.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.34.0/">v1.34.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.33.0/">v1.33.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.32.0/">v1.32.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.31.0/">v1.31.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.30.0/">v1.30.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.29.0/">v1.29.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.28.0/">v1.28.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.27.0/">v1.27.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.26.0/">v1.26.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.25.0/">v1.25.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.24.0/">v1.24.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.23.0/">v1.23.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.22.0/">v1.22.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.21.0/">v1.21.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.20.0/">v1.20.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.19.0/">v1.19.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.18.0/">v1.18.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.17.0/">v1.17.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.15.0/">v1.15.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.14.0/">v1.14.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.13.0/">v1.13.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.12.0/">v1.12.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.11.0/">v1.11.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.10.0/">v1.10.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.9.0/">v1.9.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.8.0/">v1.8.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.7.0/">v1.7.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.6.0/">v1.6.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.5.0/">v1.5.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.4.0/">v1.4.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.3.0/">v1.3.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.2.0/">v1.2.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.1.0/">v1.1.0</a></dd>
+        
+          <dd><a href="https://sagemaker.readthedocs.io/en/v1.0.0/">v1.0.0</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+      </dl>
+      <dl>
+        
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="https://readthedocs.org/projects/sagemaker/?fromdocs=sagemaker">Project Home</a>
+          </dd>
+          <dd>
+            <a href="https://readthedocs.org/builds/sagemaker/?fromdocs=sagemaker">Builds</a>
+          </dd>
+      </dl>
+    </div>
+  </div>
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+   
+
+</body>
+</html>

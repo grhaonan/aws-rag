@@ -9,8 +9,8 @@ from langchain.embeddings import SagemakerEndpointEmbeddings
 from langchain.embeddings.sagemaker_endpoint import EmbeddingsContentHandler
 
 
-
 logger = logging.getLogger(__name__)
+
 
 # extend the SagemakerEndpointEmbeddings class from langchain to provide a custom embedding function
 class SagemakerEndpointEmbeddingsJumpStart(SagemakerEndpointEmbeddings):
@@ -75,10 +75,10 @@ def create_sagemaker_embeddings_from_js_model(embeddings_model_endpoint_name: st
 
 
 
-# Testing code
-endpoint_name = "YOUR_ENDPOINT_NAME" 
-aws_region = "ap-southeast-2"
-embeddings = create_sagemaker_embeddings_from_js_model(endpoint_name, aws_region)
-test_text = "This is a sample text for testing embeddings"
-embeddings_result = embeddings.embed_documents([test_text])
-print(embeddings_result)
+# # Testing code and you can run this whole file in the sagamaker notebook instance to test it out
+# endpoint_name = "jumpstart-dft-hf-textembedding-gpt-j-6b-fp16" 
+# aws_region = "ap-southeast-2"
+# embeddings = create_sagemaker_embeddings_from_js_model(endpoint_name, aws_region)
+# test_text = "This is a sample text for testing embeddings"
+# embeddings_result = embeddings.embed_documents([test_text])
+# print(embeddings_result)

@@ -7,10 +7,10 @@ import logging
 from typing import List
 from langchain.embeddings import SagemakerEndpointEmbeddings
 from langchain.embeddings.sagemaker_endpoint import EmbeddingsContentHandler
+import boto3
 
 
 logger = logging.getLogger(__name__)
-
 
 # extend the SagemakerEndpointEmbeddings class from langchain to provide a custom embedding function
 class SagemakerEndpointEmbeddingsJumpStart(SagemakerEndpointEmbeddings):
@@ -60,6 +60,7 @@ class ContentHandler(EmbeddingsContentHandler):
 
 
 def create_sagemaker_embeddings_from_js_model(embeddings_model_endpoint_name: str, aws_region: str) -> SagemakerEndpointEmbeddingsJumpStart:
+    
     # all set to create the objects for the ContentHandler and 
     # SagemakerEndpointEmbeddingsJumpStart classes
     content_handler = ContentHandler()

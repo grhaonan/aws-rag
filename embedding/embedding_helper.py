@@ -12,6 +12,10 @@ import boto3
 
 logger = logging.getLogger(__name__)
 
+
+boto3.setup_default_session(profile_name='dustin-dev2-admin')
+
+
 # extend the SagemakerEndpointEmbeddings class from langchain to provide a custom embedding function
 class SagemakerEndpointEmbeddingsJumpStart(SagemakerEndpointEmbeddings):
     def embed_documents(

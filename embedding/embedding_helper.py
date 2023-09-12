@@ -7,6 +7,10 @@ import logging
 from typing import List
 from langchain.embeddings import SagemakerEndpointEmbeddings
 from langchain.embeddings.sagemaker_endpoint import EmbeddingsContentHandler
+from langchain import SagemakerEndpoint
+from langchain.llm.sagemaker import LLMContentHandler
+
+
 import boto3
 
 

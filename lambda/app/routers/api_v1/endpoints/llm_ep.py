@@ -5,7 +5,8 @@ from fastapi import APIRouter
 from typing import Any, Dict
 import os
 from langchain.chains.question_answering import load_qa_chain
-from .sm_helper import query_sm_endpoint
+from .query_llm import query_sm_endpoint
+import boto3
 
 
 logging.getLogger().setLevel(logging.INFO)
@@ -20,8 +21,10 @@ _sm_llm = None
 
 router = APIRouter()
 
-opensearch_secret = os.environ.get('OPENSEARCH_SECRET')
-region = os.environ.get('REGION')
+ssm = boto3.client('ssm')
+opensearch_secret = ssm.get_parameter(Name='OPENSEARCH_SECRET', WithDecryption=True)['Parameter']['Value']
+region = ssm.get_parameter(Name='REGION', WithDecryption=True)['Parameter']['Value']
+
 
 
 def _init(req:Request):
@@ -92,6 +95,7 @@ async def llm_rag(req: Request) -> Dict[str, Any]:
     #define prompt
     prompt_template = """Answer based on context:\n {context} \n Question: {question} \n Answer:"""
     logger.info(f"prompt sent to llm = \"{prompt_template}\"")
+    # using load_qa_chain which is a high-level api than LLMChain 
     chain = load_qa_chain(llm=_sm_llm, prompt=prompt_template)
     answer = chain({"input_document": docs, "question": req.q}, return_only_output=True)['output_text']
     logger.info(f"answer received from llm,\nquestion: \"{req.q}\"\nanswer: \"{answer}\"")

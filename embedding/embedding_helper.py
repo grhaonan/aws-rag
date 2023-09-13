@@ -58,7 +58,7 @@ class ContentHandler(EmbeddingsContentHandler):
         input_str = json.dumps({"text_inputs": prompt, **model_kwargs})
         return input_str.encode('utf-8') 
 
-    def transform_output(self, output: bytes) -> str:
+    def transform_output(self, output: bytes) -> List[str]:
 
         response_json = json.loads(output.read().decode("utf-8"))
         embeddings = response_json["embedding"]

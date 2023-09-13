@@ -4,16 +4,18 @@ from enum import Enum
 from pydntic import BaseModel
 
 
+# fetch value from aws parameter store
+ssm = boto3.client('ssm')
+region = ssm.get_parameter(Name='REGION', WithDecryption=True)['Parameter']['Value']
+text2text_endpoint_name = ssm.get_parameter(Name='TEXT2TEXT_ENDPOINT_NAME', WithDecryption=True)['Parameter']['Value']
+sagemaker_endpoint_name = ssm.get_parameter(Name='SAGEMAKER_ENDPOINT_NAME', WithDecryption=True)['Parameter']['Value']
 
-ACCOUNT_ID = boto3.client('sts').get_caller_identity().get('Account')
-REGION = boto3.Session().region_name
 
 class Text2TextModelName(str, Enum):
     flan_t5_xxl = "flan-t5-xxl"
 
 class EmbeddingsModelName(str, Enum):
     gpt_j_6b = "gpt-j-6b"
-
 
 class VectorDBType(str, Enum):
     opensearch = "opensearch"
@@ -35,6 +37,6 @@ class Request(BaseModel):
 
 
 sagemaker_endpoint_mapping = {
-    Text2TextModelName.flan_t5_xxl: os.environ.get('TEXT2TEXT_ENDPOINT_NAME'),
-    EmbeddingsModelName.gpt_j_6b: os.environ.get('SAGEMAKER_ENDPOINT_NAME')
+    Text2TextModelName.flan_t5_xxl: text2text_endpoint_name,
+    EmbeddingsModelName.gpt_j_6b: sagemaker_endpoint_name
 }

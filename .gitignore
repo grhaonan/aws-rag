@@ -2,3 +2,4 @@
 /data/sagemaker.readthedocs.io/
 .env
 .vscode
+*.pyc

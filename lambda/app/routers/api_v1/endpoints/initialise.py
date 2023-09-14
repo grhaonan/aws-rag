@@ -4,12 +4,16 @@ import boto3
 import logging
 from typing import List, Callable
 from urllib.parse import urlparse
-from langchain.vectorstore import OpenSearchVectorStore
-from langchain.vectorstore import SageMakerEndpointEmbeddings 
-from .fastapi_request import Request, sagemaker_endpoint_mapping
+from langchain.vectorstores import OpenSearchVectorSearch
+from langchain.embeddings import SagemakerEndpointEmbeddings
+from .fastapi_request import Request, sagemaker_endpoint_mapping, EmbeddingsModelName
 from langchain.embeddings.sagemaker_endpoint import EmbeddingsContentHandler
-from langchain.llm.sagemaker_endpoint import LLMContentHandler
+from langchain.llms.sagemaker_endpoint import LLMContentHandler
 import time
+from requests_aws4auth import AWS4Auth
+from opensearchpy import RequestsHttpConnection
+from langchain import SagemakerEndpoint
+
 
 logger = logging.getLogger(__name__)
 
@@ -17,9 +21,13 @@ logger = logging.getLogger(__name__)
 
 ssm = boto3.client('ssm')
 region = ssm.get_parameter(Name='REGION', WithDecryption=True)['Parameter']['Value']
+access_key = ssm.get_parameter(Name='ACCESS_KEY', WithDecryption=True)['Parameter']['Value']
+secret_key = ssm.get_parameter(Name='SECRET_KEY', WithDecryption=True)['Parameter']['Value']
+service = 'es'
 
+aws4auth = AWS4Auth(access_key, secret_key, region, service)
 
-class SagemakerEndpointEmbeddingsJumpStart(SageMakerEndpointEmbeddings):
+class SagemakerEndpointEmbeddingsJumpStart(SagemakerEndpointEmbeddings):
     def embed_documents(
             self, texts: List[str], 
             chunk_size: int = 5
@@ -105,3 +113,50 @@ def _create_sagemaker_embeddings(endpoint_name: str, region: str) -> SagemakerEn
     )
     logger.info(f"embeddings type={type(embeddings)}")
     return embeddings
+
+# loading vector store
+def load_vector_db_opensearch(region:str,
+                              opensearch_endpoint:str,
+                              opensearch_index:str,
+                              embedding_model_name:str) -> OpenSearchVectorSearch:
+    logger.info(f"load_vector_db_opensearch, region={region}, "
+                f"opensearch_domain_endpoint={opensearch_endpoint}, opensearch_index={opensearch_index}, "  
+                f"embeddings_model={embedding_model_name}")
+    
+
+    embedding_model_name_enum = EmbeddingsModelName(embedding_model_name)
+    embeddings_model_endpoint = sagemaker_endpoint_mapping[embedding_model_name_enum]
+    logger.info(f"embeddings_model_endpoint={embeddings_model_endpoint}")
+
+    embedding_function = _create_sagemaker_embeddings(embeddings_model_endpoint, region)
+   
+    vector_db = OpenSearchVectorSearch(index_name = opensearch_index,
+                                       embedding_function = embedding_function,
+                                       opensearch_url = opensearch_endpoint,
+                                       timeout = 300,
+                                       use_ssl = True,
+                                       verify_certs = True,
+                                       connection_class = RequestsHttpConnection,
+                                       http_auth=aws4auth)
+    logger.info(f"returning handle to OpenSearchVectorSearch, vector_db={vector_db}")
+    return vector_db
+
+# Sagemaker endpoint instanee for text generation
+def sagemaker_endpoint_for_text_generation(req: Request, region:str) -> SagemakerEndpoint:
+    parameters = {
+        "max_length": req.max_length,
+        "num_return_sequences": req.num_return_sequences,
+        "top_k": req.top_k,
+        "top_p": req.top_p,
+        "do_sample": req.do_sample,
+        "temperature": req.temperature}
+    
+    text_generation_model_name = req.text_generation_model
+    content_handler = ContentHandlerForTextGeneration()
+    text_generation_endpoint_name = sagemaker_endpoint_mapping[text_generation_model_name]
+    sm_llm = SagemakerEndpoint(
+        endpoint_name=text_generation_endpoint_name,
+        region_name = region,
+        model_kwargs =  parameters,
+        content_handler = content_handler)
+    return sm_llm

@@ -8,6 +8,7 @@ from langchain.chains.question_answering import load_qa_chain
 from .query_llm import query_sm_endpoint
 import boto3
 import logging
+from langchain import PromptTemplate
 
 
 logging.getLogger().setLevel(logging.INFO)
@@ -49,7 +50,7 @@ def _init(req:Request):
     if _sm_llm is None:
         logger.info(f"SM LLM endpoint is not setup, setting it up")
         _sm_llm = sagemaker_endpoint_for_text_generation(req,region)
-        logger.info("setting up sagemaker llm endpoint")
+        logger.info("Sagemaker llm endpoint is now set up")
     else:
         logger.info(f"SM LLM endpoint is already setup, skipping")
 
@@ -63,7 +64,7 @@ async def llm_text2text(req: Request) -> Dict[str, Any]:
 
     answer = query_sm_endpoint(req)
     resp = {'question': req.query, 'answer': answer}
-    return {"message": "Hello FastAPI! text2text"}
+    return resp
 
 
 @router.post("/rag")
@@ -92,14 +93,18 @@ async def llm_rag(req: Request) -> Dict[str, Any]:
     
     #define prompt
     prompt_template = """Answer based on context:\n {context} \n Question: {question} \n Answer:"""
-    logger.info(f"prompt sent to llm = \"{prompt_template}\"")
+    prompt = PromptTemplate(
+        template = prompt_template, input_variables = ["context", "question"]
+
+    )
+    logger.info(f"prompt sent to llm = \"{prompt}\"")
     # using load_qa_chain which is a high-level api than LLMChain 
-    chain = load_qa_chain(llm=_sm_llm, prompt=prompt_template)
-    answer = chain({"input_document": docs, "question": req.query}, return_only_output=True)['output_text']
+    chain = load_qa_chain(llm=_sm_llm, prompt=prompt)
+    answer = chain({"input_documents": docs, "question": req.query}, return_only_outputs=True)['output_text']
     logger.info(f"answer received from llm,\nquestion: \"{req.query}\"\nanswer: \"{answer}\"")
     resp  = {'question': req.query, 'answer': answer}
     if req.verbose:
         resp['docs'] = docs
-    return {"message": "Hello FastAPI! rag"}
+    return resp
 
 

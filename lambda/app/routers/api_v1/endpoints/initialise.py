@@ -63,7 +63,7 @@ class ContentHandlerForEmbeddings(EmbeddingsContentHandler):
     accepts = "application/json"
 
     def transform_input(self, prompt: str, model_kwargs={}) -> bytes:
-        input_str = json.dumps({"text_input": prompt, **model_kwargs})
+        input_str = json.dumps({"text_inputs": prompt, **model_kwargs})
         return input_str.encode('utf-8')
     
     def transform_output(self, output: bytes) -> List[str]:
@@ -83,7 +83,7 @@ class ContentHandlerForTextGeneration(LLMContentHandler):
     accepts = "application/json"
 
     def transform_input(self, prompt: str, model_kwargs={}) -> bytes:
-        input_str = json.dumps({"text_input": prompt, **model_kwargs})
+        input_str = json.dumps({"text_inputs": prompt, **model_kwargs})
         return input_str.encode('utf-8')
     
     def transform_output(self, output: bytes) -> str:
@@ -150,10 +150,10 @@ def sagemaker_endpoint_for_text_generation(req: Request, region:str) -> Sagemake
         "top_p": req.top_p,
         "do_sample": req.do_sample,
         "temperature": req.temperature}
-    
-    text_generation_model_name = req.text_generation_model
+    logger.info(f"setting up llm text generation endpoint with parameters={parameters}")
     content_handler = ContentHandlerForTextGeneration()
-    text_generation_endpoint_name = sagemaker_endpoint_mapping[text_generation_model_name]
+    text_generation_endpoint_name = sagemaker_endpoint_mapping[req.text_generation_model_name]
+    logger.info(f"text_generation_endpoint_name is: {text_generation_endpoint_name}")
     sm_llm = SagemakerEndpoint(
         endpoint_name=text_generation_endpoint_name,
         region_name = region,

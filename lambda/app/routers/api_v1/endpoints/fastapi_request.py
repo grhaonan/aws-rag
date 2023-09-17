@@ -32,7 +32,6 @@ class Request(BaseModel):
     text_generation_model_name: Text2TextModelName = Text2TextModelName.flan_t5_xl
     embeddings_generation_model_name: EmbeddingsModelName = EmbeddingsModelName.gpt_j_6b
     vectordb_type: VectorDBType = VectorDBType.opensearch
-    vectordb_s3_path: str = f""
 
 
 sagemaker_endpoint_mapping = {

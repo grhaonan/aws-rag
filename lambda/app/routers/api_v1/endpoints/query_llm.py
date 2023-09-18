@@ -22,6 +22,7 @@ def parse_response_model_flan_t5(query_response) -> List:
     return generated_text
 
 
+
 def query_sm_endpoint(req: Request) -> List:
     payload = {
         "text_inputs": req.query,
@@ -32,8 +33,9 @@ def query_sm_endpoint(req: Request) -> List:
         "do_sample": req.do_sample,
         "temperature": req.temperature}
     text_generation_model_endpoint = sagemaker_endpoint_mapping[req.text_generation_model_name]
-
-    query_response = query_llm(encode_json = json.dumps(payload).encode("utf-8"),
+    encode_json = json.dumps(payload).encode("utf-8")
+    logger.info(f"encode_json for text generation model: {encode_json}")
+    query_response = query_llm(encode_json,
         endpoint_name = text_generation_model_endpoint)
     
 

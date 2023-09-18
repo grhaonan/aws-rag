@@ -14,3 +14,6 @@ docker tag aws-rag-processing-job:latest $ECR_REPOSITORY_URL:latest
 
 # Push to ECR
 docker push $ECR_REPOSITORY_URL:latest
+
+# Remove local image
+docker rmi $ECR_REPOSITORY_URL:latest

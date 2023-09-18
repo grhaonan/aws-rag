@@ -60,7 +60,7 @@ async def llm_text2text(req: Request) -> Dict[str, Any]:
     # debugdding request
     logger.info(f"req: {req}")
 
-    _init(req)
+    # _init(req)
 
     answer = query_sm_endpoint(req)
     resp = {'question': req.query, 'answer': answer}
@@ -99,9 +99,9 @@ async def llm_rag(req: Request) -> Dict[str, Any]:
     )
     logger.info(f"prompt sent to llm = \"{prompt}\"")
     # using load_qa_chain which is a high-level api than LLMChain 
-    chain = load_qa_chain(llm=_sm_llm, prompt=prompt)
+    chain = load_qa_chain(llm=_sm_llm, prompt=prompt, chain_type="stuff")
     answer = chain({"input_documents": docs, "question": req.query}, return_only_outputs=True)['output_text']
-    logger.info(f"answer received from llm,\nquestion: \"{req.query}\"\nanswer: \"{answer}\"")
+    logger.info(f"answer received from llm, question: \"{req.query}\" answer: \"{answer}\"")
     resp  = {'question': req.query, 'answer': answer}
     if req.verbose:
         resp['docs'] = docs

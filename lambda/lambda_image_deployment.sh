@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Your AWS ECR Repository URL
-ECR_REPOSITORY_URL="288344227581.dkr.ecr.ap-southeast-2.amazonaws.com/aws-rag"
+ECR_REPOSITORY_URL="288344227581.dkr.ecr.ap-southeast-2.amazonaws.com/aws-rag-lambda"
 
 # Authenticate to ECR
 # https://stackoverflow.com/questions/69274998/could-not-connect-to-the-endpoint-url-https-api-ecr-public-xxxxxxxxx-amazona
@@ -18,3 +18,6 @@ docker tag aws-rag-lambda:latest $ECR_REPOSITORY_URL:latest
 
 # Push to ECR
 docker push $ECR_REPOSITORY_URL:latest
+
+# Remove the local image
+docker rmi $ECR_REPOSITORY_URL:latest

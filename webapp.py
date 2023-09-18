@@ -26,7 +26,7 @@ MODE_VALUES: List[str] = [MODE_RAG, MODE_TEXT2TEXT]
 # Currently we use the flan-t5-xxl for text generation
 # and gpt-j-6b for embeddings but in future we could support more
 # TODO: Llama-2?
-TEXT2TEXT_MODEL_LIST: List[str] = ["flan-t5-xxl"]
+TEXT2TEXT_MODEL_LIST: List[str] = ["flan-t5-xl"]
 EMBEDDINGS_MODEL_LIST: List[str] = ["gpt-j-6b"]
 
 

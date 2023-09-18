@@ -1,6 +1,12 @@
 import os
 import sys
 
+#  this is needed and should matach the path used in the processing job dependency image built dockerfile
+#  as in the dockerfile we copy the helper code into this folder so here we need to add its path 
+#  so the Python import can find the helper code
+sys.path.append('/opt/ml/processing/image_code/')
+from embedding_helper import create_sagemaker_embeddings_from_js_model
+
 import glob
 import time
 import json
@@ -17,31 +23,25 @@ from sagemaker.session import Session
 from opensearchpy.client import OpenSearch
 from langchain.document_loaders import ReadTheDocsLoader
 from langchain.vectorstores import OpenSearchVectorSearch
-from langchain.embeddings import SagemakerEndpointEmbeddings
-from embedding_helper import create_sagemaker_embeddings_from_js_model
-from langchain.llms.sagemaker_endpoint import ContentHandlerBase
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from opensearchpy import OpenSearch, RequestsHttpConnection, AWSV4SignerAuth
+from opensearchpy import OpenSearch, RequestsHttpConnection
 from requests_aws4auth.aws4auth import AWS4Auth
 
+
 # global constants
-MAX_OS_DOCS_PER_PUT = 500
+MAX_OS_DOCS_PER_PUT = 100
 TOTAL_INDEX_CREATION_WAIT_TIME = 60
 PER_ITER_SLEEP_TIME = 5
 logger = logging.getLogger()
 logging.basicConfig(format='%(asctime)s,%(module)s,%(processName)s,%(levelname)s,%(message)s', level=logging.INFO, stream=sys.stderr)
 
 region = 'ap-southeast-2'
-client = boto3.client('opensearchserverless', region_name=region)
-session = boto3.Session(profile_name='dustin-dev2-admin')
-credentials = session.get_credentials()
-access_key = credentials.access_key
-secret_key = credentials.secret_key
+ssm = boto3.client('ssm', region_name=region)
+access_key = ssm.get_parameter(Name='ACCESS_KEY', WithDecryption=True)['Parameter']['Value']
+secret_key = ssm.get_parameter(Name='SECRET_KEY', WithDecryption=True)['Parameter']['Value']
 service = 'es'
 
-
 aws4auth = AWS4Auth(access_key, secret_key, region, service)
-
 def check_if_index_exists(index_name:str, region: str, host:str, http_auth) -> OpenSearch:
     aos_client = OpenSearch(
         hosts = [{'host': host.replace("https://", ""), 'port': 443}],
@@ -76,9 +76,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--opensearch-cluster-domain", type=str, default=None)
     parser.add_argument("--opensearch-index-name", type=str, default=None)
-    parser.add_argument("--aws-region", type=str, default="us-east-1")
+    parser.add_argument("--region", type=str, default="ap-southeast-2")
     parser.add_argument("--embeddings-model-endpoint-name", type=str, default=None)
-    parser.add_argument("--chunk-size-for-doc-split", type=int, default=500)
+    parser.add_argument("--chunk-size-for-doc-split", type=int, default=200)
     parser.add_argument("--chunk-overlap-for-doc-split", type=int, default=30)
     parser.add_argument("--input-data-dir", type=str, default="/opt/ml/processing/input_data")
     parser.add_argument("--process-count", type=int, default=1)
@@ -120,9 +120,9 @@ if __name__ == "__main__":
     
     t1 = time.time()
 
-    index_exists = check_if_index_exists(index_name = args.opensearch_index_name, region = args.aws_region, host = args.opensearch_cluster_domain, http_auth = aws4auth)
+    index_exists = check_if_index_exists(index_name = args.opensearch_index_name, region = args.region, host = args.opensearch_cluster_domain, http_auth = aws4auth)
 
-    embeddings = create_sagemaker_embeddings_from_js_model(args.embeddings_model_endpoint_name, args.aws_region)
+    embeddings = create_sagemaker_embeddings_from_js_model(args.embeddings_model_endpoint_name, args.region)
     
 
     if index_exists is False:
@@ -149,7 +149,7 @@ if __name__ == "__main__":
     with mp.Pool(processes = args.process_count) as pool:
         results = pool.map(partial(process_shard,
                                    embeddings_model_endpoint_name=args.embeddings_model_endpoint_name,
-                                   aws_region=args.aws_region,
+                                   aws_region=args.region,
                                    os_index_name=args.opensearch_index_name,
                                    os_domain_ep=args.opensearch_cluster_domain,
                                    os_http_auth=aws4auth),

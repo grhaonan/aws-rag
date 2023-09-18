@@ -1,24 +1,12 @@
-"""
-Helper functions for using Samgemaker Endpoint via langchain
-"""
 import time
 import json
 import logging
 from typing import List
 from langchain.embeddings import SagemakerEndpointEmbeddings
 from langchain.embeddings.sagemaker_endpoint import EmbeddingsContentHandler
-from langchain import SagemakerEndpoint
-from langchain.llm.sagemaker import LLMContentHandler
-
-
-import boto3
 
 
 logger = logging.getLogger(__name__)
-
-
-boto3.setup_default_session(profile_name='dustin-dev2-admin')
-
 
 # extend the SagemakerEndpointEmbeddings class from langchain to provide a custom embedding function
 class SagemakerEndpointEmbeddingsJumpStart(SagemakerEndpointEmbeddings):
@@ -58,7 +46,7 @@ class ContentHandler(EmbeddingsContentHandler):
         input_str = json.dumps({"text_inputs": prompt, **model_kwargs})
         return input_str.encode('utf-8') 
 
-    def transform_output(self, output: bytes) -> List[str]:
+    def transform_output(self, output: bytes) -> str:
 
         response_json = json.loads(output.read().decode("utf-8"))
         embeddings = response_json["embedding"]
@@ -68,7 +56,6 @@ class ContentHandler(EmbeddingsContentHandler):
 
 
 def create_sagemaker_embeddings_from_js_model(embeddings_model_endpoint_name: str, aws_region: str) -> SagemakerEndpointEmbeddingsJumpStart:
-    
     # all set to create the objects for the ContentHandler and 
     # SagemakerEndpointEmbeddingsJumpStart classes
     content_handler = ContentHandler()
@@ -81,13 +68,3 @@ def create_sagemaker_embeddings_from_js_model(embeddings_model_endpoint_name: st
         content_handler=content_handler
     )
     return embeddings
-
-
-
-# # Testing code and you can run this whole file in the sagamaker notebook instance to test it out
-# endpoint_name = "jumpstart-dft-hf-textembedding-gpt-j-6b-fp16" 
-# aws_region = "ap-southeast-2"
-# embeddings = create_sagemaker_embeddings_from_js_model(endpoint_name, aws_region)
-# test_text = "This is a sample text for testing embeddings"
-# embeddings_result = embeddings.embed_documents([test_text])
-# print(embeddings_result)
